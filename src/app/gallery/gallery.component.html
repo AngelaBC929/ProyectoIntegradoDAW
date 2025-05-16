@@ -1,0 +1,12 @@
+<div class="gallery">
+    <h2>Galería de Fotografías</h2>
+    <div class="photos">
+      <div class="photo-card" *ngFor="let photo of photos">
+        <img [src]="photo.url" alt="Foto">
+        <div class="photo-actions">
+          <!-- <button (click)="vote(photo.id)">Votar</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  

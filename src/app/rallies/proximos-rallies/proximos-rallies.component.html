@@ -1,0 +1,9 @@
+<div class="rallies-container">
+    <h2>Próximos Rallies</h2>
+    <div *ngFor="let rally of rallies" class="rally-card">
+      <h3>{{ rally.name }}</h3>
+      <p>{{ rally.description }}</p>
+      <button class="btn-enter">Entrar</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,53 @@
+
+<!-- Overlay que bloquea toda interacción -->
+<div class="overlay" *ngIf="showModal"></div>
+
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+
+    <!-- Campo de usuario -->
+    <div class="form-group">
+      <h2>Iniciar sesión</h2>
+      <label for="username">Usuario</label>
+      <input type="text" id="username" [(ngModel)]="username" name="username" required #usernameField="ngModel"
+        class="form-control" placeholder="Ingresa tu usuario" />
+      <!-- Mensaje de error si el campo está vacío -->
+      <div *ngIf="submitted && usernameField.invalid" class="error-message">
+        El usuario es requerido.
+      </div>
+    </div>
+
+    <!-- Campo de contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <div class="password-wrapper">
+        <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password" [(ngModel)]="password" name="password"
+          required #passwordField="ngModel" class="form-control" placeholder="Ingresa tu contraseña"
+          [ngClass]="{ 'invalid': password && !passwordValid() }" />
+        <!-- Icono de ojo para ver/ocultar la contraseña -->
+        <i class="fa" [ngClass]="passwordVisible ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
+
+      </div>
+
+      <!-- Mensaje de error si la contraseña no es válida -->
+      <div *ngIf="password && !passwordValid()" class="error-message">
+        La contraseña debe tener entre 8 y 12 caracteres, incluir mayúsculas, minúsculas y un carácter especial.
+      </div>
+
+      <!-- Mensaje de error si el campo de contraseña está vacío -->
+      <div *ngIf="submitted && passwordField.invalid" class="error-message">
+        La contraseña es requerida.
+      </div>
+    </div>
+
+    <!-- Botón de login -->
+    <button type="submit" [disabled]="!loginForm.form.valid" class="btn-login">
+      Iniciar sesión
+    </button>
+       <!-- Botón de cancelar que cierra el modal -->
+    <button type="button" (click)="closeModalMethod()" class="btn-cancel">
+      Cancelar
+    </button>
+  </form>
+</div>

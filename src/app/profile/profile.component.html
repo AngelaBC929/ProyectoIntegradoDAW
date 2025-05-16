@@ -1,0 +1,19 @@
+<div class="profile">
+    <h2>Mi Perfil</h2>
+    <div class="user-info">
+      <p><strong>Nombre:</strong> Juan Pérez</p>
+      <!-- <p><strong>Email:</strong> juan.perez@mail.com</p> -->
+    </div>
+  
+    <h3>Mis Fotografías</h3>
+    <div class="photos">
+      <div class="photo-card" *ngFor="let photo of photos">
+        <img [src]="photo.url" alt="Foto">
+        <div class="photo-actions">
+          <!-- <button (click)="deletePhoto(photo.id)">Eliminar</button> -->
+          <span>{{ photo.status }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,34 @@
+<div class="form-container">
+    <h2>Editar Usuario</h2>
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input id="name" formControlName="name" type="text" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Apellidos</label>
+        <input id="lastName" formControlName="lastName" type="text"  required/>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input id="email" formControlName="email" type="email" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select id="role" formControlName="role" required>
+          <option value="user">Usuario</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+  
+      <div *ngIf="userForm.invalid" class="error-message">
+        Por favor, complete todos los campos correctamente.
+      </div>
+  
+      <button type="submit" [disabled]="userForm.invalid">Guardar Cambios</button>
+      <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
+    </form>
+  </div>
+  

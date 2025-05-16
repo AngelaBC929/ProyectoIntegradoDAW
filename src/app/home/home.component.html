@@ -1,0 +1,61 @@
+<!-- Header -->
+<header class="header">
+  <div class="logo">📷 Rally Fotográfico</div>
+  <nav class="nav-links">
+    <a (click)="goToGallery()">Galería</a>
+    <a (click)="openLoginModal()">Iniciar sesión</a>
+    <button (click)="goToRegister()">Registrarse</button>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenido al Rally Fotográfico</h1>
+    <p>Captura, comparte y compite con tus mejores fotos. Explora la galería y participa en este evento único.</p>
+    <div class="hero-buttons">
+      <button (click)="openLoginModal()">Iniciar sesión</button>
+      <button (click)="goToRegister()">Registrarse</button>
+    </div>
+  </div>
+</section>
+
+<!-- ¿Cómo participar? -->
+<section class="steps">
+  <h2>¿Cómo participar?</h2>
+  <div class="steps-grid">
+    <div class="step">
+      <h3>📸 Sube tu foto</h3>
+      <p>Regístrate y sube tu mejor captura para competir.</p>
+    </div>
+    <div class="step">
+      <h3>👀 Explora y vota</h3>
+      <p>Revisa la galería y vota tus favoritas.</p>
+    </div>
+    <div class="step">
+      <h3>🏆 Gana premios</h3>
+      <p>Las mejores fotos serán premiadas al final del evento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Galería destacada -->
+<section class="gallery-preview">
+  <h2>Galería destacada</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">🌄</div>
+    <div class="gallery-item">🏙️</div>
+    <div class="gallery-item">🌌</div>
+    <div class="gallery-item">🌊</div>
+  </div>
+  <button class="see-more-btn" (click)="goToGallery()">Ver más</button>
+</section>
+
+<!-- Login Modal -->
+<app-login *ngIf="showLoginModal" (closeModal)="closeLoginModal()" class="login-container"></app-login>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2025 Rally Fotográfico - Todos los derechos reservados</p>
+</footer>
+
