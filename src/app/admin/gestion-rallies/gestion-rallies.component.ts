@@ -23,7 +23,18 @@ export class GestionRalliesComponent implements OnInit {
   ngOnInit(): void {
     // Aquí nos suscribimos a 'rallies$' para obtener los datos actualizados automáticamente
     this.rallyService.rallies$.subscribe(rallies => {
-      this.rallies = rallies;
+      const currentDate = new Date(); // Obtener la fecha actual
+      currentDate.setHours(0, 0, 0, 0); // Asegurarse de que solo compare la fecha (sin hora)
+
+      // Filtramos los rallies para mostrar solo los que son futuros o actuales
+      this.rallies = rallies.filter(rally => {
+        const startDate = new Date(rally.start_date); // Convertimos el start_date en un objeto Date
+        startDate.setHours(0, 0, 0, 0); // Ignorar las horas al comparar las fechas
+
+        return startDate >= currentDate; // Comparamos solo la fecha sin horas
+      });
+
+      console.log('Rallies actuales y futuros:', this.rallies);
     });
 
     // Llamamos a getAllRallies para cargar los rallies por primera vez.

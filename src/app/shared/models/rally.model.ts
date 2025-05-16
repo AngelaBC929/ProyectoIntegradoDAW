@@ -1,5 +1,5 @@
 export interface Rally {
-  id?: number;
+  id: number;
   title: string;
   description?: string;
   start_date: string;
@@ -8,4 +8,5 @@ export interface Rally {
   theme?: string;
   created_by?: number;
   created_at?: string;
+  yaApuntado?: boolean;
 }

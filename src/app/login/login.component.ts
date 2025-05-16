@@ -44,9 +44,7 @@ export class LoginComponent {
   // Método para mostrar el modal y overlay
   openModal() {
     this.showModal = true;
-    
   }
-
 
   // Método para manejar el submit del formulario
   onSubmit() {
@@ -58,8 +56,11 @@ export class LoginComponent {
 
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
+        // Guardamos el token, el rol y el id del usuario en localStorage
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('userRole', response.role);
+        localStorage.setItem('userId', response.id); // Guardar el id del usuario
+
         this.closeModalMethod(); // Cerrar el modal al hacer login
 
         if (response.role === 'admin') {

@@ -46,7 +46,7 @@ onSubmit(): void {
         this.message = 'Rally creado exitosamente!';
         
         // Redirigir a la gestión de rallies después de la creación
-        this.router.navigate(['/gestion-rallies']).then(() => {
+        this.router.navigate(['/admin/gestion-rallies']).then(() => {
           console.log('Redirigiendo a /admin/gestion-rallies');
         });
       },

@@ -3,8 +3,17 @@
   <li *ngFor="let rally of ralliesActuales">
     <h3>{{ rally.title }}</h3>
     <p>{{ rally.description }}</p>
-    <p>Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span></p>
+    <p>
+      Inicio: <span>{{ rally.start_date | date: 'dd/MM/yyyy' }}</span> -
+      Fin: <span>{{ rally.end_date | date: 'dd/MM/yyyy' }}</span>
+    </p>
+
+    <!-- Botón que cambia dependiendo de si ya estás inscrito -->
+    <button
+      class="apuntarme-btn"
+      [disabled]="isUserInscribed(rally.id)" 
+      (click)="apuntarse(rally.id)">
+      {{ isUserInscribed(rally.id) ? 'Ya estás inscrito' : 'Apuntarme' }}
+    </button>
   </li>
 </ul>
-
-<p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">No hay rallies actuales.</p>

@@ -14,10 +14,11 @@ export class AuthenticationService {
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login.php`, { username, password }).pipe(
       tap(response => {
-        // Guardar token y rol en localStorage
+        // Guardar el token, rol, username y userId en localStorage
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('userRole', response.role);
         localStorage.setItem('username', response.username); // si quieres usarlo en alguna parte
+        localStorage.setItem('userId', response.id); // Guardar el ID del usuario en localStorage
       }),
       catchError(error => {
         return throwError(() => new Error(error.error?.error || 'Error de login'));
@@ -31,6 +32,11 @@ export class AuthenticationService {
 
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
+  }
+
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;  // Obtener el userId desde localStorage
   }
 
   register(email: string, username: string, password: string, name: string, lastName: string, birthdate: string) {
@@ -56,5 +62,4 @@ export class AuthenticationService {
       })
     );
   }
-  
 }

@@ -73,6 +73,10 @@ p:empty {
 
   li {
     padding: 15px;
+      position: relative; /* Asegura que los elementos dentro del li se alineen correctamente */
+      min-height: 150px; /* Ajusta esto según el tamaño de tu contenido */
+
+    
   }
 
   h3 {
@@ -83,3 +87,24 @@ p:empty {
     font-size: 0.9rem;
   }
 }
+.apuntarme-btn {
+  display: inline-block; /* Asegúrate de que no esté oculto */
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #355cdc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid rgb(11, 7, 122); /* Agregar borde para depuración */
+  position: relative; /* Asegura que el botón esté posicionado dentro del li */
+  z-index: 10;
+}
+
+.apuntarme-btn[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  border: 2px solid grey; /* Agregar borde para depuración */
+}
+
+

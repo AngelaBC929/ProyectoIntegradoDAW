@@ -6,6 +6,7 @@
       <thead>
         <tr>
           <th>Título</th>
+          <th>Tema</th>
           <th>Descripción</th>
           <th>Fechas</th>
           <th>Acciones</th>
@@ -14,6 +15,7 @@
       <tbody>
         <tr *ngFor="let rally of rallies">
           <td>{{ rally.title }}</td>
+          <td>{{ rally.theme }}</td>
           <td>{{ rally.description }}</td>
           <td>{{ rally.start_date | date: 'dd/MM/yyyy' }} - {{ rally.end_date | date: 'dd/MM/yyyy' }}</td>
           <td>
