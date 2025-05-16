@@ -8,12 +8,19 @@
       Fin: <span>{{ rally.end_date | date: 'dd/MM/yyyy' }}</span>
     </p>
 
+    
     <!-- Botón que cambia dependiendo de si ya estás inscrito -->
-    <button
-      class="apuntarme-btn"
-      [disabled]="isUserInscribed(rally.id)" 
-      (click)="apuntarse(rally.id)">
-      {{ isUserInscribed(rally.id) ? 'Ya estás inscrito' : 'Apuntarme' }}
+    <button *ngIf="!isUserInscribed(rally.id)" class="apuntarme-btn" (click)="apuntarse(rally.id)">
+      Apuntarse
+    </button>
+  
+    <button *ngIf="isUserInscribed(rally.id)" class="cancelar-btn" (click)="cancelarInscripcion(rally.id)">
+      Cancelar Inscripción
     </button>
   </li>
 </ul>
+
+<!-- Botón para volver -->
+<div class="button-container">
+  <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
+</div>

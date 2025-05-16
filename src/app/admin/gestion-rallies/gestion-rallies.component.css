@@ -1,0 +1,21 @@
+
+  /* Asegura que el botón se vea bien y esté centrado */
+  .button-container {
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    margin-top: 20px; /* Espacio superior para separar el botón de los rallies */
+  }
+
+  .back-button {
+    background-color: #4CAF50; /* Un color verde bonito */
+    color: white; /* Texto blanco */
+    border: none;
+    padding: 12px 24px; /* Un buen padding para que el botón se vea grande */
+    font-size: 16px; /* Un tamaño de fuente legible */
+    cursor: pointer; /* Cambia el cursor a mano para indicar que es un botón clickeable */
+    border-radius: 5px; /* Bordes redondeados para un diseño más suave */
+    transition: background-color 0.3s ease; /* Transición para cuando el botón cambia de color */
+  }
+
+  .back-button:hover {
+    background-color: #45a049; /* Color un poco más oscuro cuando pasa el mouse sobre el botón */
+  }

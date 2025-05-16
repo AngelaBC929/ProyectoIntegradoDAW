@@ -21,25 +21,21 @@ export class GestionRalliesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Aquí nos suscribimos a 'rallies$' para obtener los datos actualizados automáticamente
+    // Nos suscribimos a 'rallies$' para obtener los datos actualizados automáticamente
     this.rallyService.rallies$.subscribe(rallies => {
-      const currentDate = new Date(); // Obtener la fecha actual
-      currentDate.setHours(0, 0, 0, 0); // Asegurarse de que solo compare la fecha (sin hora)
-
-      // Filtramos los rallies para mostrar solo los que son futuros o actuales
-      this.rallies = rallies.filter(rally => {
-        const startDate = new Date(rally.start_date); // Convertimos el start_date en un objeto Date
-        startDate.setHours(0, 0, 0, 0); // Ignorar las horas al comparar las fechas
-
-        return startDate >= currentDate; // Comparamos solo la fecha sin horas
-      });
-
-      console.log('Rallies actuales y futuros:', this.rallies);
+      // Confirmamos que los rallies que estamos recibiendo están correctamente
+      console.log('Datos de rallies recibidos en la suscripción:', rallies);
+      this.rallies = rallies; // Asignamos todos los rallies tal como los recibe desde el servicio
+      console.log('Todos los rallies:', this.rallies);
     });
-
+  
     // Llamamos a getAllRallies para cargar los rallies por primera vez.
-    this.rallyService.getAllRallies().subscribe();
+    this.rallyService.getAllRallies().subscribe({
+      next: () => console.log('Rallies cargados correctamente'),
+      error: (err) => console.error('Error al cargar los rallies:', err)
+    });
   }
+  
 
   // Redirigir al formulario de edición
   editRally(id: number): void {
@@ -51,8 +47,13 @@ export class GestionRalliesComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar este rally?')) {
       this.rallyService.deleteRally(id).subscribe(() => {
         alert('Rally eliminado');
-        // Aquí no necesitamos recargar la lista manualmente, ya que el BehaviorSubject se actualizará automáticamente
+        // No necesitamos recargar la lista manualmente, ya que el BehaviorSubject se actualizará automáticamente
       });
     }
   }
+    // Método para redirigir al usuario al panel de usuario
+    goBackToAdminPanel(): void {
+      this.router.navigate(['admin']); 
+    }
+  
 }

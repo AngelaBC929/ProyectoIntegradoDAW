@@ -39,5 +39,6 @@ export class HomeComponent {
   // Navegar a registro
   goToRegister() {
     this.router.navigate(['/register']);
-  }
+  } // Método de logout
+  
 }

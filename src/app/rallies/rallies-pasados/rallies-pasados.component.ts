@@ -4,6 +4,7 @@ import { Rally } from '../../shared/models/rally.model';
 import { RallyService } from '../../shared/services/rally.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rallies-pasados',
@@ -14,9 +15,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class RalliesPasadosComponent implements OnInit {
   ralliesPasados: Rally[] = [];
-rallies: any;
+  rallies: any;
 
-  constructor(private rallyService: RallyService) {}
+  constructor(private rallyService: RallyService, private router: Router) {}
 
   ngOnInit(): void {
     this.rallyService.getAllRallies().subscribe((rallies) => {
@@ -35,10 +36,13 @@ rallies: any;
         return isPast;
       });
   
-      console.log('Rallies pasados:', this.ralliesPasados); // 👈
+      console.log('Rallies pasados:', this.ralliesPasados); 
     });
   }
   
-  
+  // Método para redirigir al usuario al panel de usuario 
+  goBackToUserPanel(): void {
+    this.router.navigate(['user']); 
+  }
   
 }

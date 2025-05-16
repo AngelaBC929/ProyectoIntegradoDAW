@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RallyService } from '../../shared/services/rally.service';
 import { Rally } from '../../shared/models/rally.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rallies-actuales',
@@ -13,43 +14,59 @@ import { CommonModule } from '@angular/common';
 export class RalliesActualesComponent implements OnInit {
   ralliesActuales: Rally[] = [];
   userInscribedRallies: number[] = [];
+  userId: number = 0; // 👈 Aquí declaras el userId
 
-  constructor(private rallyService: RallyService) {}
+
+  constructor(private rallyService: RallyService, private router: Router) {}
 
   ngOnInit(): void {
-    this.rallyService.getAllRallies().subscribe((rallies) => {
-      const currentDate = new Date(); // Obtener la fecha actual
-      currentDate.setHours(0, 0, 0, 0); // Asegurarse de que solo compare la fecha (sin hora)
+    // 👇 Obtener userId desde localStorage, por ejemplo
+    const storedUser = localStorage.getItem('userId');
+    if (storedUser) {
+      this.userId = +storedUser; // convertir a número
+    }
 
-      // Filtrar rallies que están actualmente en curso
-      this.ralliesActuales = rallies.filter(rally => {
-        const startDate = new Date(rally.start_date); // Convertimos el start_date en un objeto Date
-        const endDate = new Date(rally.end_date); // Convertimos el end_date en un objeto Date
-        
-        // Establecer las horas en 00:00:00 para comparar solo las fechas
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(23, 59, 59, 999); // Consideramos hasta el final del día en end_date
+    // Primero obtener las inscripciones del usuario
+    this.rallyService.getUserInscriptions(this.userId).subscribe(inscripciones => {
+      this.userInscribedRallies = inscripciones;
 
-        // Los rallies deben haber comenzado y no deben haber terminado
-        return startDate <= currentDate && endDate >= currentDate;
+      // Luego, obtener los rallies y filtrar los actuales
+      this.rallyService.getAllRallies().subscribe((rallies) => {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        this.ralliesActuales = rallies.filter(rally => {
+          const startDate = new Date(rally.start_date);
+          const endDate = new Date(rally.end_date);
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(23, 59, 59, 999);
+          return startDate <= currentDate && endDate >= currentDate;
+        });
       });
-
-      // Obtenemos las inscripciones del usuario
-      this.userInscribedRallies = this.rallyService.getInscripciones();
     });
   }
 
-  // Comprobar si el usuario está inscrito en el rally
   isUserInscribed(rallyId: number): boolean {
     return this.userInscribedRallies.includes(rallyId);
   }
 
-  // Método para inscribirse a un rally
-  apuntarse(rallyId: number) {
+  apuntarse(rallyId: number): void {
     this.rallyService.apuntarseARally(rallyId).subscribe((response) => {
       if (response.success) {
-        this.userInscribedRallies.push(rallyId);  // Agregamos el rally a las inscripciones del usuario
+        this.userInscribedRallies.push(rallyId);
       }
     });
+  }
+
+  cancelarInscripcion(rallyId: number): void {
+    this.rallyService.cancelarInscripcion(rallyId).subscribe((response) => {
+      if (response.success) {
+        this.userInscribedRallies = this.userInscribedRallies.filter(id => id !== rallyId);
+      }
+    });
+  }
+  // Método para redirigir al usuario al panel de usuario
+  goBackToUserPanel(): void {
+    this.router.navigate(['user']); 
   }
 }

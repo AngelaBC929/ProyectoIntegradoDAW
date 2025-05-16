@@ -1,5 +1,8 @@
-<navbar-admin *ngIf="role === 'admin'"></navbar-admin>
-<navbar-user *ngIf="role === 'user'"></navbar-user>
+<ng-container *ngIf="role">
+  <navbar-admin *ngIf="role === 'admin'"></navbar-admin>
+  <navbar-user *ngIf="role === 'user'"></navbar-user>
+</ng-container>
+
 <main class="main-container">
   <router-outlet></router-outlet>
 </main>

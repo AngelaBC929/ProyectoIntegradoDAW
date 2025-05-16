@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gallery',
+  standalone: true,
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css'] ,
   imports: [CommonModule] 
@@ -14,5 +16,10 @@ export class GalleryComponent {
     { id: 3, url: 'photo3.jpg', title: 'Photo 3' },
   ];
 
-  constructor() { }
+
+  constructor(private router: Router) { }
+    // Método para redirigir al usuario al panel de usuario
+    goBackToHome(): void {
+      this.router.navigate(['home']); 
+    }
 }

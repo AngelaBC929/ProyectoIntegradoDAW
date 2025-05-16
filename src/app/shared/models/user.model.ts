@@ -2,6 +2,6 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  lastName: string; // <-- Nuevo campo
+  lastName: string; 
   role: 'admin' | 'user';
 }

@@ -51,4 +51,8 @@ export class UserControlComponent implements OnInit {
 editUser(userId: number): void {
   this.router.navigate(['/admin/edit-user', userId]);  // Redirige a la página de edición de usuario
 }
+// Método para redirigir al usuario al panel de usuario
+goBackToAdminPanel(): void {
+  this.router.navigate(['admin']); 
+}
 }

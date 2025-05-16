@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { RallyService } from '../../shared/services/rally.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-rallies',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-rallies.component.html',
   styleUrls: ['./create-rallies.component.css']
 })
