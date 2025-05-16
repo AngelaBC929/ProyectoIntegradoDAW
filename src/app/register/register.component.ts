@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
   email: string = '';
-  firstName: string = '';
+  name: string = '';
   lastName: string = '';
   birthdate: string = '';
   errorMessages: string[] = [];
@@ -25,7 +26,8 @@ export class RegisterComponent {
   passwordVisible: boolean = false;
   confirmPasswordVisible: boolean = false;
 
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, private authenticationService: AuthenticationService  ) {}
 
   // Método de validación de contraseñas
   validatePasswords() {
@@ -43,39 +45,38 @@ export class RegisterComponent {
     }
   }
 
-  // Método de validación del formulario
   onSubmit(form: NgForm) {
     console.log("🚀 onSubmit() ejecutado");
     this.errorMessages = []; // Limpiar errores antes de cada validación
     this.onBirthdateChange(); // Actualizar edad antes de verificar
-
+  
     // Validar campos
     this.validatePasswords();  // Validar contraseñas
-
+  
     // Validar edad mínima
     if (this.userAge < 18) {
       this.errorMessages.push('Debes tener al menos 18 años para registrarte.');
     }
-
+  
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.email)) {
       this.errorMessages.push('El correo electrónico no es válido.');
     }
-
+  
     // Validar otros campos
     if (!this.username || this.username.length < 3) {
       this.errorMessages.push('El nombre de usuario debe tener al menos 3 caracteres.');
     }
-
-    if (!this.firstName || this.firstName.length < 2) {
+  
+    if (!this.name || this.name.length < 2) {
       this.errorMessages.push('El nombre debe tener al menos 2 caracteres.');
     }
-
+  
     if (!this.lastName || this.lastName.length < 2) {
       this.errorMessages.push('El apellido debe tener al menos 2 caracteres.');
     }
-
+  
     // Si hay errores, no continuar
     if (form.invalid || this.errorMessages.length > 0) {
       console.log("❌ Formulario inválido. No se redirige.");
@@ -83,19 +84,28 @@ export class RegisterComponent {
       console.log("Errores encontrados:", this.errorMessages);
       return;
     }
-    
+      
     // Si todo es válido
     console.log('Formulario válido:', form.value);
-    // Aquí podrías redirigir o enviar los datos al backend
-    console.log("✅ Redirigiendo al login...");
-
-    
-
-    this.router.navigate(['/login']).then(success => {
-      console.log("Resultado navegación:", success);
-  });
+  
+    // Enviar los datos del formulario al backend
+    this.authenticationService.register(this.email, this.username, this.password, this.name, this.lastName, this.birthdate).subscribe(
+      (      response: { message: string; }) => {
+        console.log('Respuesta del backend:', response);
+        if (response.message === 'Usuario creado correctamente') {
+          // Redirigir al login después de un registro exitoso
+          this.router.navigate(['/login']).then(success => {
+            console.log("Resultado navegación:", success);
+          });
+        }
+      },
+      (      error: any) => {
+        console.error('Error de registro:', error);
+        this.errorMessages.push('Hubo un error al registrar el usuario.');
+      }
+    );
   }
-
+  
   // Método para calcular la edad del usuario
   onBirthdateChange() {
     const birthdate = new Date(this.birthdate);
@@ -123,7 +133,7 @@ export class RegisterComponent {
       this.password === this.confirmPassword &&
       this.password.length >= 8 &&
       this.username.length >= 3 &&
-      this.firstName.length >= 2 &&
+      this.name.length >= 2 &&
       this.lastName.length >= 2 &&
       this.userAge >= 18
       // Quitamos el check de errorMessages aquí

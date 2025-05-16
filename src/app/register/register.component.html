@@ -11,10 +11,10 @@
 
     <!-- Nombre -->
     <div class="form-group">
-      <label for="firstName">Nombre</label>
-      <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName" required minlength="3"
-        #firstNameField="ngModel" />
-      <div *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
+      <label for="name">Nombre</label>
+      <input type="text" id="name" name="name" [(ngModel)]="name" required minlength="3"
+        #nameField="ngModel" />
+      <div *ngIf="nameField.invalid && nameField.touched" class="error-message">
         El nombre debe tener al menos 3 caracteres.
       </div>
     </div>
