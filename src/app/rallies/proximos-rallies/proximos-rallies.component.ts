@@ -1,18 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { RallyService } from '../../shared/services/rally.service';
+import { Rally } from '../../shared/models/rally.model';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-proximos-rallies',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule, FormsModule],
   templateUrl: './proximos-rallies.component.html',
-  styleUrls: ['./proximos-rallies.component.css']
+  styleUrls: ['./proximos-rallies.component.css'],
 })
-export class ProximosRalliesComponent {
-  // Aquí puedes agregar datos de ejemplo o hacer peticiones a un backend
-  rallies = [
-    { name: 'Rally A', description: 'Un rally emocionante para todos.' },
-    { name: 'Rally B', description: 'Explora nuevas rutas y gana premios.' },
-    { name: 'Rally C', description: 'Captura la mejor foto en este rally.' }
-  ];
+export class ProximosRalliesComponent implements OnInit {
+  ralliesProximos: Rally[] = [];
+
+  constructor(private rallyService: RallyService) {}
+
+  ngOnInit(): void {
+    this.rallyService.getAllRallies().subscribe((rallies) => {
+      const today = new Date();
+      // Filtrar los rallies próximos (que empiezan después de hoy)
+      this.ralliesProximos = rallies.filter(
+        (rally) => new Date(rally.start_date) > today
+      );
+    });
+  }
 }

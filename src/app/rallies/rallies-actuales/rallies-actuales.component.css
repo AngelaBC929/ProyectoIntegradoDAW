@@ -1,42 +1,85 @@
-.rallies-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
+/* General container styles */
+h2 {
+  text-align: center;
+  color: #4A90E2;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Style for the list of rallies */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each rally item style */
+li {
+  background: #f4f7fb;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect for each rally */
+li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Title style */
+h3 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Description style */
+p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Date style */
+p span {
+  font-weight: bold;
+  color: #4A90E2;
+}
+
+/* Style when no rallies are found */
+p:empty {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+/* Style for empty state */
+.no-rallies-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
   }
-  
-  .rally-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  li {
+    padding: 15px;
   }
-  
-  .rally-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+
+  h3 {
+    font-size: 1.5rem;
   }
-  
-  .rally-card p {
-    font-size: 1rem;
-    margin-bottom: 20px;
+
+  p {
+    font-size: 0.9rem;
   }
-  
-  .btn-enter {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-enter:hover {
-    background-color: #0056b3;
-  }
-  
+}

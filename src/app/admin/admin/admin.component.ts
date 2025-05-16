@@ -14,7 +14,7 @@ export class AdminComponent {
   constructor(private router: Router) {}
 
   goToRalliesManagement() {
-    this.router.navigate(['/admin/rallies']);
+    this.router.navigate(['/admin/gestion-rallies']);
   }
 
   goToUsersManagement() {

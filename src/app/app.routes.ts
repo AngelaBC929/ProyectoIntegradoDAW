@@ -7,9 +7,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserComponent } from './user/user/user.component';
 import { ProximosRalliesComponent } from './rallies/proximos-rallies/proximos-rallies.component';
 import { RalliesActualesComponent } from './rallies/rallies-actuales/rallies-actuales.component';
-import { RalliesFinalizadosComponent } from './rallies/rallies-finalizados/rallies-finalizados.component';
+import { RalliesPasadosComponent } from './rallies/rallies-pasados/rallies-pasados.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
+import { GestionRalliesComponent } from './admin/gestion-rallies/gestion-rallies.component';
+import { EditRalliesComponent } from './admin/edit-rallies/edit-rallies.component';
+import { CreateRalliesComponent } from './admin/create-rallies/create-rallies.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,10 +23,12 @@ export const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'proximos-rallies', component: ProximosRalliesComponent },
   { path: 'rallies-actuales', component: RalliesActualesComponent },
-  { path: 'rallies-finalizados', component: RalliesFinalizadosComponent },
+  { path: 'rallies-pasados', component: RalliesPasadosComponent },
   { path: 'admin', component: AdminComponent},
   { path: 'admin/edit-user/:id', component: EditUserComponent },
-  { path: 'admin/rallies', loadComponent: () => import('./admin/manage-rallies/manage-rallies.component').then(m => m.ManageRalliesComponent)},
+  { path: 'admin/gestion-rallies', component: GestionRalliesComponent },
+  { path: 'admin/create-rallies', component: CreateRalliesComponent },
+  { path: 'admin/edit-rallies/:id', component: EditRalliesComponent },
   { path: 'admin/user-control', loadComponent: () => import('./admin/user-control/user-control.component').then(m => m.UserControlComponent)},
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

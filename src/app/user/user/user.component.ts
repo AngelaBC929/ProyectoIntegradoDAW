@@ -21,7 +21,7 @@ export class UserComponent {
     this.router.navigate(['/rallies-actuales']);  // Ruta que lleva a los rallies actuales
   }
 
-  entrarRalliesFinalizados() {
-    this.router.navigate(['/rallies-finalizados']);  // Ruta que lleva a los rallies finalizados
+  entrarRalliesPasados() {
+    this.router.navigate(['/rallies-pasados']);  // Ruta que lleva a los rallies finalizados
   }
 }

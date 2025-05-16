@@ -1,17 +1,29 @@
+import { Component, OnInit } from '@angular/core';
+import { Rally } from '../../shared/models/rally.model';
+import { RallyService } from '../../shared/services/rally.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rallies-actuales',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule,FormsModule],
   templateUrl: './rallies-actuales.component.html',
-  styleUrls: ['./rallies-actuales.component.css']
+  styleUrls: ['./rallies-actuales.component.css'],
 })
-export class RalliesActualesComponent {
-  // Aquí también puedes agregar datos de ejemplo o hacer peticiones a un backend
-  rallies = [
-    { name: 'Rally X', description: 'Participa en el rally en curso.' },
-    { name: 'Rally Y', description: 'No te pierdas esta oportunidad.' }
-  ];
+export class RalliesActualesComponent implements OnInit {
+  ralliesActuales: Rally[] = [];
+
+  constructor(private rallyService: RallyService) {}
+
+  ngOnInit(): void {
+    this.rallyService.getAllRallies().subscribe((rallies) => {
+      const today = new Date();
+      // Filtrar los rallies actuales (que están en curso)
+      this.ralliesActuales = rallies.filter(
+        (rally) =>
+          new Date(rally.start_date) <= today && new Date(rally.end_date) >= today
+      );
+    });
+  }
 }
