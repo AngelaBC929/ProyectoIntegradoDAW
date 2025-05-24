@@ -1,0 +1,26 @@
+<app-navbar *ngIf="role"></app-navbar>
+
+<!-- Modal con estructura de Bootstrap -->
+<div class="modal fade show session-expired-modal" tabindex="-1" role="dialog" style="display: block;" *ngIf="showModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <h5 class="session-expired-title">Sesión expirada</h5>
+      <div class="session-expired-content">
+        <p>Tu sesión ha caducado por inactividad. Por favor, inicia sesión nuevamente.</p>
+      </div>
+      <div class="session-expired-actions">
+        <button class="btn btn-session-login" (click)="handleLogin()">Iniciar sesión</button>
+        <button class="btn btn-session-cancel" (click)="handleCancel()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fondo oscuro (si no usas Bootstrap JS) -->
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+
+
+<!-- Contenido principal -->
+<main class="main-container">
+  <router-outlet></router-outlet>
+</main>

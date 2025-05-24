@@ -1,0 +1,126 @@
+.urban-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5c2c10;
+  color: #fdf3e7;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #8d3c1f;
+  font-family: 'Segoe UI', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
+.urban-navbar-left {
+  font-size: 3rem;
+  font-weight: normal;
+  color: #fef5e4;
+  text-shadow: 1px 1px 4px #3d1c0f;
+}
+
+/* NUEVO: Branding dentro del navbar */
+.urban-brand-group {
+  line-height: 1.1;
+}
+
+.urban-navbar-brand {
+  font-family: 'Rye', cursive;
+  font-size: 2.6rem;
+  margin-bottom: 0.2rem;
+  color: #fef5e4;
+}
+
+.urban-navbar-subtitle {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #f4d6b5;
+}
+
+/* Parte derecha del navbar */
+.urban-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Estilo para el nombre de usuario */
+.user-name {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #fff0e0;
+  background-color: rgba(90, 40, 10, 0.4);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+/* Estilo para el icono */
+.urban-navbar-logo {
+  height: 8rem; /* Más grande */
+  width: auto;
+  object-fit: contain;
+  user-select: none;
+}
+
+
+/* Botones */
+.urban-btn {
+  background-color: #8d3c1f;
+  color: #fff2e0;
+  border: none;
+  padding: 0.5rem 1.3rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.urban-btn:hover {
+  background-color: #a54825;
+}
+@media (max-width: 768px) {
+  .urban-navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .urban-navbar-left {
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .urban-navbar-brand {
+    font-size: 1.8rem;
+  }
+
+  .urban-navbar-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .urban-navbar-right {
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+
+  .user-name {
+    font-size: 1.1rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .urban-btn {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+    width: 100%;
+    max-width: 200px;
+  }
+  .urban-navbar-logo {
+    height: 40px;
+  }
+}

@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+:host {
+  font-family: 'Merriweather', serif;
+}
+
+.mis-rallies {
+  background: url('/images/fondo3.jpg') no-repeat center top;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* HEADER */
+.mis-rallies-header {
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(123, 79, 36, 0.5);
+  margin: 0 1rem 2rem;
+  user-select: none;
+}
+
+.mis-rallies-header h1 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 1px 1px 4px #3c2608;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.tabs button {
+  background: transparent;
+  border: none;
+  color: #e0cda9;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 0.25rem solid transparent;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.tabs button:hover {
+  color: #fff6d6;
+}
+
+.tabs button.active {
+  border-bottom-color: #f2d388;
+  color: #f9f4e6;
+  font-weight: 700;
+}
+
+/* TITULO */
+.titulo-seccion {
+  text-align: center;
+  font-size: 2rem;
+  margin: 1rem;
+  color: #4a2c14;
+  font-weight: bold;
+  text-shadow: 0.0625rem 0.0625rem 0.125rem #d4a373;
+}
+
+/* RALLY CARD */
+.rally-card {
+  background-color: #f2d388;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(139, 69, 19, 0.1);
+  border: 0.0625rem solid #e0c9a6;
+  margin: 2rem auto;
+  max-width: 95%;
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5c3a1e;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 0.1rem 0.1rem 0.2rem #d4a373;
+}
+
+h6 {
+  font-size: 1.3rem;
+  color: #5c3a1e;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* MINIATURAS */
+.miniaturas-container {
+  margin-top: 2rem;
+}
+
+.miniaturas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.foto-preview {
+  text-align: center;
+  max-width: 25rem;
+  flex: 1 1 30%;
+  position: relative;
+}
+
+.foto-preview img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border: 0.25rem solid #d4a373;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.foto-preview p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ESTADO */
+.estado-aprobada {
+  color: #4CAF50;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  color: #ac8511;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.estado-rechazada {
+  color: #F44336;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* BOTONES */
+.btn,
+.btn.volver {
+  background-color: #a0522d;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin: 2rem auto;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover,
+.btn.volver:hover {
+  background-color: #8b4513;
+}
+
+.btn-secondary {
+  background-color: #ddd;
+  color: #333;
+  padding: 0.75rem 1.5rem;
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.modal-content {
+  background: #fffaf5;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 0.0625rem solid #e0c9a6;
+  box-shadow: 0 0.375rem 0.9375rem rgba(139, 69, 19, 0.25);
+  width: 90%;
+  max-width: 40rem;
+  max-height: 80vh; /* límite de altura del modal */
+  overflow-y: auto;  /* scroll interno si se pasa */
+  text-align: center;
+  cursor: default;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: contain;
+}
+
+/* POPUP */
+.popup-error {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  background-color: #b22222;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  z-index: 10000;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+  animation: fadeInOut 3s ease-in-out;
+  font-family: 'Merriweather', serif;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-0.625rem); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-0.625rem); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .rally-card {
+    padding: 2rem;
+    max-width: 95%;
+  }
+
+  .foto-preview {
+    max-width: 80%;
+    flex: 1 1 45%;
+  }
+
+  .card-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .mis-rallies {
+    padding: 1rem 0.5rem;
+  }
+
+  .mis-rallies-header {
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+
+  .tabs {
+    gap: 0.5rem;
+  }
+
+  .tabs button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .titulo-seccion {
+    font-size: 2rem;
+  }
+
+  .rally-card {
+    padding: 1.5rem;
+  }
+
+  .foto-preview {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .modal-content {
+    padding: 2rem;
+    width: 95%;
+  }
+}
+

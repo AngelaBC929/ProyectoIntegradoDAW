@@ -1,0 +1,95 @@
+<div class="dashboard">
+
+  <!-- ENCABEZADO -->
+  <header class="dashboard-header">
+    <h1>Bienvenido a tu Panel de Usuario</h1>
+    <nav class="tabs">
+      <button (click)="seleccionarTab('perfil')" [class.active]="tabActivo === 'perfil'">Perfil</button>
+      <button [routerLink]="['/mis-rallies']" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
+      <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
+      <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
+      <button [routerLink]="['/faqs']" [class.active]="tabActivo === 'faqs'">FAQs</button>
+      
+    </nav>
+  </header>
+
+  <!-- CARDS PRINCIPALES -->
+  <div class="user-dashboard">
+    <div class="card-container">
+      <div class="card">
+        <h2>Próximos Rallies
+          <img src="images/carrete.png" alt="carrete" class="icono-rally-carrete" />
+        </h2>
+        <p>Participa en los próximos rallies fotográficos que tenemos preparados para ti.</p>
+        <button class="btn-enter" (click)="entrarProximosRallies()">Entrar</button>
+      </div>
+      <div class="card">       
+        <h2>Rallies Actuales
+          <img src="images/camara.png" alt="camara" class="icono-rally-camara" />
+        </h2>
+        <p>Únete a los rallies en los que estás participando actualmente.</p>
+        <button class="btn-enter" (click)="entrarRalliesActuales()">Entrar</button>
+      </div>
+      <div class="card">
+        <h2>Rallies Finalizados
+          <img src="images/foto.png" alt="foto" class="icono-rally-foto" />
+        </h2>
+        <p>Revive los rallies pasados y mira las fotos que tomaste.</p>
+        <button class="btn-enter" (click)="entrarRalliesPasados()">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN PERFIL -->
+  <main>
+    <section *ngIf="tabActivo === 'perfil'" class="perfil-container">
+
+      <!-- DATOS DE USUARIO -->
+      <div class="perfil-card" *ngIf="usuario">
+        <h2>Mis datos</h2>
+
+        <label>Nombre</label>
+        <input type="text" [(ngModel)]="usuario.name" />
+
+        <label>Apellidos</label>
+        <input type="text" [(ngModel)]="usuario.lastName" />
+
+        <label>Correo Electrónico</label>
+        <input type="email" [(ngModel)]="usuario.email" />
+
+        <button class="btn-guardar" (click)="modificarPerfil()">Guardar cambios</button>
+      </div>
+
+      <!-- INSTRUCCIONES DE FOTOS -->
+    <div class="fotos-card">
+  <h2>Subida de Fotos</h2>
+  <p>Puedes subir hasta <strong>3 fotos</strong> por rally. Asegúrate de que sigan la temática y cumplan las normas.</p>
+  <p>Tu foto puede ser <strong>admitida</strong>, quedar <strong>pendiente</strong> o ser <strong>rechazada</strong> tras revisión del administrador.</p>
+  <p>Podrás modificar tus fotos mientras no hayas subido las 3 fotos máximas al rally y podrás votar tus fotos favoritas mientras el rally este <strong>activo</strong>.</p>
+  <p>Consulta las <a routerLink="/faqs">FAQs</a> para más detalles.</p>
+</div>
+
+    </section>
+  </main>
+
+  <!-- MODAL SUBIR FOTO -->
+  <div id="uploadModal" class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Sube tu foto</h2>
+
+      <form (ngSubmit)="onSubmit()">
+        <label for="photoInput">Selecciona una foto:</label>
+        <input type="file" id="photoInput" name="photo" accept="image/*" (change)="onFileSelected($event)" />
+
+        <div *ngIf="imagePreview" id="previewContainer">
+          <h3>Vista previa:</h3>
+          <img [src]="imagePreview" alt="Vista previa" />
+        </div>
+
+        <button type="submit" [disabled]="!selectedFile">Subir Foto</button>
+      </form>
+    </div>
+  </div>
+
+</div>

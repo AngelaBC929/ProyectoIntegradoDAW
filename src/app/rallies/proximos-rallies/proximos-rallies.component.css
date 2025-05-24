@@ -1,0 +1,76 @@
+.horizontal-card {
+  background: #f2d388;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.45);
+  color: #4b2e05;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+}
+h2{
+  text-align: center;
+  margin-top: 1rem;
+  color: #4b2e05;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #7b4f24;
+}
+
+.horizontal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(210, 160, 70, 0.6);
+}
+
+.horizontal-card h3 {
+  margin-top: 0;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px #7b4f24;
+}
+p{
+  font-size: 1.2rem;
+  color: #4b2e05;
+
+}
+.horizontal-card p span {
+  font-weight: 700;
+  color: #7b4f24; /* Un tono cálido que combine con tu paleta */
+}
+i, .material-symbols-outlined {
+  font-size: 3rem !important;
+  margin-right: 1rem;
+  vertical-align: middle;
+  color: #5c2c10 !important;
+}
+
+.btn {
+  background-color: #a0522d;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin: 1rem auto; /* <-- esto lo centra horizontalmente */
+}
+
+.btn:hover {
+  background-color: #8b4513;
+}
+.btn back{
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}

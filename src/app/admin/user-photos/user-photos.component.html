@@ -1,0 +1,56 @@
+<div class="photo-list">
+  <h2>Fotos de usuarios</h2>
+
+  <div class="table-container">
+    <div class="table-responsive">
+      <table class="table" cellspacing="0" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Usuario</th>
+            <th>Nombre de la foto</th>
+            <th>Rally</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let photo of allPhotos">
+            <td><img [src]="photo.photo_url" alt="Foto" /></td>
+            <td>{{ photo.user_name || 'Sin nombre' }}</td>
+            <td>{{ photo.title || 'Sin título' }}</td>
+            <td>{{ photo.rally_name || 'Sin rally' }}</td>
+            <td>{{ photo.status }}</td>
+            <td>
+              <button (click)="openModal(photo)" [disabled]="photo.status === 'aprobada' || photo.status === 'rechazada'">
+                Revisar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button (click)="goBackToAdminPanel()" class="back-button">Volver</button>
+  </div>
+</div>
+
+<!-- Modal de revisión -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h3>Revisión de Foto</h3>
+    <img [src]="selectedPhoto?.photo_url" alt="Foto seleccionada" class="modal-image" />
+
+    <p><strong>Usuario:</strong> {{ selectedPhoto?.user_name }}</p>
+    <p><strong>Título:</strong> {{ selectedPhoto?.title }}</p>
+    <p><strong>Rally:</strong> {{ selectedPhoto?.rally_name }}</p>
+
+    <div class="modal-buttons">
+      <button (click)="updatePhotoStatus('aprobada')">Aprobar</button>
+      <button (click)="updatePhotoStatus('rechazada')">Rechazar</button>
+      <button (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>

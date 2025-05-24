@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+:host {
+  font-family: 'Merriweather', serif;
+  background-size: cover;
+  min-height: 80vh;
+
+  color: #5c3a1e;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-gallery {
+  background: url('/images/fondo3.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 1rem;
+  color: #5c3a1e;
+}
+
+.app-gallery-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fdf7edcc;
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(123, 79, 36, 0.3);
+}
+
+/* Título */
+.app-gallery h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #4a2c14;
+  text-shadow: 1px 1px 2px #d4a373;
+}
+
+/* Tarjeta de rally */
+.rally-card {
+  margin-bottom: 2rem;
+  border: 1px solid #e0c9a6;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  background: #f2d388;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+}
+
+/* Título rally */
+.rally-card h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #5c3a1e;
+}
+
+/* Fechas rally */
+.rally-dates {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #6e4b19;
+}
+
+/* Grid de fotos */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Tarjeta foto */
+.photo-card {
+  background: #fffaf5;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.15);
+  overflow: hidden;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.photo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
+}
+
+.photo-card.winner-photo {
+  border: 3px solid #4CAF50;
+}
+
+/* Imagen */
+.photo-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #d4a373;
+}
+
+/* Info debajo de la imagen */
+.photo-info {
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #5c3a1e;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Autor y votos */
+.photo-info p {
+  margin: 0.3rem 0;
+  font-weight: 600;
+}
+
+/* Botón votar */
+.btn-vote {
+  margin-top: 0.5rem;
+  background-color: #a0522d;
+  border: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-vote:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+
+.btn-vote:hover:not(:disabled) {
+  background-color: #8b4513;
+}
+
+/* Paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 1rem 0;
+}
+
+.pagination-btn {
+  background-color: #a0522d;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #8b4513;
+}
+
+.page-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #5c3a1e;
+}
+
+/* Botón volver */
+.button-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #a0522d;
+}
+
+/* --------- Responsive --------- */
+
+/* Móviles (hasta 600px) */
+@media (max-width: 600px) {
+  .app-gallery {
+    padding: 1rem;
+  }
+
+  .app-gallery h2 {
+    font-size: 2rem;
+  }
+
+  .rally-card {
+    padding: 1rem;
+  }
+
+  .rally-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .rally-dates {
+    font-size: 0.9rem;
+  }
+
+  .photos-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .photo-card {
+    width: 100%;
+  }
+
+  .photo-info {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .btn-vote {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .pagination-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .back-button {
+    width: 100%;
+  }
+}
+
+/* Tablets (601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .photos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rally-card h3 {
+    font-size: 1.6rem;
+  }
+
+  .btn-vote {
+    font-size: 1rem;
+  }
+}
+
+/* Pantallas grandes */
+@media (min-width: 901px) {
+  .photos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

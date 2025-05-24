@@ -1,0 +1,98 @@
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4" style="color:#4b2e2e; font-family: 'Georgia', serif;">Editar Rally</h2>
+
+  <form [formGroup]="rallyForm" (ngSubmit)="onSubmit()">
+    <div class="row g-3">
+
+      <!-- Título -->
+      <div class="col-md-6">
+        <label for="title" class="form-label fw-bold" style="color:#3e2b2b;">Título</label>
+        <input id="title" formControlName="title" type="text" class="form-control custom-input" placeholder="Título del rally" />
+        <div *ngIf="rallyForm.get('title')?.touched && rallyForm.get('title')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('title')?.hasError('required')">El título es obligatorio.</small>
+          <small *ngIf="rallyForm.get('title')?.hasError('minlength')">El título debe tener al menos 5 caracteres.</small>
+          <small *ngIf="rallyForm.get('title')?.hasError('maxlength')">El título no puede superar los 100 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Ubicación -->
+      <div class="col-md-6">
+        <label for="location" class="form-label fw-bold" style="color:#3e2b2b;">Ubicación</label>
+        <input id="location" formControlName="location" type="text" class="form-control custom-input" placeholder="Ubicación del rally" />
+        <div *ngIf="rallyForm.get('location')?.touched && rallyForm.get('location')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('location')?.hasError('required')">La ubicación es obligatoria.</small>
+          <small *ngIf="rallyForm.get('location')?.hasError('minlength')">La ubicación debe tener al menos 3 caracteres.</small>
+          <small *ngIf="rallyForm.get('location')?.hasError('maxlength')">La ubicación no puede superar los 100 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="col-12">
+        <label for="description" class="form-label fw-bold" style="color:#3e2b2b;">Descripción</label>
+        <textarea id="description" formControlName="description" rows="4" class="form-control custom-input" placeholder="Descripción del rally"></textarea>
+        <div *ngIf="rallyForm.get('description')?.touched && rallyForm.get('description')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('description')?.hasError('required')">La descripción es obligatoria.</small>
+          <small *ngIf="rallyForm.get('description')?.hasError('minlength')">La descripción debe tener al menos 10 caracteres.</small>
+          <small *ngIf="rallyForm.get('description')?.hasError('maxlength')">La descripción no puede superar los 500 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Fecha de inicio -->
+      <div class="col-md-6">
+        <label for="start_date" class="form-label fw-bold" style="color:#3e2b2b;">Fecha de inicio</label>
+        <input id="start_date" type="date" formControlName="start_date" class="form-control custom-input" />
+        <div *ngIf="rallyForm.get('start_date')?.touched && rallyForm.get('start_date')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('start_date')?.hasError('required')">La fecha de inicio es obligatoria.</small>
+        </div>
+      </div>
+
+      <!-- Fecha de finalización -->
+      <div class="col-md-6">
+        <label for="end_date" class="form-label fw-bold" style="color:#3e2b2b;">Fecha de finalización</label>
+        <input id="end_date" type="date" formControlName="end_date" class="form-control custom-input" />
+        <div *ngIf="rallyForm.get('end_date')?.touched && rallyForm.get('end_date')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('end_date')?.hasError('required')">La fecha de finalización es obligatoria.</small>
+        </div>
+        <div *ngIf="rallyForm.errors?.['dateMismatch'] && rallyForm.get('end_date')?.touched" class="text-danger small mt-1">
+          <small>La fecha de finalización no puede ser anterior a la de inicio.</small>
+        </div>
+      </div>
+
+      <!-- Tema -->
+      <div class="col-12">
+        <label for="theme" class="form-label fw-bold" style="color:#3e2b2b;">Tema</label>
+        <select id="theme" formControlName="theme" class="form-select custom-input">
+          <option value="">Selecciona un tema</option>
+          <option value="Fotografia">📸 Fotografía general</option>
+          <option value="Naturaleza">🌿 Naturaleza</option>
+          <option value="Deporte">🏃‍♂️ Deporte</option>
+          <option value="Animales">🐾 Animales</option>
+          <option value="Comida">🍽️ Comida</option>
+          <option value="Mar y playa">🏖️ Mar y Playa</option>
+          <option value="Paisaje urbano">🌆 Paisaje Urbano</option>
+        </select>
+        <div *ngIf="rallyForm.get('theme')?.touched && rallyForm.get('theme')?.invalid" class="text-danger small mt-1">
+          <small *ngIf="rallyForm.get('theme')?.hasError('required')">El tema es obligatorio.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mensaje de error general -->
+    <div *ngIf="rallyForm.invalid && rallyForm.touched" class="text-danger mt-3" style="font-family: 'Georgia', serif;">
+      Por favor, completa todos los campos correctamente.
+    </div>
+
+    <!-- Botones -->
+    <div class="mt-4 d-flex gap-3">
+      <button type="submit" class="btn btn-guardar flex-grow-1" [disabled]="rallyForm.invalid || isLoading">Actualizar</button>
+      <button type="button" class="btn btn-cancel flex-grow-1" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+
+  <!-- Fechas actuales -->
+  <div *ngIf="rallyForm.get('start_date')?.value || rallyForm.get('end_date')?.value" class="mt-4" style="font-family: 'Georgia', serif; color: #4b2e05;">
+    <h5><strong>Inicio actual:</strong> {{ rallyForm.get('start_date')?.value | date }}</h5>
+    <h5><strong>Fin actual:</strong> {{ rallyForm.get('end_date')?.value | date }}</h5>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="app-gallery">
+  <div class="app-gallery-content">
+  <h2>Galería del Rally</h2>
+
+  <!-- Iterar por cada rally -->
+  <div class="rally-card" *ngFor="let rally of rallies">
+    <h3>{{ rally.title }}</h3>
+    <p class="rally-dates">
+      🗓️ Del {{ rally.start_date | date: 'dd/MM/yyyy' }} al {{ rally.end_date | date: 'dd/MM/yyyy' }}
+    </p>
+
+    <div class="photos-grid">
+      <!-- Iterar por cada foto del rally -->
+      <div class="photo-card" *ngFor="let photo of rally.photos" 
+           [ngClass]="{'winner-photo': isWinner(photo, rally)}">      
+        <img [src]="photo.photo_url" alt="Foto del rally" />
+        <div class="photo-info">
+          <p class="author">📸 {{ photo.autor }}</p>
+          <p class="votos">❤️ {{ photo.votos || 0 }} votos</p>
+
+          <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)" class="btn-vote">
+            {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <div class="pagination-container">
+    <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-btn">Anterior</button>
+    <span class="page-number">{{ currentPage }}</span>
+    <button (click)="nextPage()" [disabled]="!hasMorePhotos()" class="pagination-btn">Siguiente</button>
+  </div>
+</div>
+
+<!-- Botón para volver -->
+<div class="button-container">
+  <button (click)="goBackToHome()" class="back-button">Volver</button>
+</div>
+</div>

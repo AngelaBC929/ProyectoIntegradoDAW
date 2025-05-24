@@ -1,0 +1,36 @@
+<h2>Gestión de Rallies</h2>
+  <div class="add-button-container">
+  <button class="btn-nuevo" (click)="router.navigate(['/admin/create-rallies'])">Añadir nuevo rally</button>
+</div>
+
+<div class="table-container">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Tema</th>
+          <th>Descripción</th>
+          <th>Fechas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rally of rallies">
+          <td>{{ rally.title }}</td>
+          <td>{{ rally.theme }}</td>
+          <td>{{ rally.description }}</td>
+          <td>{{ rally.start_date | date: 'dd/MM/yyyy' }} - {{ rally.end_date | date: 'dd/MM/yyyy' }}</td>
+          <td class="actions">
+            <button class="action-btn edit-btn" (click)="rally.id !== undefined && editRally(rally.id)">Editar</button>
+            <button class="action-btn delete-btn" (click)="rally.id !== undefined && deleteRally(rally.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-container">
+    <button (click)="goBackToAdminPanel()" class="back-button">Volver</button>
+  </div>
+</div>

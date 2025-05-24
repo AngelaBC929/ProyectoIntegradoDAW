@@ -1,0 +1,68 @@
+<!-- Modal Login -->
+<div class="login-modal">
+  <div class="login-modal-dialog">
+    <div class="login-modal-content">
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate class="login-form">
+
+        <!-- Header -->
+        <div class="login-modal-header">
+          <h5 class="login-modal-title">Iniciar sesión</h5>
+        </div>
+
+        <!-- Cuerpo del formulario -->
+        <div class="login-modal-body">
+
+          <!-- Usuario -->
+          <div class="login-form-group">
+            <label for="username" class="login-form-label">Usuario</label>
+            <input type="text" id="username" name="username" autocomplete="username" class="login-form-control" [(ngModel)]="username" required 
+              placeholder="Ingresa tu usuario" #usernameField="ngModel" />
+            <div *ngIf="submitted && usernameField.invalid" class="login-invalid-feedback">
+              El usuario es requerido.
+            </div>
+          </div>
+          <!-- Contraseña -->
+          <div class="login-form-group">
+            <label for="password" class="login-form-label">Contraseña</label>
+
+            <div class="input-wrapper">
+              <input [type]="passwordVisible ? 'text' : 'password'" id="password" name="password" autocomplete="current-password"
+                class="login-form-control" [(ngModel)]="password" required placeholder="Ingresa tu contraseña"
+                [ngClass]="{ 'is-invalid': (submitted && passwordField.invalid) || (password && !passwordValid()) }"
+                #passwordField="ngModel" />
+
+              <!-- Icono para mostrar/ocultar contraseña -->
+              <span class="login-password-toggle" (click)="togglePasswordVisibility()">
+                <i class="fa" [ngClass]="passwordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+              </span>
+            </div>
+
+            <div *ngIf="password && !passwordValid()" class="login-invalid-feedback">
+              La contraseña debe tener entre 8 y 12 caracteres, incluir mayúsculas, minúsculas y un carácter especial.
+            </div>
+            <div *ngIf="submitted && passwordField.invalid" class="login-invalid-feedback">
+              La contraseña es requerida.
+            </div>
+          </div>
+
+          <!-- Mensaje de error general -->
+          <div *ngIf="errorMessage" class="login-error-message">
+            {{ errorMessage }}
+          </div>
+        </div>
+
+        <!-- Footer con botones -->
+        <div class="login-modal-footer">
+          <button type="submit" class="login-btn-login" [disabled]="!loginForm.form.valid">
+            Iniciar sesión
+          </button>
+          <button type="button" class="login-btn-cancel" (click)="goHome()">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

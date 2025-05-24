@@ -1,0 +1,75 @@
+<div class="form-container">
+  <h2 class="form-title">Crear Rally</h2>
+  <form [formGroup]="rallyForm" (ngSubmit)="onSubmit()">
+
+    <!-- Campos reutilizables excepto 'theme' -->
+    <div class="form-group" *ngFor="let field of fields">
+      <ng-container *ngIf="field.name !== 'theme'">
+        <label [for]="field.id">{{ field.label }}</label>
+        <input *ngIf="field.type !== 'textarea'" [id]="field.id" [type]="field.type" [formControlName]="field.name"
+          class="form-control-custom" />
+        <textarea *ngIf="field.type === 'textarea'" [id]="field.id" [formControlName]="field.name"
+          class="form-control-custom"></textarea>
+
+        <div *ngIf="rallyForm.get(field.name)?.invalid && rallyForm.get(field.name)?.touched" class="text-danger">
+          <small *ngFor="let error of field.errors">
+            <ng-container *ngIf="rallyForm.get(field.name)?.hasError(error.type)">
+              {{ error.message }}
+            </ng-container>
+          </small>
+        </div>
+      </ng-container>
+    </div>
+
+  <!-- Selector de tema -->
+<div class="form-group">
+  <label for="theme">Tema del Rally</label>
+  <select id="theme" formControlName="theme" class="form-control-custom">
+    <option value="">Selecciona un tema</option>
+    <option value="fotografia">📸 Fotografía general</option>
+    <option value="naturaleza">🌿 Naturaleza</option>
+    <option value="deporte">🏃‍♂️ Deporte</option>
+    <option value="animales">🐾 Animales</option>
+    <option value="comida">🍽️ Comida</option>
+    <option value="mar y playa">🏖️ Mar y Playa</option>
+    <option value="paisaje urbano">🌆 Paisaje Urbano</option>
+  </select>
+      <div *ngIf="rallyForm.get('theme')?.invalid && rallyForm.get('theme')?.touched" class="text-danger">
+        <small>El tema es obligatorio.</small>
+      </div>
+      <!-- Vista previa de icono del tema -->
+      <div *ngIf="rallyForm.get('theme')?.value" class="icon-preview"> </div>
+
+    </div> <!-- Cierre div form-group tema -->
+
+    <!-- Error de fecha -->
+    <div *ngIf="dateRangeError" class="text-danger">
+      {{ dateRangeError }}
+    </div>
+
+    <!-- Botones -->
+    <div class="form-group button-group">
+      <button type="submit" class="btn-submit" [disabled]="isLoading">Crear Rally</button>
+      <button type="button" class="btn-cancel" (click)="cancelCreation()">Cancelar</button>
+    </div>
+
+    <!-- Mensaje de éxito/error -->
+    <div *ngIf="message" class="alert-info-custom">
+      {{ message }}
+    </div>
+  </form>
+
+  <!-- Lista de rallies creados -->
+  <div *ngIf="rallies.length > 0" class="rally-list">
+    <h3 class="list-title">Rallies creados</h3>
+    <ul>
+      <li *ngFor="let rally of rallies">
+        <strong>{{ rally.title }}</strong><br />
+        Fecha de inicio: {{ rally.start_date | date }}<br />
+        Fecha de finalización: {{ rally.end_date | date }}<br />
+        Ubicación: {{ rally.location }}<br />
+        Tema: {{ rally.theme }}
+      </li>
+    </ul>
+  </div>
+</div>

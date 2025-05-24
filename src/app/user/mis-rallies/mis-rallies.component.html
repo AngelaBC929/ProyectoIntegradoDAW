@@ -1,0 +1,109 @@
+<div class="mis-rallies">
+  <!-- ENCABEZADO -->
+  <header class="mis-rallies-header">
+    <nav class="tabs">
+      <button (click)="volverADashboard()" [class.active]="tabActivo === 'perfil'">Perfil</button>
+      <button (click)="seleccionarTab('mis-rallies')" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
+      <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
+      <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
+      <button [routerLink]="['/faqs']" [class.active]="tabActivo === 'faqs'">FAQs</button>
+    </nav>
+  </header>
+  <h2 class="titulo-seccion">Mis Rallies</h2>
+
+  <div class="rallies-container">
+    <div *ngFor="let rally of misRallies" class="rally-card">
+      <div class="card-body">
+        <h5 class="card-title">{{ rally.title }}</h5>
+
+    <!-- Miniaturas de fotos subidas por rally -->
+<ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
+  <div class="miniaturas-container" *ngIf="fotos.length > 0">
+    <h6>Mis fotos subidas:</h6>
+    <div class="miniaturas">
+      <div *ngFor="let foto of fotos" class="foto-preview">
+        <img
+          [src]="foto.photo_url"
+          alt="Foto subida"
+          (click)="openImageModal(foto.photo_url)"
+          style="cursor: pointer;"
+        />
+        <p>{{ foto.title || 'Sin título' }}</p>
+        <p>
+          <span style="color: #5c3a1e;">Status:</span>
+          <span
+            [ngClass]="{
+              'estado-aprobada': foto.status === 'aprobada',
+              'estado-pendiente': foto.status === 'pendiente',
+              'estado-rechazada': foto.status === 'rechazada'
+            }"
+          >
+            <ng-container [ngSwitch]="foto.status">
+              <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
+              <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
+              <span *ngSwitchCase="'rechazada'"> Rechazada ❌</span>
+            </ng-container>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Modal para mostrar imagen ampliada -->
+<div
+  class="modal-overlay"
+  *ngIf="imagenModalVisible"
+  (click)="closeImageModal()"
+  style="cursor: zoom-out;"
+>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <img
+      [src]="imagenModalUrl"
+      alt="Imagen ampliada"
+      style="width: 100%; height: auto; border-radius: 1rem;"
+    />
+  </div>
+</div>
+
+
+        <div class="card-buttons">
+          <button (click)="openModal(rally)" class="btn">Subir Foto</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Modal de carga de fotos -->
+  <div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <h5>Subir foto para el rally: {{ rallySeleccionado?.title }}</h5>
+
+      <label for="tituloFoto">Título de la foto</label>
+      <input id="tituloFoto" type="text" [(ngModel)]="tituloFoto" placeholder="Introduce un título" />
+
+      <input type="file" (change)="onFileSelected($event)" />
+      <div *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Vista previa" class="preview-img" />
+      </div>
+
+      <div class="modal-buttons">
+        <button (click)="onSubmit()" class="btn">Subir Foto</button>
+        <button (click)="closeModal()" class="btn-secondary">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="popupVisible" class="popup-error">
+    {{ popupMensaje }}
+  </div>
+
+  <!-- Botón para volver -->
+  <div class="button-container">
+    <button (click)="goBackToUserPanel()" class="btn volver">Volver</button>
+  </div>
+</div>

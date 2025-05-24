@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+.faqs {
+  background: url('/images/fondo3.jpg') no-repeat center top;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 1rem 1rem 1rem 0rem;
+}
+:host {
+  font-family: 'Merriweather', serif;
+}
+
+/* Header y Tabs */
+.faqs-header {
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.5);
+  margin-bottom: 1.5rem;
+  user-select: none;
+}
+
+.faqs-header h1 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 1px 1px 4px #3c2608;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.tabs button {
+  background: transparent;
+  border: none;
+  color: #e0cda9;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.tabs button:hover {
+  color: #fff6d6;
+}
+
+.tabs button.active {
+  border-bottom-color: #f2d388;
+  color: #f9f4e6;
+  font-weight: 700;
+}
+/*Acordeon*/
+.acordeon-card {
+  background: #fff9ec;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.4);
+  color: #4b2e05;
+  transition: box-shadow 0.3s ease;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.acordeon-card h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #4b2e05;
+  text-shadow: 1px 1px 3px #7b4f24;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.acordeon {
+  border-top: 1px solid #ddb67d;
+}
+
+.acordeon-header {
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  color: #5e3c10;
+  transition: background-color 0.3s ease;
+}
+
+.acordeon-header:hover {
+  background-color: #f5e2c4;
+}
+
+.acordeon-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  background-color: #fff5dc;
+  padding: 0 1rem;
+  color: #5e3c10;
+  font-size: 1rem;
+}
+
+.acordeon-body.abierto {
+  padding: 1rem;
+  max-height: 300px;
+}
+
+.flecha {
+  font-size: 1.2rem;
+  color: #b3813a;
+}
+/* BOTÓN VOLVER */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.back-button {
+  background-color: #a1744f;
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #8d5f38;
+}
+.btn-descarga {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #8B4513; /* marrón cálido */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-descarga:hover {
+  background-color: #5c3a1e; /* tono más oscuro al pasar el ratón */
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .acordeon-card {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .faqs-header h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tabs button {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  .acordeon-card h2 {
+    font-size: 1.6rem;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .acordeon-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flecha {
+    align-self: flex-end;
+  }
+
+  .back-button {
+    width: 100%;
+    max-width: 200px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .faqs {
+    padding: 1rem;
+  }
+
+  .faqs-header {
+    padding: 1rem;
+  }
+
+  .tabs button {
+    font-size: 0.95rem;
+  }
+
+  .acordeon-card {
+    padding: 1rem;
+  }
+
+  .acordeon-body {
+    font-size: 0.95rem;
+  }
+
+  .back-button {
+    padding: 0.6rem 1.2rem;
+  }
+  .btn-descarga {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
