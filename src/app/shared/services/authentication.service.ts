@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private apiUrl = environment.apiUrl;
   //private apiUrl = 'http://localhost/backendRallyFotografico';
-   private apiUrl = 'https://expresscapturevz.wuaze.com'; // URL de la API
+
+  //private apiUrl = 'https://expresscapturevz.wuaze.com'; // URL de la API
   private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('role'));
   role$ = this.roleSubject.asObservable();
   private usernameSubject = new BehaviorSubject<string | null>(localStorage.getItem('username'));
