@@ -7,7 +7,8 @@ import { tap, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost/backendRallyFotografico';
+  //private apiUrl = 'http://localhost/backendRallyFotografico';
+   private apiUrl = 'https://expresscapturevz.wuaze.com'; // URL de la API
   private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('role'));
   role$ = this.roleSubject.asObservable();
   private usernameSubject = new BehaviorSubject<string | null>(localStorage.getItem('username'));
