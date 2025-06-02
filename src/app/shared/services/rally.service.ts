@@ -103,6 +103,11 @@ export class RallyService {
       error: () => this.userInscriptionsSubject.next([])
     });
   }
+  getFotosAprobadasPorUsuario(userId: number): Observable<number[]> {
+  return this.http.get<{ ralliesConFotoAprobada: number[] }>(`${this.apiUrl}/fotos.php?action=getApprovedPhotosByUser&userId=${userId}`)
+    .pipe(map(res => res.ralliesConFotoAprobada));
+}
+
 
   toggleInscripcion(rallyId: number, userId: number, actualmenteInscrito: boolean): Observable<any> {
     const body = {
@@ -186,4 +191,15 @@ export class RallyService {
       })
     );
   }
+  getFotosAprobadas(rallyId: number, userId: number): Observable<boolean> {
+  const url = `${this.apiUploadPhotosUrl}?action=checkAprobadas&rallyId=${rallyId}&userId=${userId}`;
+  return this.http.get<{ aprobadas: boolean }>(url).pipe(
+   map((res: any) => !!res.aprobadas),
+    catchError(error => {
+      console.error('Error al comprobar fotos aprobadas:', error);
+      return of(false); // por defecto asumimos que no tiene aprobadas si hay error
+    })
+  );
+}
+
 }

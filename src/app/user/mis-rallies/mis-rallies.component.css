@@ -115,8 +115,8 @@ h6 {
 }
 
 .foto-preview img {
-  width: 300px;
-  height: 200px;
+  width: 370px;
+  height: 300px;
   object-fit: cover;
   border: 0.25rem solid #d4a373;
   border-radius: 1rem;
@@ -206,9 +206,10 @@ h6 {
   border-radius: 1.25rem;
   border: 0.0625rem solid #e0c9a6;
   box-shadow: 0 0.375rem 0.9375rem rgba(139, 69, 19, 0.25);
-  width: 90%;
-  max-width: 40rem;
-  max-height: 80vh; /* límite de altura del modal */
+  width: 150%;
+  height: auto;
+  max-width: 70rem;
+  max-height: 100vh; /* límite de altura del modal */
   overflow-y: auto;  /* scroll interno si se pasa */
   text-align: center;
   cursor: default;

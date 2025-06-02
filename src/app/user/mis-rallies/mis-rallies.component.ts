@@ -82,7 +82,7 @@ imagenModalUrl: string | null = null;
   
     // Si ya ha subido 3 fotos, mostrar el popup y no abrir el modal
     if (fotosSubidas >= 3) {
-      //this.toastr.warning('Ya has subido el número máximo de fotos para este rally.', 'Límite alcanzado');
+      this.sweetAlert.info('Ya has subido el número máximo de fotos para este rally.', 'Límite alcanzado');
       return; // No abrir el modal
     }
   

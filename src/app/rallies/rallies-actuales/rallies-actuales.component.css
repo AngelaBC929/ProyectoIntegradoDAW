@@ -18,6 +18,15 @@ h2 {
   text-shadow: 1px 1px 1px #7b4f24;
 }
 
+.text-brown {
+  color: #6c4c3b; 
+}
+
+.icono-tema-preview {
+  font-size: 2rem;
+  color: #b08968;
+}
+
 /* Lista de rallies */
 ul {
   padding-left: 0;

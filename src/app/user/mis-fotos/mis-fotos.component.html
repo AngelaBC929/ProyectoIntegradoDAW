@@ -40,31 +40,50 @@
   <div *ngIf="fotos.length === 0" class="no-photos">
     <p>No hay fotos para mostrar.</p>
   </div>
+<!-- Modal de edición -->
+<div *ngIf="isEditModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <h4 class="modal-title">Editar Foto: {{ selectedPhoto?.title }}</h4>
 
-  <!-- Modal de edición -->
-  <div *ngIf="isEditModalOpen" class="modal-overlay">
-    <div class="modal-content">
-      <h4 class="modal-title">Editar Foto: {{ selectedPhoto?.title }}</h4>
+    <!-- Alerta si está aprobada -->
+    <div *ngIf="selectedPhoto?.status === 'aprobada'" class="alert alert-warning" style="margin-bottom: 10px;">
+      Solo se puede modificar el nombre. La imagen ya fue aprobada.
+    </div>
 
-      <label for="title">Nuevo Título</label>
-      <input [(ngModel)]="selectedPhoto.title" id="title" type="text" class="photo-title-input" placeholder="Nuevo título" />
+    <!-- Título -->
+    <label for="title">Nuevo Título</label>
+    <input
+  type="text"
+  class="form-control"
+  [(ngModel)]="selectedPhoto.title"
+  placeholder="Nuevo título"
+/>
 
-      <label for="photo">Nueva Foto</label>
-      <input #editFileInput type="file" (change)="onFileSelected($event)" id="photo"
-        [disabled]="selectedPhoto?.status === 'approved'" />
+    <!-- Imagen -->
+    <label for="photo">Nueva Foto</label>
+    <input
+      #editFileInput
+      type="file"
+      (change)="onFileSelected($event)"
+      id="photo"
+      [disabled]="selectedPhoto?.status === 'aprobada'"
+      class="photo-file-input"
+    />
 
-      <p *ngIf="selectedPhoto?.status === 'approved'" class="disabled-note">
-        No se puede cambiar la imagen si la foto está aprobada.
-      </p>
+    <!-- Aviso de bloqueo -->
+    <p *ngIf="selectedPhoto?.status === 'aprobada'" class="disabled-note" style="color: #8b4513;">
+      No se puede cambiar la imagen si la foto ya fue aprobada.
+    </p>
 
-      <div *ngIf="imagePreview" class="preview-container">
-        <img [src]="imagePreview" alt="Vista previa" class="preview-img" />
-      </div>
+    <!-- Vista previa -->
+    <div *ngIf="imagePreview" class="preview-container">
+      <img [src]="imagePreview" alt="Vista previa" class="preview-img" />
+    </div>
 
-      <div class="modal-buttons">
-        <button class="save-btn" (click)="onSaveEdit()">Guardar cambios</button>
-        <button class="close-btn" (click)="closeEditModal()">Cerrar</button>
-      </div>
+    <!-- Botones -->
+    <div class="modal-buttons">
+      <button class="save-btn" (click)="onSaveEdit()">Guardar cambios</button>
+      <button class="close-btn" (click)="closeEditModal()">Cerrar</button>
     </div>
   </div>
 </div>
