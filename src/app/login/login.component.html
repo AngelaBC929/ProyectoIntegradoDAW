@@ -1,11 +1,7 @@
-
-<!-- Overlay que bloquea toda interacción -->
-<div class="overlay" *ngIf="showModal"></div>
-
-<div class="login-container">
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-
-
+<div class="modal-overlay">
+  <div class="login-container">
+    
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <!-- Campo de usuario -->
     <div class="form-group">
       <h2>Iniciar sesión</h2>
@@ -42,12 +38,9 @@
     </div>
 
     <!-- Botón de login -->
-    <button type="submit" [disabled]="!loginForm.form.valid" class="btn-login">
-      Iniciar sesión
-    </button>
-       <!-- Botón de cancelar que cierra el modal -->
-    <button type="button" (click)="closeModalMethod()" class="btn-cancel">
-      Cancelar
-    </button>
-  </form>
+
+      <button type="submit" [disabled]="!loginForm.form.valid" class="btn-login">Iniciar sesión</button>
+      <button type="button" (click)="goHome()" class="btn-cancel">Cancelar</button>
+    </form>
+  </div>
 </div>

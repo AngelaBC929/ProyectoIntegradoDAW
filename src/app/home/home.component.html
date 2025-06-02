@@ -1,11 +1,10 @@
-
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
     <h1>Bienvenido al Rally Fotográfico</h1>
     <p>Captura, comparte y compite con tus mejores fotos. Explora la galería y participa en este evento único.</p>
     <div class="hero-buttons">
-      <button (click)="openLoginModal()">Iniciar sesión</button>
+      <button (click)="mostrarLogin()">Iniciar sesión</button>
       <button (click)="goToRegister()">Registrarse</button>
     </div>
   </div>
@@ -42,11 +41,12 @@
   <button class="see-more-btn" (click)="goToGallery()">Ver más</button>
 </section>
 
-<!-- Login Modal -->
-<app-login *ngIf="showLoginModal" (closeModal)="closeLoginModal()" class="login-container"></app-login>
+<!-- Login modal -->
+<div class="modal-overlay" *ngIf="isLoginVisible">
+  <app-login (cerrar)="cerrarLogin()"></app-login>
+</div>
 
 <!-- Footer -->
 <footer class="footer">
   <p>&copy; 2025 Rally Fotográfico - Todos los derechos reservados</p>
 </footer>
-

@@ -1,30 +1,25 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, Output } from "@angular/core";
+import { AuthenticationService } from "../shared/services/authentication.service";
+import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  @Output() closeModal = new EventEmitter<void>();
-
+  @Output() cerrar = new EventEmitter<void>();
   username: string = '';
   password: string = '';
   submitted: boolean = false;
-  passwordVisible: boolean = false;  // Variable para mostrar u ocultar la contraseña
+  passwordVisible: boolean = false;
 
   // Expresión regular para validar la contraseña
   passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,12}$/;
-
-  // Controlar la visibilidad del modal y overlay
-  showModal: boolean = false; // Controla si el modal está visible
-  
 
   constructor(
     private authService: AuthenticationService,
@@ -36,55 +31,44 @@ export class LoginComponent {
     return this.passwordRegex.test(this.password);
   }
 
-  // Método para alternar la visibilidad de la contraseña
+  // Método para mostrar/ocultar la contraseña
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  // Método para mostrar el modal y overlay
-  openModal() {
-    this.showModal = true;
-  }
-
-  // Método para manejar el submit del formulario
+  // Método para validar el formulario
   onSubmit() {
     this.submitted = true;
 
     if (!this.passwordValid()) {
-      return; // Si la contraseña no es válida, no enviamos el formulario
+      return;
     }
 
     this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-            // Verifica el contenido de la respuesta en la consola
-    console.log('Respuesta del login:', response);
-        // Guardamos el token, el rol y el id del usuario en localStorage
+      next: (response: { token: string; role: string; username: string; id: { toString: () => string; }; }) => {
         if (response.token && response.role && response.username && response.id) {
-        localStorage.setItem('authToken', response.token);
-        localStorage.setItem('userRole', response.role);
-        localStorage.setItem('username', response.username);
-        localStorage.setItem('userId', response.id.toString());
- // Guardar el id del usuario
+          localStorage.setItem('authToken', response.token);
+          localStorage.setItem('userRole', response.role);
+          localStorage.setItem('username', response.username);
+          localStorage.setItem('userId', response.id.toString());
+          //Guardar el token en el localStorage
+          // Redirigir según el rol del usuario
 
-        this.closeModalMethod(); // Cerrar el modal al hacer login
-
-        if (response.role === 'admin') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/user/dashboard']); // Ajusta esta ruta según corresponda
+          if (response.role === 'admin') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/user/dashboard']);
+          }
         }
-      }
-        // Si no se recibe el token, rol o id, puedes manejarlo como desees
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error de autenticación', error);
       },
     });
-
   }
-
-  closeModalMethod() {
-    this.showModal = false;
-    this.router.navigate(['/home']); // Redirige al home
+ 
+  goHome() {
+    this.cerrar.emit(); // Emite evento para cerrar modal
   }
+  
 }

@@ -19,17 +19,15 @@ export class HomeComponent {
   showLoginModal: boolean = false;
 
   constructor(private router: Router) {}
+  isLoginVisible = false;
 
-  openLoginModal() {
-    console.log('openLoginModal called');
-    this.showLoginModal = true;
+  mostrarLogin() {
+    this.isLoginVisible = true;
   }
-  
-  closeLoginModal() {
-    console.log('closeLoginModal called');
-    this.showLoginModal = false;
-  }
-  
+
+  cerrarLogin() {
+    this.isLoginVisible = false;
+  } 
 
   // Navegar a galería
   goToGallery() {
