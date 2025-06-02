@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
 import { PhotoService } from '../shared/services/photo.service';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',

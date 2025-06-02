@@ -3,97 +3,90 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-user-photos',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Aquí puedes importar otros módulos si es necesario
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-photos.component.html',
   styleUrls: ['./user-photos.component.css']
 })
 export class UserPhotosComponent implements OnInit {
-  allPhotos: any[] = [];       // Lista de fotos
-  isModalOpen: boolean = false; // Para controlar la apertura del modal
-  selectedPhoto: any = null;    // Foto seleccionada para revisar
+  allPhotos: any[] = [];
+  isModalOpen: boolean = false;
+  selectedPhoto: any = null;
+  private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private photoService: UserService
+  ) {}
 
-  // Al iniciar el componente, cargamos las fotos
   ngOnInit(): void {
     this.loadPhotos();
   }
 
-  // Método para cargar todas las fotos desde el backend
- loadPhotos() {
-  this.http.get(`${environment.apiUrl}/fotos.php?action=getAllPhotos`)
-    .subscribe((response: any) => {
-      if (response.photos) {
-        this.allPhotos = response.photos.map((foto: any) => ({
-          ...foto,
-          photo_url: `${environment.apiUrl}/${foto.photo_url}`
-        }));
-      } else {
-        console.error('No se encontraron fotos');
-      }
-    }, (error) => {
-      console.error('Error al cargar fotos', error);
-    });
-}
+  loadPhotos() {
+    this.http.get(`${this.apiUrl}/fotos.php?action=getAllPhotos`)
+      .subscribe((response: any) => {
+        if (response.photos) {
+          this.allPhotos = response.photos.map((foto: any) => ({
+            ...foto,
+            photo_url: `${this.apiUrl}/${foto.photo_url}`
+          }));
+        } else {
+          console.error('No se encontraron fotos');
+        }
+      }, error => {
+        console.error('Error al cargar fotos', error);
+      });
+  }
 
-  // Método para abrir el modal con la foto seleccionada
   openModal(photo: any) {
     this.selectedPhoto = photo;
     this.isModalOpen = true;
   }
 
-  // Método para cerrar el modal
   closeModal() {
     this.isModalOpen = false;
-    this.selectedPhoto = null; // Limpiar la foto seleccionada
+    this.selectedPhoto = null;
   }
 
- // Método para actualizar el estado de la foto (Aprobar/Rechazar)
-updatePhotoStatus(status: string) {
-  if (this.selectedPhoto) {
-    console.log('Enviando solicitud con estos datos: ', {
-      action: 'approve_or_reject',
-      photo_id: this.selectedPhoto.id,
-      status: status
-    });
+  updatePhotoStatus(status: string) {
+    if (this.selectedPhoto) {
+      console.log('Enviando solicitud con estos datos:', {
+        photo_id: this.selectedPhoto.id,
+        status: status
+      });
 
-    this.http.post('http://localhost/backendRallyFotografico/fotos.php', {
-      action: 'approve_or_reject',
-      photo_id: this.selectedPhoto.id,
-      status: status
-    })
-    .subscribe((response: any) => {
-      if (response.success) {
-        // Actualizamos el estado en la foto seleccionada
-        this.selectedPhoto.status = status;
-        this.selectedPhoto.isReviewed = true; // Marcamos la foto como revisada
+      this.photoService.updatePhotoStatus(this.selectedPhoto.id, status)
+        .subscribe((response: any) => {
+          if (response.success) {
+            this.selectedPhoto.status = status;
+            this.selectedPhoto.isReviewed = true;
 
-        // También actualizamos el estado de esa foto en allPhotos
-        const updatedIndex = this.allPhotos.findIndex(photo => photo.id === this.selectedPhoto.id);
-        if (updatedIndex !== -1) {
-          this.allPhotos[updatedIndex].status = status; // Actualizamos el estado de la foto en la lista
-        }
+            const updatedIndex = this.allPhotos.findIndex(photo => photo.id === this.selectedPhoto.id);
+            if (updatedIndex !== -1) {
+              this.allPhotos[updatedIndex].status = status;
+            }
 
-        // Cerramos el modal después de actualizar el estado
-        this.closeModal();
-      } else {
-        console.error('Error al actualizar el estado de la foto');
-      }
-    }, (error) => {
-      console.error('Error en la solicitud HTTP', error);
-    });
-  } else {
-    console.error('No se ha seleccionado ninguna foto');
+            this.closeModal();
+          } else {
+            console.error('Error al actualizar el estado de la foto');
+          }
+        }, (error: any) => {
+          console.error('Error en la solicitud HTTP', error);
+        });
+
+    } else {
+      console.error('No se ha seleccionado ninguna foto');
+    }
   }
-}
-// Método para redirigir al usuario al panel de usuario
-goBackToAdminPanel(): void {
-  this.router.navigate(['admin']); 
-}
-  
+
+  goBackToAdminPanel(): void {
+    this.router.navigate(['admin']);
+  }
 }

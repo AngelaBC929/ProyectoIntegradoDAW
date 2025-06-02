@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -94,15 +94,23 @@ username$ = this.usernameSubject.asObservable();
     return this.usernameSubject.getValue();
   }
   
-  register(email: string, username: string, password: string, name: string, lastName: string, birthdate: string) {
-    const userData = { email, username, password, name, lastName, birthdate };
-    return this.http.post<any>(`${this.apiUrl}/usuarios.php`, userData).pipe(
-      tap(response => console.log("Usuario registrado con éxito:", response)),
-      catchError(error => {
-        return throwError(() => new Error(error.error?.error || 'Error al registrar usuario'));
-      })
-    );
-  }
+register(email: string, username: string, password: string, name: string, lastName: string, birthdate: string) {
+  const userData = {
+    action: 'create', // 👈 ¡IMPORTANTE!
+    email,
+    username,
+    password,
+    name,
+    lastName,
+    birthdate
+  };
+  return this.http.post<any>(`${this.apiUrl}/usuarios.php`, userData).pipe(
+    tap(response => console.log("Usuario registrado con éxito:", response)),
+    catchError(error => {
+      return throwError(() => new Error(error.error?.error || 'Error al registrar usuario'));
+    })
+  );
+}
 
   setRole(role: string | null) {
     if (role) {

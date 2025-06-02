@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -23,12 +23,32 @@ export class UserService {
   }
 
   // Actualizar un usuario en la API
-  updateUser(userId: number, userData: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}?id=${userId}`, userData);
-  }
+updateUser(userId: number, userData: User): Observable<any> {
+  const payload = {
+    ...userData,
+    id: userId,
+    action: 'update'
+  };
+  return this.http.post<any>(this.apiUrl, payload);
+}
 
   // Eliminar un usuario desde la API
-  deleteUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}?id=${userId}`);
-  }
+ deleteUser(userId: number): Observable<any> {
+  const payload = {
+    id: userId,
+    action: 'delete'
+  };
+  return this.http.post<any>(this.apiUrl, payload);
+}
+
+// Aprobar o rechazar una foto
+updatePhotoStatus(photoId: number, status: string): Observable<any> {
+  const payload = {
+    action: 'approve_or_reject',
+    photo_id: photoId,
+    status: status
+  };
+  return this.http.post<any>(`${environment.apiUrl}/fotos.php`, payload);
+}
+
 }

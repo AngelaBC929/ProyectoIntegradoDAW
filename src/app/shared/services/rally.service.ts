@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Rally } from '../models/rally.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RallyService {
-  private apiUrl = 'http://localhost/backendRallyFotografico/rallies.php';
-  private apiInscripcionesUrl = 'http://localhost/backendRallyFotografico/inscripciones.php';
-  private apiUploadPhotosUrl = 'http://localhost/backendRallyFotografico/fotos.php';
+  private apiUrl = `${environment.apiUrl}/rallies.php`;
+  private apiInscripcionesUrl = `${environment.apiUrl}/inscripciones.php`;
+  private apiUploadPhotosUrl = `${environment.apiUrl}/fotos.php`;
 
   private ralliesSubject = new BehaviorSubject<Rally[]>([]);
   rallies$ = this.ralliesSubject.asObservable();
@@ -30,6 +31,7 @@ export class RallyService {
     );
   }
 
+
   createRally(rallyData: any): Observable<any> {
     return this.http.post(this.apiUrl, rallyData, { observe: 'response' }).pipe(
       tap((res) => {
@@ -45,21 +47,24 @@ export class RallyService {
   }
 
   updateRally(id: number, rallyData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}?id=${id}`, rallyData).pipe(
-      tap((updatedRally) => {
-        const currentRallies = this.ralliesSubject.value || [];
-        const index = currentRallies.findIndex((rally) => rally.id === id);
-        if (index !== -1) {
-          currentRallies[index] = updatedRally as Rally;
-          this.ralliesSubject.next([...currentRallies]);
-        }
-      }),
-      catchError((error) => {
-        console.error('Error al actualizar rally:', error);
-        return throwError(() => new Error(error));
-      })
-    );
-  }
+  // Añadimos el action 'update' en el body para que el backend sepa qué hacer
+  const body = { ...rallyData, action: 'update', id };
+
+  return this.http.post(this.apiUrl, body).pipe(
+    tap((updatedRally) => {
+      const currentRallies = this.ralliesSubject.value || [];
+      const index = currentRallies.findIndex((rally) => rally.id === id);
+      if (index !== -1) {
+        currentRallies[index] = updatedRally as Rally;
+        this.ralliesSubject.next([...currentRallies]);
+      }
+    }),
+    catchError((error) => {
+      console.error('Error al actualizar rally:', error);
+      return throwError(() => new Error(error));
+    })
+  );
+}
 
   getRallyById(id: number): Observable<Rally> {
     return this.http.get<Rally>(`${this.apiUrl}?id=${id}`).pipe(
@@ -71,18 +76,20 @@ export class RallyService {
   }
 
   deleteRally(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}?id=${id}`).pipe(
-      tap(() => {
-        const currentRallies = this.ralliesSubject.value || [];
-        this.ralliesSubject.next(currentRallies.filter((r) => r.id !== id));
-      }),
-      catchError((error) => {
-        console.error('Error al eliminar rally:', error);
-        return throwError(() => new Error(error));
-      })
-    );
-  }
+  // Enviamos un POST con action 'delete' y el id para eliminar
+  const body = { action: 'delete', id };
 
+  return this.http.post(this.apiUrl, body).pipe(
+    tap(() => {
+      const currentRallies = this.ralliesSubject.value || [];
+      this.ralliesSubject.next(currentRallies.filter((r) => r.id !== id));
+    }),
+    catchError((error) => {
+      console.error('Error al eliminar rally:', error);
+      return throwError(() => new Error(error));
+    })
+  );
+}
   loadUserInscriptions(userId: number): void {
     this.http.get<any>(`${this.apiInscripcionesUrl}?userId=${userId}`).pipe(
       tap(response => console.log('Respuesta inscripciones:', response)),

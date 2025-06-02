@@ -6,7 +6,7 @@ import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
 import { FormsModule } from '@angular/forms';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-mis-rallies',

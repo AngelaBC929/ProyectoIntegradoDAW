@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-mis-fotos',

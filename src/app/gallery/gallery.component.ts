@@ -3,7 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhotoService } from '../shared/services/photo.service';
 import { SweetAlertService } from '../shared/services/sweet-alert.service';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-gallery',
