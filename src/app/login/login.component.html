@@ -36,7 +36,10 @@
         La contraseña es requerida.
       </div>
     </div>
-
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    
     <!-- Botón de login -->
 
       <button type="submit" [disabled]="!loginForm.form.valid" class="btn-login">Iniciar sesión</button>

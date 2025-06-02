@@ -32,9 +32,11 @@ username$ = this.usernameSubject.asObservable();
   
         this.startTimeout();
       }),
-      catchError(error => {
-        return throwError(() => new Error(error.error?.error || 'Error de login'));
+      catchError((error) => {
+        // Reenvía el error tal cual para poder manejar status y mensaje en el componente
+        return throwError(() => error);
       })
+      
     );
   }
   

@@ -17,12 +17,7 @@ export class LoginComponent {
   password: string = '';
   submitted: boolean = false;
   passwordVisible: boolean = false;
-  
-  onCancel(): void {
-    // Cerrar el modal y redirigir al home
-    this.router.navigate(['/home']);
-  }
-
+  errorMessage: string = ''; // Mensaje de error para mostrar en la interfaz
 
   // Expresión regular para validar la contraseña
   passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,12}$/;
@@ -46,6 +41,7 @@ export class LoginComponent {
   onSubmit() {
     this.submitted = true;
 
+    // Si la contraseña no es válida, no enviamos el formulario
     if (!this.passwordValid()) {
       return;
     }
@@ -57,25 +53,37 @@ export class LoginComponent {
           localStorage.setItem('userRole', response.role);
           localStorage.setItem('username', response.username);
           localStorage.setItem('userId', response.id.toString());
-          //Guardar el token en el localStorage
-          // Redirigir según el rol del usuario
 
+          // Redirigir según el rol del usuario
           if (response.role === 'admin') {
             this.router.navigate(['/admin']);
           } else {
             this.router.navigate(['/user/dashboard']);
           }
-          this.cerrar.emit(); // 🔁 Cerrar modal tras redirección
+
+          // Cerrar el modal tras redirección
+          this.cerrar.emit();
         }
       },
-      error: (error: any) => {
-        console.error('Error de autenticación', error);
-      },
+      error: (error) => {
+        console.log('Error de login:', error); // Verifica el error recibido en la consola
+        
+        // Aquí debes asegurarte de que el mensaje que recibes se asigna a 'errorMessage'
+        if (error.status === 404) {
+          this.errorMessage = error.error.error || 'Este usuario no está registrado. ¿Deseas registrarte?';  // Mensaje personalizado si no está registrado
+        } else if (error.status === 401) {
+          this.errorMessage = error.error.error || 'Credenciales incorrectas. Intenta de nuevo.';  // Mensaje si las credenciales son incorrectas
+        } else {
+          this.errorMessage = 'Hubo un problema al intentar iniciar sesión. Por favor, intenta de nuevo más tarde.'; // Mensaje genérico en caso de otro tipo de error
+        }
+      }
+      
+      
     });
   }
- 
+
+  // Método para volver al home
   goHome() {
     this.cerrar.emit(); // Emite evento para cerrar modal
   }
-  
 }
