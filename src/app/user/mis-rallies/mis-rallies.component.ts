@@ -5,6 +5,7 @@ import { InscripcionesService } from '../../shared/services/inscripciones.servic
 import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
 import { FormsModule } from '@angular/forms';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-mis-rallies',
@@ -31,11 +32,13 @@ imagenModalUrl: string | null = null;
   // Mapa para guardar fotos por rally
   fotosPorRally: { [rallyId: number]: any[] } = {};
 
+
   constructor(
     private inscripcionesService: InscripcionesService,
     private router: Router,
     private userService: UserService,
-    private photoService: PhotoService
+    private photoService: PhotoService,
+    private sweetAlert: SweetAlertService
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +81,7 @@ imagenModalUrl: string | null = null;
   
     // Si ya ha subido 3 fotos, mostrar el popup y no abrir el modal
     if (fotosSubidas >= 3) {
-      this.mostrarPopup('Ya has subido el número máximo de fotos para este rally.');
+      //this.toastr.warning('Ya has subido el número máximo de fotos para este rally.', 'Límite alcanzado');
       return; // No abrir el modal
     }
   
@@ -123,34 +126,37 @@ imagenModalUrl: string | null = null;
     
   }
   
-  onSubmit() {
-    if (this.selectedFile && this.usuario) {
-      const userId = this.usuario.id;
-      const rallyId = this.rallySeleccionado?.id;
-      const title = this.tituloFoto || this.selectedFile?.name || 'Sin título';
-  
-      if (rallyId) {
-        this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
-          next: (response) => {
-            alert('Foto subida correctamente');
-            this.loadFotosSubidas(rallyId); // Refrescar fotos
-            this.selectedFile = null;
-            this.imagePreview = null;
-            this.tituloFoto = ''; // Limpiar el campo
-            this.closeModal(); // <- Aquí se cierra el modal automáticamente
-          },
-          error: (err: any) => {
-            console.error('Error al subir la foto:', err);
-            alert('Error al subir la foto');
-          }
-        });
-      } else {
-        alert('No se ha seleccionado un rally válido.');
-      }
+onSubmit() {
+  if (!this.selectedFile) {
+    this.sweetAlert.info('Por favor selecciona una foto.');
+    return; // 🔥 Sal del método sin cerrar modal
+  }
+
+  if (this.selectedFile && this.usuario) {
+    const userId = this.usuario.id;
+    const rallyId = this.rallySeleccionado?.id;
+    const title = this.tituloFoto || this.selectedFile.name || 'Sin título';
+
+    if (rallyId) {
+      this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
+        next: (response) => {
+          this.sweetAlert.success('Foto subida correctamente', '¡Buen trabajo!');
+          this.loadFotosSubidas(rallyId);
+          this.selectedFile = null;
+          this.imagePreview = null;
+          this.tituloFoto = '';
+          this.closeModal(); // Solo cerrar si se subió correctamente
+        },
+        error: (err: any) => {
+          console.error('Error al subir la foto:', err);
+        }
+      });
     } else {
-      alert('Por favor selecciona una foto.');
+      this.sweetAlert.warning('No se ha seleccionado un rally válido!');
     }
   }
+}
+
   
 // Métodos para abrir y cerrar el modal de imagen
 openImageModal(url: string) {

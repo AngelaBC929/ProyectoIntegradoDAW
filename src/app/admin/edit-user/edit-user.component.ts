@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -30,7 +31,7 @@ export class EditUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router, private sweetAlert: SweetAlertService
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +69,7 @@ export class EditUserComponent implements OnInit {
 
       // Validación para no cambiar el rol del admin principal
       if (this.userId === 14 && updatedUser.role !== this.user?.role) {
-        alert('No puedes cambiar el rol del admin principal');
+        this.sweetAlert.warning('No puedes cambiar el rol del admin principal');
         return;
       }
 

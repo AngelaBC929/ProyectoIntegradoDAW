@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-rallies-actuales',
@@ -23,7 +24,8 @@ export class RalliesActualesComponent implements OnInit, OnDestroy {
   constructor(
     private rallyService: RallyService,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private sweetAlert: SweetAlertService
   ) { }
 
   ngOnInit(): void {
@@ -105,12 +107,13 @@ export class RalliesActualesComponent implements OnInit, OnDestroy {
             }
             this.cdRef.detectChanges();
           } else {
-            alert(response.message || 'Error al alternar inscripción.');
+           this.sweetAlert.error('Error', response.message || 'Error al alternar inscripción.');
+
           }
         },
         (error) => {
-          console.error('Error al alternar inscripción:', error);
-          alert(error.message || 'Error de conexión o servidor. Inténtalo más tarde.');
+          this.sweetAlert.error('Error de conexión', error.message || 'Inténtalo más tarde.');
+
         }
       );
   }

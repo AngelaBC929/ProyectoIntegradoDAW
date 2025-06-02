@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../shared/models/user.model';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mis-fotos',
@@ -26,7 +28,7 @@ export class MisFotosComponent implements OnInit {
 
   userId: number = 0;// Definir el userId de forma explícita, ajusta según sea necesario
   @ViewChild('editFileInput') editFileInput!: ElementRef<HTMLInputElement>;
-  constructor(private photoService: PhotoService, private router: Router ) {}
+  constructor(private photoService: PhotoService, private router: Router, private sweetAlert: SweetAlertService) {}
 
   ngOnInit(): void {
     const idStr = localStorage.getItem('userId');
@@ -34,7 +36,7 @@ export class MisFotosComponent implements OnInit {
       this.userId = parseInt(idStr, 10);
       this.loadPhotos();
     } else {
-      alert('Usuario no encontrado');
+      this.sweetAlert.info('Usuario no encontrado.');
       this.router.navigate(['/login']);
     }
   }
@@ -50,26 +52,29 @@ export class MisFotosComponent implements OnInit {
       },
       error: (err: any) => {
         console.error('Error al cargar las fotos:', err);
-        alert('Error al cargar las fotos');
+        this.sweetAlert.warning('Error al cargar las fotos.');
       }
     });
   }
   
-  
-  deletePhoto(photoId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta foto?')) {
-      this.photoService.deletePhoto(photoId, this.userId).subscribe({
-        next: () => {
-          this.fotos = this.fotos.filter(photo => photo.id !== photoId);
-          alert('Foto eliminada correctamente');
-        },
-        error: (err: any) => {
-          console.error('Error al eliminar la foto:', err);
-          alert('Error al eliminar la foto');
-        }
-      });
-    }
-  }
+ deletePhoto(photoId: number): void {
+  this.sweetAlert.confirm('¿Estás seguro?', 'Esta acción eliminará la foto permanentemente.')
+    .then((confirmed) => {
+      if (confirmed) {
+        this.photoService.deletePhoto(photoId, this.userId).subscribe({
+          next: () => {
+            this.fotos = this.fotos.filter(photo => photo.id !== photoId);
+            this.sweetAlert.success('¡Foto eliminada correctamente!');
+          },
+          error: (err: any) => {
+            console.error('Error al eliminar la foto:', err);
+            this.sweetAlert.warning('Error al eliminar la foto:', err);
+          }
+        });
+      }
+    });
+}
+
 
   // Abre el modal de edición
   editPhoto(photo: any): void {
@@ -103,7 +108,7 @@ export class MisFotosComponent implements OnInit {
       fileToSend
     ).subscribe({
       next: () => {
-        alert("Foto actualizada correctamente");
+        this.sweetAlert.success('Foto actualizada correctamente');
         this.closeEditModal();
         this.loadPhotos();
       },
@@ -137,17 +142,17 @@ export class MisFotosComponent implements OnInit {
     if (this.rallySeleccionado && this.selectedFile) {
       this.photoService.uploadPhoto(this.selectedFile, this.userId, this.rallySeleccionado.id, this.rallySeleccionado.title).subscribe({
         next: () => {
-          alert('Foto subida correctamente');
+          this.sweetAlert.success('Foto subida correctamente');
           this.closeModal();
           this.loadPhotos();
         },
         error: (err) => {
           console.error('Error al subir la foto:', err);
-          alert('Error al subir la foto');
+          this.sweetAlert.warning('Error al subir la foto');
         }
       });
     } else {
-      alert('Selecciona una imagen primero');
+      this.sweetAlert.info('Por favor selecciona una foto y un rally.');
     }
   }
 volverADashboard() {

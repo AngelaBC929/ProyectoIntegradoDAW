@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Rally } from '../../shared/models/rally.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-gestion-rallies',
@@ -17,8 +18,9 @@ export class GestionRalliesComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private rallyService: RallyService
-  ) {}
+    private rallyService: RallyService,
+    private sweetAlert: SweetAlertService
+  ) { }
 
   ngOnInit(): void {
     // Nos suscribimos a 'rallies$' para obtener los datos actualizados automáticamente
@@ -28,14 +30,14 @@ export class GestionRalliesComponent implements OnInit {
       this.rallies = rallies; // Asignamos todos los rallies tal como los recibe desde el servicio
       console.log('Todos los rallies:', this.rallies);
     });
-  
+
     // Llamamos a getAllRallies para cargar los rallies por primera vez.
     this.rallyService.getAllRallies().subscribe({
       next: () => console.log('Rallies cargados correctamente'),
       error: (err) => console.error('Error al cargar los rallies:', err)
     });
   }
-  
+
 
   // Redirigir al formulario de edición
   editRally(id: number): void {
@@ -46,23 +48,26 @@ export class GestionRalliesComponent implements OnInit {
   deleteRally(id: number): void {
     this.rallyService.getRallyById(id).subscribe(rally => {
       if (rally) {
-        const rallyName = rally.title; // Suponiendo que 'title' es el nombre del rally
-  
-        if (confirm(`¿Estás seguro de que deseas eliminar el rally: ${rallyName}?`)) {
-          this.rallyService.deleteRally(id).subscribe(() => {
-            alert('Rally eliminado');
-            // No es necesario recargar la lista manualmente, ya que el BehaviorSubject se actualizará automáticamente
-          });
-        }
+        const rallyName = rally.title;
+        this.sweetAlert.confirm( `¿Estás seguro de que deseas eliminar el rally: ${rallyName}?`, 'Esta acción no se puede deshacer.'
+        ).then(isConfirmed => {
+          if (isConfirmed) {
+            this.rallyService.deleteRally(id).subscribe(() => {
+              this.sweetAlert.success('Rally eliminado');
+              // Aquí puedes emitir un evento o refrescar la lista si es necesario
+            });
+          }
+        });
+
       } else {
-        alert('No se encontró el rally.');
+        this.sweetAlert.warning('No se encontró el rally.');
       }
     });
   }
-  
-    // Método para redirigir al usuario al panel de usuario
-    goBackToAdminPanel(): void {
-      this.router.navigate(['admin']); 
-    }
-  
+
+  // Método para redirigir al usuario al panel de usuario
+  goBackToAdminPanel(): void {
+    this.router.navigate(['admin']);
+  }
+
 }

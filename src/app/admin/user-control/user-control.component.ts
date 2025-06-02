@@ -3,6 +3,7 @@ import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../shared/models/user.model'; // Asegúrate de importar correctamente el modelo User
 import { CommonModule } from '@angular/common';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-user-control',
@@ -15,7 +16,7 @@ export class UserControlComponent implements OnInit {
   users: User[] = [];  // Lista de usuarios, usando el modelo User
   loading: boolean = true;  // Indicador de carga
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private sweetAlert: SweetAlertService) {}
 
   ngOnInit(): void {
     // Obtener los usuarios al cargar el componente
@@ -43,7 +44,7 @@ deleteUser(userId: number): void {
     if (confirm(confirmMessage)) {
       this.userService.deleteUser(userId).subscribe({
         next: () => {
-          alert('Usuario eliminado correctamente');
+          this.sweetAlert.success('Usuario eliminado correctamente');
           // Actualizamos la lista de usuarios después de la eliminación
           this.users = this.users.filter(user => user.id !== userId);
         },

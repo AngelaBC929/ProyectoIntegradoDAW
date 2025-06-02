@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhotoService } from '../shared/services/photo.service';
+import { SweetAlertService } from '../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'app-gallery',
@@ -24,7 +25,7 @@ export class GalleryComponent implements OnInit {
   limit: number = 6; // Fotos por página
   totalPhotos: number = 0; // Total de fotos, para calcular las páginas
 
-  constructor(private photoService: PhotoService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private photoService: PhotoService, private router: Router, private route: ActivatedRoute, private sweetAlert: SweetAlertService) {}
 
   ngOnInit() {
     this.loadRallies();
@@ -119,12 +120,12 @@ isWinner(photo: any, rally: any): boolean {
     const parsedUserId = parseInt(userId || '', 10);
 
     if (!userId || isNaN(parsedUserId)) {
-      alert('Debes iniciar sesión para votar.');
+      this.sweetAlert.info('Debes iniciar sesión para votar.')
       return;
     }
 
     if (this.hasVoted(photoId)) {
-      alert('Ya has votado por esta foto.');
+      this.sweetAlert.info('Ya has votado por esta foto.')
       return;
     }
 
@@ -140,11 +141,11 @@ isWinner(photo: any, rally: any): boolean {
         this.votedPhotos.add(photoId);
         localStorage.setItem(`userVotedPhotos_${userId}`, JSON.stringify(Array.from(this.votedPhotos)));
 
-        alert('¡Voto registrado!');
+        this.sweetAlert.success('¡Voto registrado!', '¡Gracias por participar!');
       },
       error: (err) => {
         console.error('Error al votar:', err);
-        alert('Error al votar: ' + (err.error?.error || 'Intenta más tarde'));
+        this.sweetAlert.error('Error al votar: ' + (err.error?.error || 'Intenta más tarde.'));
       }
     });
   }
