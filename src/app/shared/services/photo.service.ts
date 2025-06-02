@@ -108,4 +108,29 @@ export class PhotoService {
       })
     );
   }
+  getAllPhotos(userId: number): Observable<any> {
+    const data = new FormData();
+    data.append('userId', userId.toString());
+    data.append('action', 'getUserPhotosActuales');
+  
+    return this.http.get<{ photos: any[] }>(
+      'http://localhost/backendRallyFotografico/fotos.php?action=getAllPhotos'
+    );
+  }
+  
+  updatePhotoStatus(photoId: number, newStatus: 'approved' | 'rejected'): Observable<any> {
+    const data = new FormData();
+    data.append('photo_id', photoId.toString());
+    data.append('status', newStatus); // 'approved' o 'rejected'
+    data.append('action', 'updateStatus');
+  
+    return this.http.post(this.apiUrl, data).pipe(
+      catchError((error: HttpErrorResponse) => {
+        const message = error.error?.error || error.message;
+        return throwError(() => new Error(message));
+      })
+    );
+  }
+  
+
 }

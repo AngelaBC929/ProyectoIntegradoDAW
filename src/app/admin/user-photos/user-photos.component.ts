@@ -1,58 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../shared/services/user.service';
-import { Router } from '@angular/router';
-import { User } from '../../shared/models/user.model'; // Asegúrate de importar correctamente el modelo User
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-photos',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule, FormsModule], // Aquí puedes importar otros módulos si es necesario
   templateUrl: './user-photos.component.html',
   styleUrls: ['./user-photos.component.css']
 })
 export class UserPhotosComponent implements OnInit {
-  users: User[] = [];  // Lista de usuarios, usando el modelo User
-  loading: boolean = true;  // Indicador de carga
+  allPhotos: any[] = [];       // Lista de fotos
+  isModalOpen: boolean = false; // Para controlar la apertura del modal
+  selectedPhoto: any = null;    // Foto seleccionada para revisar
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
+  // Al iniciar el componente, cargamos las fotos
   ngOnInit(): void {
-    // Obtener los usuarios al cargar el componente
-    this.userService.getAllUsers().subscribe({
-      next: (users) => {
-        this.users = users;  // Asignamos los usuarios a la lista
-        this.loading = false;  // Dejamos de mostrar el loading
-      },
-      error: (error) => {
-        console.error('Error al obtener los usuarios', error);
-        this.loading = false;  // Dejamos de mostrar el loading en caso de error
-      }
-    });
+    this.loadPhotos();
   }
 
-  // Eliminar usuario
-  deleteUser(userId: number): void {
-    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      this.userService.deleteUser(userId).subscribe({
-        next: () => {
-          // Actualizamos la lista de usuarios después de la eliminación
-          this.users = this.users.filter(user => user.id !== userId);
-        },
-        error: (error) => {
-          console.error('Error al eliminar el usuario', error);
+  // Método para cargar todas las fotos desde el backend
+  loadPhotos() {
+    this.http.get('http://localhost/backendRallyFotografico/fotos.php?action=getAllPhotos')
+      .subscribe((response: any) => {
+        if (response.photos) {
+          this.allPhotos = response.photos;
+        } else {
+          console.error('No se encontraron fotos');
         }
+      }, (error) => {
+        console.error('Error al cargar fotos', error);
       });
+  }
+
+  // Método para abrir el modal con la foto seleccionada
+  openModal(photo: any) {
+    this.selectedPhoto = photo;
+    this.isModalOpen = true;
+  }
+
+  // Método para cerrar el modal
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedPhoto = null; // Limpiar la foto seleccionada
+  }
+
+  // Método para actualizar el estado de la foto (Aprobar/Rechazar)
+  updatePhotoStatus(status: string) {
+    if (this.selectedPhoto) {
+      // Aquí se podría hacer una llamada al backend para actualizar el estado
+      console.log(`Foto ${this.selectedPhoto.id} actualizada a estado: ${status}`);
+      
+      // Simulamos una actualización en el estado, por ejemplo, directamente en la vista
+      this.selectedPhoto.status = status;
+
+      // Llamada para cerrar el modal después de actualizar el estado
+      this.closeModal();
+    } else {
+      console.error('No se ha seleccionado ninguna foto');
     }
   }
-
-  // Editar usuario
-  
-editUser(userId: number): void {
-  this.router.navigate(['/admin/edit-user', userId]);  // Redirige a la página de edición de usuario
-}
-// Método para redirigir al usuario al panel de usuario
-goBackToAdminPanel(): void {
-  this.router.navigate(['admin']); 
-}
 }

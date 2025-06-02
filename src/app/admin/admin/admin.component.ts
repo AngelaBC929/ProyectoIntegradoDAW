@@ -22,6 +22,6 @@ export class AdminComponent {
   }
 
   goToPhotosManagement() {
-    this.router.navigate(['/admin/user-fotos']);
+    this.router.navigate(['/admin/user-photos']);
   }
 }
