@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhotoService } from '../shared/services/photo.service';
 
@@ -24,7 +24,7 @@ export class GalleryComponent implements OnInit {
   limit: number = 6; // Fotos por página
   totalPhotos: number = 0; // Total de fotos, para calcular las páginas
 
-  constructor(private photoService: PhotoService, private router: Router) {}
+  constructor(private photoService: PhotoService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.loadRallies();
@@ -176,7 +176,13 @@ isWinner(photo: any, rally: any): boolean {
     return (this.currentPage * this.limit) < this.totalPhotos; // Verifica si hay más fotos
   }
 
-  goBackToHome(): void {
-    this.router.navigate(['home']);
+ goBackToHome(): void {
+  const from = this.route.snapshot.queryParamMap.get('from');
+  if (from === 'dashboard') {
+    this.router.navigate(['/user/dashboard']);
+  } else {
+    this.router.navigate(['/home']);
   }
+}
+
 }

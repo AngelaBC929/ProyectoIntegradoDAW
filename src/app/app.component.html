@@ -1,8 +1,6 @@
-<!-- Barra de navegación según el rol -->
-<ng-container *ngIf="role">
-  <navbar-admin *ngIf="role === 'admin'"></navbar-admin>
-  <navbar-user *ngIf="role === 'user'"></navbar-user>
-</ng-container>
+<!-- Barra de navegación única para todos los roles -->
+<app-navbar *ngIf="role"></app-navbar>
+
 
 <!-- Modal de sesión expirada -->
 <div class="modal" *ngIf="showModal">

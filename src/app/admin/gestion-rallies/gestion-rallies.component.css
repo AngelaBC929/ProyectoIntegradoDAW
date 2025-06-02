@@ -1,21 +1,61 @@
+/* Tabla cálida estilo dashboard */
+.tabla-card {
+  background-color: #fff9ec;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.4);
+  overflow-x: auto;
+}
 
-  /* Asegura que el botón se vea bien y esté centrado */
-  .button-container {
-    text-align: center; /* Centra el contenido dentro del contenedor */
-    margin-top: 20px; /* Espacio superior para separar el botón de los rallies */
-  }
+.tabla-calida {
+  width: 100%;
+  border-collapse: collapse;
+  color: #4b2e05;
+  font-size: 1rem;
+}
 
-  .back-button {
-    background-color: #4CAF50; /* Un color verde bonito */
-    color: white; /* Texto blanco */
-    border: none;
-    padding: 12px 24px; /* Un buen padding para que el botón se vea grande */
-    font-size: 16px; /* Un tamaño de fuente legible */
-    cursor: pointer; /* Cambia el cursor a mano para indicar que es un botón clickeable */
-    border-radius: 5px; /* Bordes redondeados para un diseño más suave */
-    transition: background-color 0.3s ease; /* Transición para cuando el botón cambia de color */
-  }
+.tabla-calida thead {
+  background-color: #f2d388;
+  color: #4b2e05;
+}
 
-  .back-button:hover {
-    background-color: #45a049; /* Color un poco más oscuro cuando pasa el mouse sobre el botón */
-  }
+.tabla-calida th,
+.tabla-calida td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e7c17b;
+  text-align: left;
+}
+
+.tabla-calida tr:hover {
+  background-color: #fef6dd;
+}
+
+/* Botones de acción */
+.btn-editar {
+  background-color: #f2a654;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+  background-color: #db923e;
+}
+
+.btn-eliminar {
+  background-color: #d95d4a;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #b84334;
+}

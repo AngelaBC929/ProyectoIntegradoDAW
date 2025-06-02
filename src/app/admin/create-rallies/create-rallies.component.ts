@@ -78,5 +78,82 @@ export class CreateRalliesComponent {
       );
     }
   }
+  fields = [
+  {
+    id: 'title',
+    name: 'title',
+    label: 'Título',
+    type: 'text',
+    errors: [
+      { type: 'required', message: 'El título es obligatorio.' },
+      { type: 'minlength', message: 'Debe tener al menos 6 caracteres.' }
+    ]
+  },
+  {
+    id: 'description',
+    name: 'description',
+    label: 'Descripción',
+    type: 'textarea',
+    errors: [
+      { type: 'required', message: 'La descripción es obligatoria.' },
+      { type: 'minlength', message: 'Debe tener al menos 10 caracteres.' },
+      { type: 'maxlength', message: 'No puede tener más de 250 caracteres.' }
+    ]
+  },
+  {
+    id: 'start_date',
+    name: 'start_date',
+    label: 'Fecha de inicio',
+    type: 'date',
+    errors: [
+      { type: 'required', message: 'La fecha de inicio es obligatoria.' }
+    ]
+  },
+  {
+    id: 'end_date',
+    name: 'end_date',
+    label: 'Fecha de finalización',
+    type: 'date',
+    errors: [
+      { type: 'required', message: 'La fecha de finalización es obligatoria.' }
+    ]
+  },
+  {
+    id: 'location',
+    name: 'location',
+    label: 'Ubicación',
+    type: 'text',
+    errors: [
+      { type: 'required', message: 'La ubicación es obligatoria.' }
+    ]
+  },
+  {
+    id: 'theme',
+    name: 'theme',
+    label: 'Tema',
+    type: 'text',
+    errors: [
+      { type: 'required', message: 'El tema es obligatorio.' }
+    ]
+  }
+];
+getIconClassByTheme(tema: string = ''): string {
+  switch (tema) {
+    case 'fotografia': return 'fa-solid fa-camera-retro';
+    case 'naturaleza': return 'fa-solid fa-tree';
+    case 'deporte': return 'fa-solid fa-person-hiking';
+    case 'animales': return 'fa-solid fa-paw';
+    case 'comida': return 'fa-solid fa-utensils';
+    case 'mar y playa': return 'fa-solid fa-umbrella-beach';
+    case 'paisaje urbano': return 'fa-solid fa-city';
+    default: return 'fa-solid fa-question';
+  }
+}
+
+
+cancelCreation() {
+  this.router.navigate(['/gestion-rallies']); // o la ruta que corresponda a tu panel de admin
+}
+
   
 }

@@ -1,143 +1,88 @@
-/* General container styles */
-h2 {
+.horizontal-card {
+  background: #f2d388;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.45);
+  color: #4b2e05;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  display: flex;  
+}
+h2{
   text-align: center;
-  color: #4A90E2;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+  margin-top: 1rem;
+  color: #4b2e05;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #7b4f24;
 }
 
-/* Style for the list of rallies */
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Each rally item style */
-li {
-  background: #f4f7fb;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  position: relative; /* Necesario para alinear los botones correctamente */
-}
-
-/* Hover effect for each rally */
-li:hover {
+.horizontal-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(210, 160, 70, 0.6);
 }
 
-/* Title style */
-h3 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 10px;
+.horizontal-card h3 {
+  margin-top: 0;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px #7b4f24;
+  text-align: left;
 }
 
-/* Description style */
 p {
-  font-size: 1rem;
-  color: #555;
-  margin: 5px 0;
-}
-
-/* Date style */
-p span {
-  font-weight: bold;
-  color: #4A90E2;
-}
-
-/* Style when no rallies are found */
-p:empty {
-  text-align: center;
-  font-style: italic;
-  color: #888;
-}
-
-/* Style for empty state */
-.no-rallies-message {
-  text-align: center;
   font-size: 1.2rem;
-  color: #888;
+  color: #4b2e05;
 }
 
-  /* Asegura que el botón se vea bien y esté centrado */
-  .button-container {
-    text-align: center; /* Centra el contenido dentro del contenedor */
-    margin-top: 20px; /* Espacio superior para separar el botón de los rallies */
-  }
-
-  .back-button {
-    background-color: #4CAF50; /* Un color verde bonito */
-    color: white; /* Texto blanco */
-    border: none;
-    padding: 12px 24px; /* Un buen padding para que el botón se vea grande */
-    font-size: 16px; /* Un tamaño de fuente legible */
-    cursor: pointer; /* Cambia el cursor a mano para indicar que es un botón clickeable */
-    border-radius: 5px; /* Bordes redondeados para un diseño más suave */
-    transition: background-color 0.3s ease; /* Transición para cuando el botón cambia de color */
-  }
-
-  .back-button:hover {
-    background-color: #45a049; /* Color un poco más oscuro cuando pasa el mouse sobre el botón */
-  }
-
-
-
-/* Responsive design */
-@media (max-width: 768px) {
-  h2 {
-    font-size: 2rem;
-  }
-
-  li {
-    padding: 15px;
-    min-height: 150px; /* Ajusta esto según el tamaño de tu contenido */
-  }
-
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  p {
-    font-size: 0.9rem;
-  }
+.horizontal-card p span {
+  font-weight: 700;
+  color: #7b4f24;
 }
 
-/* Styles for the buttons */
-.apuntarme-btn, .cancelar-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #355cdc;
+i, .material-symbols-outlined {
+  font-size: 3rem !important;
+  margin-right: 1rem;
+  vertical-align: middle;
+  color: #5c2c10 !important;
+}
+
+/* Botones */
+.btn, .cancelar-btn, .apuntarme-btn {
+  background-color: #a0522d;
   color: white;
   border: none;
+  padding: 0.6rem 1.2rem;
   border-radius: 5px;
   cursor: pointer;
-  border: 2px solid rgb(11, 7, 122);
-  position: relative;
-  z-index: 10;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
   text-align: center;
 }
 
-.apuntarme-btn[disabled], .cancelar-btn[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
-  border: 2px solid grey;
+.btn:hover, .cancelar-btn:hover, .apuntarme-btn:hover {
+  background-color: #8b4513;
 }
 
-/* Cancel button specific styles */
 .cancelar-btn {
-  background-color: #ff4d4d; /* Red color for cancel button */
-  border: 2px solid #e60000; /* Red border */
+  background-color: #cc4b37;
 }
 
-.cancelar-btn[disabled] {
-  background-color: #f5cccc; /* Light red for disabled */
-  border: 2px solid #e6b3b3;
+.cancelar-btn:hover {
+  background-color: #a43a29;
+}
+
+.apuntarme-btn {
+  background-color: #4b8b3b;
+}
+
+.apuntarme-btn:hover {
+  background-color: #3a6b2b;
+}
+
+.button-container {
+  text-align: center;
+  margin: 2rem 0;
 }

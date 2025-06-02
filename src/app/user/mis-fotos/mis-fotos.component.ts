@@ -1,30 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../../shared/services/photo.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
+import { User } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-mis-fotos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './mis-fotos.component.html',
   styleUrls: ['./mis-fotos.component.css']
 })
 export class MisFotosComponent implements OnInit {
+  tabActivo: string = 'misfotos'; // o el valor correcto que manejes
+  usuario: User | null = null;
   fotos: any[] = [];
   rallySeleccionado: any;
   isModalOpen = false;
   imagePreview: string | undefined;
   selectedFile: File | null = null;
-
   isEditModalOpen = false;
   selectedPhoto: any = null;
 
   userId: number = 0;// Definir el userId de forma explícita, ajusta según sea necesario
   @ViewChild('editFileInput') editFileInput!: ElementRef<HTMLInputElement>;
-  constructor(private photoService: PhotoService, private router: Router) {}
+  constructor(private photoService: PhotoService, private router: Router ) {}
 
   ngOnInit(): void {
     const idStr = localStorage.getItem('userId');
@@ -36,6 +38,10 @@ export class MisFotosComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+    seleccionarTab(tab: string) {
+    this.tabActivo = tab;
+  }
+
   
   loadPhotos(): void {
     this.photoService.getFotosUsuarioActuales(this.userId).subscribe({
@@ -144,6 +150,15 @@ export class MisFotosComponent implements OnInit {
       alert('Selecciona una imagen primero');
     }
   }
+volverADashboard() {
+  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate(['/user/dashboard']);
+  });
+}
+
+  entrarGaleria() {
+  this.router.navigate(['/gallery'], { queryParams: { from: 'dashboard' } });
+}
 
   goBackToUserPanel(): void {
     this.router.navigate(['/user/dashboard']);

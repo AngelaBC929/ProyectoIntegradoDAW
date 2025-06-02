@@ -15,19 +15,36 @@ import { Router } from '@angular/router';
 export class ProximosRalliesComponent implements OnInit {
   ralliesProximos: Rally[] = [];
 
-  constructor(private rallyService: RallyService, private router: Router) {}
+  constructor(private rallyService: RallyService, private router: Router) { }
 
   ngOnInit(): void {
     this.rallyService.getAllRallies().subscribe((rallies) => {
       const today = new Date();
-      // Filtrar los rallies próximos (que empiezan después de hoy)
       this.ralliesProximos = rallies.filter(
         (rally) => new Date(rally.start_date) > today
       );
+      console.log('Rallies próximos:', this.ralliesProximos);
     });
   }
-   // Método para redirigir al usuario al panel de usuario
-   volverAlPanelUsuario(): void {
+
+getIconClassByTheme(tema: string): string {
+  if (!tema) return 'fa-solid fa-question';
+
+  const cleanedTema = tema.trim().toLowerCase();
+
+  switch (cleanedTema) {
+    case 'fotografia': return 'fa-solid fa-camera-retro';
+    case 'naturaleza': return 'fa-solid fa-tree';
+    case 'deporte': return 'fa-solid fa-person-hiking';
+    case 'animales': return 'fa-solid fa-paw';
+    case 'comida': return 'fa-solid fa-utensils';
+    case 'mar y playa': return 'fa-solid fa-umbrella-beach';
+    case 'paisaje urbano': return 'fa-solid fa-city';
+    default: return 'fa-solid fa-question';
+  }
+}
+
+  volverAlPanelUsuario(): void {
     this.router.navigate(['user/dashboard']);
   }
 }

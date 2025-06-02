@@ -132,6 +132,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/rallies-pasados']);
   }
 
+  entrarGaleria() {
+  this.router.navigate(['/gallery'], { queryParams: { from: 'dashboard' } });
+}
+
   goBackToUserPanel(): void {
     this.router.navigate(['user/dashboard']);
   }

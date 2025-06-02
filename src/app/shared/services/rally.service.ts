@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError, catchError, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Rally } from '../models/rally.model';
-import { EMPTY } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,13 +15,11 @@ export class RallyService {
   private ralliesSubject = new BehaviorSubject<Rally[]>([]);
   rallies$ = this.ralliesSubject.asObservable();
 
-  // 🔥 BehaviorSubject para inscripciones
   private userInscriptionsSubject = new BehaviorSubject<number[]>([]);
   userInscriptions$ = this.userInscriptionsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  
   getAllRallies(): Observable<Rally[]> {
     return this.http.get<Rally[]>(this.apiUrl).pipe(
       tap((rallies) => this.ralliesSubject.next(rallies)),
@@ -35,18 +33,16 @@ export class RallyService {
   createRally(rallyData: any): Observable<any> {
     return this.http.post(this.apiUrl, rallyData, { observe: 'response' }).pipe(
       tap((res) => {
-        console.log('Respuesta completa del servidor:', res);
-        const newRally = res.body;
+        const newRally = res.body as Rally;
         const currentRallies = this.ralliesSubject.value || [];
-        this.ralliesSubject.next([...currentRallies, newRally as Rally]);
+        this.ralliesSubject.next([...currentRallies, newRally]);
       }),
       catchError((error) => {
-        console.error('Error al crear rally (catch):', error);
+        console.error('Error al crear rally:', error);
         return throwError(() => new Error(error.message || 'Error desconocido'));
       })
     );
   }
-  
 
   updateRally(id: number, rallyData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}?id=${id}`, rallyData).pipe(
@@ -78,8 +74,7 @@ export class RallyService {
     return this.http.delete(`${this.apiUrl}?id=${id}`).pipe(
       tap(() => {
         const currentRallies = this.ralliesSubject.value || [];
-        const updatedRallies = currentRallies.filter((rally) => rally.id !== id);
-        this.ralliesSubject.next(updatedRallies);
+        this.ralliesSubject.next(currentRallies.filter((r) => r.id !== id));
       }),
       catchError((error) => {
         console.error('Error al eliminar rally:', error);
@@ -88,25 +83,20 @@ export class RallyService {
     );
   }
 
-  // ✅ Método unificado para cargar y propagar inscripciones
   loadUserInscriptions(userId: number): void {
-    this.http.get<any>(`${this.apiUrl}?userId=${userId}`).pipe(
-      tap(response => console.log('Respuesta del servidor:', response)), // Ver la respuesta aquí
-      map((response) => {
-        return Array.isArray(response.inscritos) ? response.inscritos.map((r: any) => r.id) : [];
-      }),
-      catchError((err) => {
-       // console.error('Error al cargar inscripciones:', err);
-        return []; // evitar reventar
+    this.http.get<any>(`${this.apiInscripcionesUrl}?userId=${userId}`).pipe(
+      tap(response => console.log('Respuesta inscripciones:', response)),
+      map((response) => Array.isArray(response.inscritos) ? response.inscritos.map((r: any) => r.id) : []),
+      catchError((error) => {
+        console.error('Error al cargar inscripciones:', error);
+        return of([]);
       })
     ).subscribe({
       next: (ids) => this.userInscriptionsSubject.next(ids),
       error: () => this.userInscriptionsSubject.next([])
     });
   }
-  
 
-  // ✅ Alternar inscripción y actualizar inscripciones del usuario
   toggleInscripcion(rallyId: number, userId: number, actualmenteInscrito: boolean): Observable<any> {
     const body = {
       rallyId,
@@ -119,30 +109,25 @@ export class RallyService {
     }).pipe(
       tap((response) => {
         if (response.success) {
-          // 🔁 Actualiza inscripciones
           this.loadUserInscriptions(userId);
         }
       }),
-      map((response) => {
-        if (response.success) {
-          return response;
-        } else {
-          throw new Error(response.message || 'Error al alternar inscripción');
-        }
-      }),
+      map(response => response),
       catchError((error) => {
-        console.error('Error al alternar inscripción:', error);
-        return throwError(() => new Error(error));
+        console.error('Error HTTP o conexión:', error);
+        return throwError(() => ({
+          success: false,
+          message: error.message || 'Error de conexión o servidor'
+        }));
       })
     );
   }
 
-  // No necesario si usas `toggleInscripcion`, pero lo dejo por si lo usas en otro sitio
   cancelarInscripcion(rallyId: number): Observable<any> {
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     if (!userId) {
-      console.error('No se ha encontrado un usuario autenticado.');
-      return EMPTY;
+      console.error('Usuario no autenticado.');
+      return of(null);
     }
     return this.cancelarInscripcionBackend(rallyId, userId);
   }
@@ -166,19 +151,31 @@ export class RallyService {
 
   uploadPhotos(rallyId: number, photos: File[]): Observable<any> {
     const formData = new FormData();
-    photos.forEach((photo) => formData.append('photos[]', photo, photo.name));
+    photos.forEach(photo => formData.append('photos[]', photo, photo.name));
 
-    photos.forEach((photo) => {
+    // Validar tipo de archivo
+    for (const photo of photos) {
       if (!photo.type.startsWith('image/')) {
-        console.error('El archivo no es una imagen');
+        console.error('Solo se pueden subir imágenes.');
         throw new Error('Solo se pueden subir imágenes.');
       }
-    });
+    }
 
     return this.http.post<any>(`${this.apiUploadPhotosUrl}?rallyId=${rallyId}`, formData).pipe(
       catchError((error) => {
         console.error('Error al subir fotos:', error);
         return throwError(() => new Error(error));
+      })
+    );
+  }
+
+  getFotosSubidas(rallyId: number, userId: number): Observable<number> {
+    const url = `${this.apiInscripcionesUrl}?rallyId=${rallyId}&userId=${userId}`;
+    return this.http.get<{ count: number }>(url).pipe(
+      map(response => response.count || 0),
+      catchError(error => {
+        console.error('Error al obtener fotos subidas:', error);
+        return of(0);
       })
     );
   }

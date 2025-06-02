@@ -1,0 +1,51 @@
+.urban-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5c2c10;
+  color: #fdf3e7;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #8d3c1f;
+  font-family: 'Segoe UI', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.urban-navbar-left {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fef5e4;
+  text-shadow: 1px 1px 4px #3d1c0f;
+}
+
+.urban-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.7rem;
+  color: #fff0e0;
+  background-color: rgba(90, 40, 10, 0.4);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.urban-btn {
+  background-color: #8d3c1f;
+  color: #fff2e0;
+  border: none;
+  padding: 0.5rem 1.3rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.urban-btn:hover {
+  background-color: #a54825;
+}

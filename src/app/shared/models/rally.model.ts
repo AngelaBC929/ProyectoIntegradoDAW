@@ -8,7 +8,7 @@ export interface Rally {
   start_date: string;
   end_date: string;
   location?: string;
-  theme?: string;
+  theme: string;
   created_by?: number;
   created_at?: string;
   yaApuntado?: boolean;

@@ -2,15 +2,14 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { RouterOutlet } from '@angular/router';
-import { NavbarUserComponent } from './shared/navbar-user/navbar-user.component';
-import { NavbarAdminComponent } from './shared/navbar-admin/navbar-admin.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarUserComponent, NavbarAdminComponent, CommonModule, FormsModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -19,6 +18,8 @@ export class AppComponent implements OnInit {
   role: string | null = null;
   showModal: boolean = false;  // Variable para mostrar el modal
   isLoggedIn: boolean = false;  // Estado de autenticación
+
+
 
 
   constructor(private authService: AuthenticationService, private router: Router) {}

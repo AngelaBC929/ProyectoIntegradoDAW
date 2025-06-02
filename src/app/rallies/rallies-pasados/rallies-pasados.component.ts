@@ -39,6 +39,23 @@ export class RalliesPasadosComponent implements OnInit {
       console.log('Rallies pasados:', this.ralliesPasados); 
     });
   }
+   getIconClassByTheme(tema: string): string {
+  if (!tema) return 'fa-solid fa-question';
+
+  const cleanedTema = tema.trim().toLowerCase();
+
+  switch (cleanedTema) {
+    case 'fotografia': return 'fa-solid fa-camera-retro';
+    case 'naturaleza': return 'fa-solid fa-tree';
+    case 'deporte': return 'fa-solid fa-person-hiking';
+    case 'animales': return 'fa-solid fa-paw';
+    case 'comida': return 'fa-solid fa-utensils';
+    case 'mar y playa': return 'fa-solid fa-umbrella-beach';
+    case 'paisaje urbano': return 'fa-solid fa-city';
+    default: return 'fa-solid fa-question';
+  }
+}
+
   
   // Método para redirigir al usuario al panel de usuario 
   volverAlPanelUsuario(): void {

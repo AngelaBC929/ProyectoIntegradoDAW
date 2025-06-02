@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { InscripcionesService } from '../../shared/services/inscripciones.service';
 import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-mis-rallies',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './mis-rallies.component.html',
   styleUrls: ['./mis-rallies.component.css']
 })
 export class MisRalliesComponent implements OnInit {
+  tabActivo: string = 'misrallies';
   misRallies: any[] = [];
   rallySeleccionado: any = null;
   isModalOpen = false;
@@ -62,7 +63,10 @@ export class MisRalliesComponent implements OnInit {
       });
     });
   }
-  
+   seleccionarTab(tab: string) {
+    this.tabActivo = tab;
+  }
+
 
   openModal(rally: any) {
     this.rallySeleccionado = rally;
@@ -156,8 +160,15 @@ mostrarPopup(mensaje: string) {
     this.popupVisible = false;
   }, 5000); // Popup se cierra automáticamente después de 5 segundos
 }
-
+volverADashboard() {
+  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate(['/user/dashboard']);
+  });
+}
   
+  entrarGaleria() {
+  this.router.navigate(['/gallery'], { queryParams: { from: 'dashboard' } });
+}
   goBackToUserPanel(): void {
     this.router.navigate(['user/dashboard']);
   }

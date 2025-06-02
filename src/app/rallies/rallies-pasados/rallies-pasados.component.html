@@ -1,15 +1,22 @@
 <h2>Rallies Pasados</h2>
-<ul>
-  <li *ngFor="let rally of ralliesPasados">
-    <h3>{{ rally.title }}</h3>
-    <p>{{ rally.description }}</p>
-    <p>Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span></p>
-  </li>
-</ul>
 
-<p *ngIf="ralliesPasados.length === 0" class="no-rallies-message">No hay rallies pasados.</p>
+  <li *ngFor="let rally of ralliesPasados" class="card horizontal-card p-3 mb-3">
+    <div class="d-flex align-items-center">
+      <!-- Icono según el tema -->
+      <i [class]="getIconClassByTheme(rally.theme) + ' icono-tema-preview'"></i>
+
+      <div class="flex-grow-1">
+        <h3>{{ rally.title }}</h3>
+        <p>{{ rally.description }}</p>
+        <p>
+          Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin:
+          <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span>
+        </p>
+      </div>
+    </div>
+  </li>
 
 <!-- Botón para volver -->
 <div class="button-container">
-  <button (click)="volverAlPanelUsuario()" class="back-button">Volver</button>
+  <button (click)="volverAlPanelUsuario()" class="btn">Volver</button>
 </div>

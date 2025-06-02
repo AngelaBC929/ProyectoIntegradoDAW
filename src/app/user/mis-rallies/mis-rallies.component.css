@@ -1,26 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
 .mis-rallies {
-  padding: 2rem;
+  background: url('/images/fondo3.jpg') no-repeat center top;
+  background-size: 1700px auto;
+  min-height: 100vh;
+  padding: 1rem 1rem 1rem 0rem;
+}
+:host {
+  font-family: 'Merriweather', serif;
+}
+
+/* Header y Tabs */
+.mis-rallies-header {
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.5);
+  margin-bottom: 1.5rem;
+  user-select: none;
+  margin-left: 1rem;
+}
+
+.mis-rallies-header h1 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 1px 1px 4px #3c2608;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.tabs button {
+  background: transparent;
+  border: none;
+  color: #e0cda9;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.tabs button:hover {
+  color: #fff6d6;
+}
+
+.tabs button.active {
+  border-bottom-color: #f2d388;
+  color: #f9f4e6;
+  font-weight: 700;
+}
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 3rem;
+  margin: 1rem ;
+  margin-bottom: 1rem;
+  color: #4a2c14;
+   font-weight: bold;
+   text-shadow: 1px 1px 2px #d4a373;
 }
 
 .rally-card {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 1.5rem;
+  background-color: #f2d388; /* Color de fondo */
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+  border: 1px solid #e0c9a6;
+  margin-bottom: 2rem;
+  margin-left: 4rem;
+  margin-right: 3.5rem;
 }
 
-button {
-  background-color: #007a8c;
+.card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #5c3a1e;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 1px 1px 2px #d4a373;
+}
+
+h6{
+  font-size: 1rem;
+  color: #5c3a1e;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.btn {
+  background-color: #a0522d;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin: 1rem auto; /* <-- esto lo centra horizontalmente */
 }
 
-button:hover {
-  background-color: #005f6b;
+.btn:hover {
+  background-color: #8b4513;
+}
+.btn volver{
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.btn-secondary {
+  background-color: #ddd;
+  color: #333;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .modal-overlay {
@@ -33,20 +143,26 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .modal-content {
-  background: white;
+  background: #fffaf5;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid #e0c9a6;
+  box-shadow: 0 6px 15px rgba(139, 69, 19, 0.25);
   width: 90%;
   max-width: 500px;
+  text-align: center;
 }
 
 .preview-img {
   max-width: 100%;
   height: auto;
   margin-top: 1rem;
+  border: 1px solid #d4a373;
+  border-radius: 8px;
 }
 
 .miniaturas-container {
@@ -55,39 +171,67 @@ button:hover {
 
 .miniaturas {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
-  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.foto-preview {
+  text-align: center;
+  max-width: 300px;
 }
 
 .foto-preview img {
-  width: 300px;
+  width: 100%;
   height: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid #d4a373;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .foto-preview p {
-  text-align: center;
+  margin: 5px 0;
   font-size: 12px;
-  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
 }
-
 
 .button-container {
+  text-align: center;
   margin-top: 2rem;
 }
+.estado-aprobada {
+  color: #4CAF50; /* Verde */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  color: #ac8511; /* Amarillo */
+   font-size: 1rem;
+  font-weight: bold;
+}
+
+.estado-rechazada {
+  color: #F44336; /* Rojo */
+   font-size: 1rem;
+  font-weight: bold;
+}
+
+
 .popup-error {
-  position: center;
+  position: fixed;
   top: 20px;
   right: 20px;
-  background-color: #f44336;
+  background-color: #b22222;
   color: white;
   padding: 16px 24px;
   border-radius: 8px;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   animation: fadeInOut 3s ease-in-out;
+  font-family: 'Merriweather', serif;
 }
 
 @keyframes fadeInOut {

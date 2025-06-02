@@ -1,35 +1,47 @@
 <h2>Rallies Actuales</h2>
 
 <ul *ngIf="ralliesActuales.length > 0; else sinRallies">
-  <li *ngFor="let rally of ralliesActuales">
-    <h3>{{ rally.title }}</h3>
-    <p>{{ rally.description }}</p>
-    <p>
-      Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> -
-      Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span>
-    </p>
+  <li *ngFor="let rally of ralliesActuales" class="card horizontal-card p-3 mb-3">
+    <div class="d-flex align-items-center">
+      <i [class]="getIconClassByTheme(rally.theme) + ' icono-tema-preview'"></i>
 
-    <!-- Botón que cambia dependiendo del estado de inscripción -->
-    <ng-container *ngIf="estaInscrito(rally.id); else noInscrito">
-      <button class="cancelar-btn" (click)="alternarInscripcion(rally.id)">
-        Anular Inscripción
-      </button>
-    </ng-container>
+      <div class="flex-grow-1">
+        <h3>{{ rally.title }}</h3>
+        <p>{{ rally.description }}</p>
+        <p>
+          Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> -
+          Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span>
+        </p>
+      </div>
 
-    <ng-template #noInscrito>
-      <button class="apuntarme-btn" (click)="alternarInscripcion(rally.id)">
-        Inscribirse
-      </button>
-    </ng-template>
+     <div>
+  <ng-container *ngIf="estaInscrito(rally.id); else noInscrito">
+    <button 
+      class="cancelar-btn btn" 
+      (click)="alternarInscripcion(rally.id)"
+      [disabled]="haCompletadoRally(rally.id)">
+      {{ haCompletadoRally(rally.id) ? 'Inscripción completada' : 'Anular Inscripción' }}
+    </button>
+  </ng-container>
+
+  <ng-template #noInscrito>
+    <button 
+      class="apuntarme-btn btn" 
+      (click)="alternarInscripcion(rally.id)"
+      [disabled]="haCompletadoRally(rally.id)">
+      {{ haCompletadoRally(rally.id) ? 'Inscripción completada' : 'Inscribirse' }}
+    </button>
+  </ng-template>
+</div>
+
+    </div>
   </li>
 </ul>
 
-<!-- Mensaje si no hay rallies activos -->
 <ng-template #sinRallies>
-  <p class="no-rallies-message">No hay rallies actualmente.</p>
+  <p>No hay rallies actualmente.</p>
 </ng-template>
 
-<!-- Botón para volver -->
 <div class="button-container">
-  <button (click)="volverAlPanelUsuario()" class="back-button">Volver</button>
+  <button (click)="volverAlPanelUsuario()" class="btn">Volver</button>
 </div>

@@ -1,110 +1,282 @@
-/* Estilos generales para el modal */
-.modal-overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+:host {
+  font-family: 'Merriweather', serif;
 }
 
-/* Estilo del contenido del modal */
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
+.mis-fotos {
+  background: url('/images/fondo3.jpg') no-repeat center top;
+  background-size:cover;
+  min-height: 80vh;
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+/* Header y Tabs */
+.mis-fotos-header {
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  padding: 1.5rem 2rem;
   border-radius: 8px;
-  width: 18cm; /* Ancho fijo de 18cm */
-  height: auto;
-  max-width: 100%;
-  max-height: 90%; /* Limitamos la altura del modal a un máximo del 90% de la pantalla */
-  overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  position: relative;
-  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.5);
+  margin-bottom: 1.5rem;
+  user-select: none;
+}
+
+.mis-fotos-header h1 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 1px 1px 4px #3c2608;
+}
+
+.tabs {
   display: flex;
-  flex-direction: column;
+  gap: 1rem;
 }
 
-/* Imagen en el modal (vista previa) */
-.preview-img {
-  width: 100%; /* Aseguramos que la imagen se ajuste al ancho del modal */
-  height: auto; /* Mantener la proporción original de la imagen */
-  max-width: 12cm; /* Limitar el ancho de la imagen a 12cm */
-  margin: 20px 0;
-  display: block;
-  object-fit: contain; /* Mantener la proporción de la imagen sin recortes */
-  border-radius: 8px;
-}
-
-/* Estilo para el botón de cerrar */
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-/* Estilo para los botones del modal */
-.modal-buttons button {
-  padding: 10px 15px;
+.tabs button {
+  background: transparent;
   border: none;
-  background-color: #4CAF50;
-  color: white;
-  font-size: 16px;
+  color: #e0cda9;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid transparent;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
 }
 
-.modal-buttons button:hover {
-  background-color: #45a049;
+.tabs button:hover {
+  color: #fff6d6;
 }
 
-/* Botón de cerrar modal */
-.modal-content button {
-  background-color: #f44336;
-  font-size: 16px;
+.tabs button.active {
+  border-bottom-color: #f2d388;
+  color: #f9f4e6;
+  font-weight: 700;
 }
 
-.modal-content button:hover {
-  background-color: #e53935;
-}
-
-/* Foto en la vista de galería */
-.photo-img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.photo-card {
-  width: 300px;
-  margin: 10px;
+.section-title {
   text-align: center;
+  font-size: 3rem;
+  margin: 1rem;
+  color: #4a2c14;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #d4a373;
 }
 
+/* Grid de fotos */
 .photo-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  justify-content: flex-start;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
-button {
-  background-color: #007a8c;
-  color: white;
-  border: none;
+.photo-card {
+  background-color: #f2d388;
+  border: 1px solid #e0c9a6;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.photo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
+}
+
+.photo-img {
+  width: 100%;
+  height: auto;
+  border: 2px solid #d4a373;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.8rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  color: #5c3a1e;
+  margin: 0.5rem 0;
+}
+
+.status-text {
+  color: #5c3a1e;
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+
+/* Botones */
+.edit-btn,
+.delete-btn {
   padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  border: none;
   border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #a0522d;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #8b4513;
+}
+
+.delete-btn {
+  background-color: #b22222;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #992f2f;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fffaf5;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e0c9a6;
+  box-shadow: 0 6px 15px rgba(139, 69, 19, 0.25);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-title {
+  color: #5c3a1e;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.photo-title-input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #d3c2a2;
+  margin-bottom: 1rem;
+  background-color: #fdf7ed;
+  font-family: 'Merriweather', serif;
+}
+
+.disabled-note {
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.preview-container {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.preview-img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 2px solid #d4a373;
+  box-shadow: 0 2px 10px rgba(123, 79, 36, 0.2);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.save-btn {
+  background-color: #a0522d;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #005f6b;
+.save-btn:hover {
+  background-color: #8b4513;
+}
+
+.close-btn {
+  background-color: #ddd;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  background-color: #bbb;
+}
+
+/* Sin fotos */
+.no-photos {
+  text-align: center;
+  font-size: 1rem;
+  color: #5c3a1e;
+  margin-top: 2rem;
+  font-weight: bold;
+}
+
+/* Botón volver */
+.button-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.back-button {
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.back-button:hover {
+  background-color: #a0522d;
+}
+.estado-aprobada {
+  color: #4CAF50; /* Verde */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  color: #ac8511; /* Amarillo */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.estado-rechazada {
+  color: #F44336; /* Rojo */
+  font-size: 1rem;
+  font-weight: bold;
 }
