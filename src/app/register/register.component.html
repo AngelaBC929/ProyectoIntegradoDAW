@@ -32,6 +32,10 @@
     <div class="form-group">
       <label for="email">Correo electrónico</label>
       <input type="email" id="email" name="email" [(ngModel)]="email" required email #emailField="ngModel" />
+      <div *ngIf="backendFieldErrors['email']" class="error-message">
+        {{ backendFieldErrors['email'] }}
+      </div>
+      
       <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
         Ingresa un correo válido.
       </div>
@@ -55,6 +59,10 @@
       <label for="username">Usuario</label>
       <input type="text" id="username" name="username" [(ngModel)]="username" required minlength="4"
         #usernameField="ngModel" />
+        <div *ngIf="backendFieldErrors['username']" class="error-message">
+          {{ backendFieldErrors['username'] }}
+        </div>
+        
       <div *ngIf="usernameField.invalid && usernameField.touched" class="error-message">
         El nombre de usuario debe tener al menos 4 caracteres.
       </div>
@@ -105,4 +113,5 @@
   <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
 
   </form>
+  
 </div>

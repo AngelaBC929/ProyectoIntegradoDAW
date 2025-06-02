@@ -1,3 +1,5 @@
+
+
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
@@ -9,6 +11,13 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="successMessage" class="success-message-modal">
+  <div class="modal-content">
+    <h2>{{ successMessage }}</h2>
+    <button (click)="closeSuccessMessage()">Cerrar</button>
+  </div>
+</div>
 
 <!-- ¿Cómo participar? -->
 <section class="steps">

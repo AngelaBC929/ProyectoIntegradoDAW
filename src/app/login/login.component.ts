@@ -17,6 +17,12 @@ export class LoginComponent {
   password: string = '';
   submitted: boolean = false;
   passwordVisible: boolean = false;
+  
+  onCancel(): void {
+    // Cerrar el modal y redirigir al home
+    this.router.navigate(['/home']);
+  }
+
 
   // Expresión regular para validar la contraseña
   passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,12}$/;
@@ -59,6 +65,7 @@ export class LoginComponent {
           } else {
             this.router.navigate(['/user/dashboard']);
           }
+          this.cerrar.emit(); // 🔁 Cerrar modal tras redirección
         }
       },
       error: (error: any) => {

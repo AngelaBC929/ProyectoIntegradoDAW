@@ -21,92 +21,70 @@ export class RegisterComponent {
   birthdate: string = '';
   errorMessages: string[] = [];
   userAge: number = 0;
+  backendFieldErrors: { [key: string]: string } = {};
 
-  // Propiedades para controlar la visibilidad de las contraseñas
+
   passwordVisible: boolean = false;
   confirmPasswordVisible: boolean = false;
+  isSubmitting: boolean = false;
 
+  private readonly passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*]).{8,12}$/;
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService  ) {}
+  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
-  // Método de validación de contraseñas
   validatePasswords() {
-    this.errorMessages = [];  // Limpiar mensajes de error antes de cada validación
+    this.errorMessages = [];
 
-    // Validar las contraseñas coincidentes
     if (this.password !== this.confirmPassword) {
       this.errorMessages.push('Las contraseñas no coinciden.');
     }
 
-    // Validar formato de la contraseña (mayúsculas, minúsculas, número, carácter especial)
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*]).{8,12}$/;
-    if (!passwordRegex.test(this.password)) {
+    if (!this.passwordRegex.test(this.password)) {
       this.errorMessages.push('La contraseña debe tener entre 8 y 12 caracteres, incluir mayúsculas, minúsculas, un número y uno de los siguientes caracteres especiales: !@#$%^&*.');
     }
   }
 
-  onSubmit(form: NgForm) {
-    console.log("🚀 onSubmit() ejecutado");
-    this.errorMessages = []; // Limpiar errores antes de cada validación
-    this.onBirthdateChange(); // Actualizar edad antes de verificar
+  onSubmit(registerForm: NgForm) {
+    this.isSubmitting = true;
   
-    // Validar campos
-    this.validatePasswords();  // Validar contraseñas
-  
-    // Validar edad mínima
-    if (this.userAge < 18) {
-      this.errorMessages.push('Debes tener al menos 18 años para registrarte.');
-    }
-  
-    // Validar email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.email)) {
-      this.errorMessages.push('El correo electrónico no es válido.');
-    }
-  
-    // Validar otros campos
-    if (!this.username || this.username.length < 3) {
-      this.errorMessages.push('El nombre de usuario debe tener al menos 3 caracteres.');
-    }
-  
-    if (!this.name || this.name.length < 2) {
-      this.errorMessages.push('El nombre debe tener al menos 2 caracteres.');
-    }
-  
-    if (!this.lastName || this.lastName.length < 2) {
-      this.errorMessages.push('El apellido debe tener al menos 2 caracteres.');
-    }
-  
-    // Si hay errores, no continuar
-    if (form.invalid || this.errorMessages.length > 0) {
-      console.log("❌ Formulario inválido. No se redirige.");
-      console.log("Formulario inválido:", form.invalid);
-      console.log("Errores encontrados:", this.errorMessages);
-      return;
-    }
-      
-    // Si todo es válido
-    console.log('Formulario válido:', form.value);
-  
-    // Enviar los datos del formulario al backend
-    this.authenticationService.register(this.email, this.username, this.password, this.name, this.lastName, this.birthdate).subscribe(
-      (      response: { message: string; }) => {
+    this.authenticationService.register(
+      this.email, this.username, this.password, this.name, this.lastName, this.birthdate
+    ).subscribe(
+      (response: any) => {
+        this.isSubmitting = false;
         console.log('Respuesta del backend:', response);
+  
+        if (response.error) {
+          this.backendFieldErrors = {}; // Resetear errores previos
+          
+          if (response.error.includes('correo')) {
+            this.backendFieldErrors['email'] = response.error;
+          } else if (response.error.includes('usuario')) {
+            this.backendFieldErrors['username'] = response.error;
+          } else {
+            this.errorMessages.push(response.error); // Error genérico
+          }
+          
+          return;
+        }
+  
+        // ✅ Si se creó correctamente
         if (response.message === 'Usuario creado correctamente') {
-          // Redirigir al login después de un registro exitoso
-          this.router.navigate(['/login']).then(success => {
-            console.log("Resultado navegación:", success);
-          });
+          // Redirigir al home con el mensaje de éxito
+          this.router.navigate(['/'], { state: { message: 'Usuario registrado con éxito. Puedes iniciar sesión cuando quieras.' } });
         }
       },
-      (      error: any) => {
-        console.error('Error de registro:', error);
-        this.errorMessages.push('Hubo un error al registrar el usuario.');
+      (error: any) => {
+        this.isSubmitting = false;
+        const backendError = error?.error?.error || 'Hubo un error al registrar el usuario.';
+        this.errorMessages.push(backendError);
       }
     );
   }
   
-  // Método para calcular la edad del usuario
+
+  // Método para calcular la edad del usuario basándose en la fecha de nacimiento
   onBirthdateChange() {
     const birthdate = new Date(this.birthdate);
     const today = new Date();
@@ -115,19 +93,24 @@ export class RegisterComponent {
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
       this.userAge--;
     }
+
+    // Validación de la edad
+    if (this.userAge < 18) {
+      this.errorMessages.push('Debes tener al menos 18 años para registrarte.');
+    }
   }
 
-  // Método para alternar visibilidad de la contraseña
+  // Método para alternar la visibilidad de la contraseña
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  // Método para alternar visibilidad de la confirmación de la contraseña
+  // Método para alternar la visibilidad de la confirmación de la contraseña
   toggleConfirmPasswordVisibility() {
     this.confirmPasswordVisible = !this.confirmPasswordVisible;
   }
 
-  // Método para validar el estado del formulario
+  // Método para verificar si el formulario es válido
   get isFormValid() {
     return (
       this.password === this.confirmPassword &&
@@ -136,11 +119,12 @@ export class RegisterComponent {
       this.name.length >= 2 &&
       this.lastName.length >= 2 &&
       this.userAge >= 18
-      // Quitamos el check de errorMessages aquí
     );
   }
-   // Método para cancelar la edición y volver al listado de usuarios
-   cancel(): void {
-    this.router.navigate(['/home']);  // Redirige al listado de usuarios
+  
+
+  // Método para cancelar el registro y redirigir al home
+  cancel(): void {
+    this.router.navigate(['/home']);
   }
 }

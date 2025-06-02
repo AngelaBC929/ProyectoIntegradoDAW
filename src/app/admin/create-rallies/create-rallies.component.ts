@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RallyService } from '../../shared/services/rally.service';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,9 @@ export class CreateRalliesComponent {
   rallyForm: FormGroup;
   isLoading = false;
   message: string = '';
+  dateRangeError: string | null = null;
+  titleDuplicationError: string | null = null;
+  rallies: any[] = [];  // Aquí almacenaremos los rallies
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,8 +25,8 @@ export class CreateRalliesComponent {
     private router: Router
   ) {
     this.rallyForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(6)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(250)]],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       location: ['', Validators.required],
@@ -31,34 +34,49 @@ export class CreateRalliesComponent {
     });
   }
 
-  // Método para crear un rally
-onSubmit(): void {
-  console.log("El formulario ha sido enviado");
-
-  if (this.rallyForm.valid) {
-    this.isLoading = true;
-    console.log('Formulario válido, creando rally...');
-    
-    this.rallyService.createRally(this.rallyForm.value).subscribe(
-      (response: any) => {
-        console.log('Rally creado con éxito:', response);
-        this.isLoading = false;
-        this.message = 'Rally creado exitosamente!';
-        
-        // Redirigir a la gestión de rallies después de la creación
-        this.router.navigate(['/admin/gestion-rallies']).then(() => {
-          console.log('Redirigiendo a /admin/gestion-rallies');
-        });
-      },
-      (error: any) => {
-        console.error('Error al crear el rally:', error);
-        this.isLoading = false;
-        this.message = 'Error al crear el rally. Inténtalo nuevamente.';
+  // Método para crear el rally
+  onSubmit(): void {
+    this.dateRangeError = null;
+    this.titleDuplicationError = null;
+  
+    if (this.rallyForm.valid) {
+      const startDate = new Date(this.rallyForm.value.start_date);
+      const endDate = new Date(this.rallyForm.value.end_date);
+  
+      if (endDate < startDate) {
+        this.dateRangeError = 'La fecha de finalización no puede ser anterior a la de inicio.';
+        return;
       }
-    );
-  } else {
-    this.message = 'Por favor, completa todos los campos correctamente.';
+  
+      const rallyData = {
+        ...this.rallyForm.value,
+        created_by: parseInt(localStorage.getItem('userId') || '0', 10)
+      };
+  
+      this.isLoading = true;
+      this.rallyService.createRally(rallyData).subscribe(
+        (response: any) => {
+          if (response?.error && response.error === "Ya existe un rally con ese título y fecha de inicio") {
+            this.titleDuplicationError = response.error;
+            this.isLoading = false;
+            return;
+          }
+  
+          this.message = 'Rally creado exitosamente!';
+          this.isLoading = false;
+  
+          this.rallyService.getAllRallies().subscribe((rallies) => {
+            this.rallies = rallies;  // Asegúrate que `this.rallies` exista o lo necesites aquí
+          });
+  
+          this.router.navigate(['/admin/gestion-rallies']);
+        },
+        (error: any) => {
+          this.isLoading = false;
+          this.message = error?.error?.error || 'Error al crear el rally. Inténtalo nuevamente.';
+        }
+      );
+    }
   }
-}
-
+  
 }

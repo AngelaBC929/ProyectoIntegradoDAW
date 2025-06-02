@@ -67,6 +67,12 @@ export class EditUserComponent implements OnInit {
         ...this.userForm.value
       };
 
+      // Validamos que no se intente cambiar el rol del admin principal
+      if (this.userId === 14 && updatedUser.role !== this.user?.role) {
+        alert('No puedes cambiar el rol del admin principal');
+        return;  // Detenemos el proceso si es el admin principal
+      }
+
       // Llamamos al servicio para actualizar el usuario
       this.userService.updateUser(this.userId, updatedUser).subscribe({
         next: () => {
@@ -79,6 +85,7 @@ export class EditUserComponent implements OnInit {
       });
     }
   }
+
   // Método para cancelar la edición y volver al listado de usuarios
   cancel(): void {
     this.router.navigate(['/admin/user-control']);  // Redirige al listado de usuarios

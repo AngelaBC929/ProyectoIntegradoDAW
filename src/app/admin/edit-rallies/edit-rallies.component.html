@@ -5,41 +5,90 @@
     <div class="form-group">
       <label for="title">Título</label>
       <input id="title" formControlName="title" type="text" required />
+      <div *ngIf="rallyForm.get('title')?.touched && rallyForm.get('title')?.invalid">
+        <small *ngIf="rallyForm.get('title')?.hasError('required')">El título es obligatorio.</small>
+        <small *ngIf="rallyForm.get('title')?.hasError('minlength')">El título debe tener al menos 5 caracteres.</small>
+        <small *ngIf="rallyForm.get('title')?.hasError('maxlength')">El título no puede superar los 100
+          caracteres.</small>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="description">Descripción</label>
       <textarea id="description" formControlName="description" required></textarea>
+      <div *ngIf="rallyForm.get('description')?.touched && rallyForm.get('description')?.invalid">
+        <small *ngIf="rallyForm.get('description')?.hasError('required')">La descripción es obligatoria.</small>
+        <small *ngIf="rallyForm.get('description')?.hasError('minlength')">La descripción debe tener al menos 10
+          caracteres.</small>
+        <small *ngIf="rallyForm.get('description')?.hasError('maxlength')">La descripción no puede superar los 500
+          caracteres.</small>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="start_date">Fecha de inicio</label>
       <input id="start_date" type="date" formControlName="start_date" required />
+      <div *ngIf="rallyForm.get('start_date')?.touched && rallyForm.get('start_date')?.invalid">
+        <small *ngIf="rallyForm.get('start_date')?.hasError('required')">La fecha de inicio es obligatoria.</small>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="end_date">Fecha de finalización</label>
-      <input id="end_date" type="date" formControlName="end_date" required />
+      <input 
+        id="end_date" 
+        type="date" 
+        formControlName="end_date" 
+        required 
+      />
+      <div *ngIf="rallyForm.get('end_date')?.touched && rallyForm.get('end_date')?.invalid">
+        <small *ngIf="rallyForm.get('end_date')?.hasError('required')">La fecha de finalización es obligatoria.</small>
+      </div>
+      
+      <!-- Muestra el mensaje de error de la validación personalizada (dateMismatch) en el FormGroup -->
+      <div *ngIf="rallyForm.errors?.['dateMismatch'] && rallyForm.get('end_date')?.touched">
+        <small>La fecha de finalización no puede ser anterior a la de inicio.</small>
+      </div>
     </div>
+    
+
+
 
     <div class="form-group">
       <label for="location">Ubicación</label>
       <input id="location" formControlName="location" type="text" required />
+      <div *ngIf="rallyForm.get('location')?.touched && rallyForm.get('location')?.invalid">
+        <small *ngIf="rallyForm.get('location')?.hasError('required')">La ubicación es obligatoria.</small>
+        <small *ngIf="rallyForm.get('location')?.hasError('minlength')">La ubicación debe tener al menos 3
+          caracteres.</small>
+        <small *ngIf="rallyForm.get('location')?.hasError('maxlength')">La ubicación no puede superar los 100
+          caracteres.</small>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="theme">Tema</label>
       <input id="theme" formControlName="theme" type="text" required />
+      <div *ngIf="rallyForm.get('theme')?.touched && rallyForm.get('theme')?.invalid">
+        <small *ngIf="rallyForm.get('theme')?.hasError('required')">El tema es obligatorio.</small>
+        <small *ngIf="rallyForm.get('theme')?.hasError('minlength')">El tema debe tener al menos 3 caracteres.</small>
+        <small *ngIf="rallyForm.get('theme')?.hasError('maxlength')">El tema no puede superar los 50 caracteres.</small>
+      </div>
     </div>
 
-    <div *ngIf="rallyForm.invalid" class="error-message">
+    <div *ngIf="rallyForm.invalid && rallyForm.touched" class="error-message">
       Por favor, completa todos los campos correctamente.
     </div>
 
-    <button type="submit" [disabled]="rallyForm.invalid || isLoading">Actualizar</button>
-    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
+    <button type="submit" [disabled]="rallyForm.invalid || isLoading">
+      Actualizar
+    </button>
+    <button type="button" class="cancel-button" (click)="cancel()">
+      Cancelar
+    </button>
   </form>
-<br>
+
+  <br>
   <!-- Opcional: mostrar datos actuales -->
   <div *ngIf="rallyForm.get('start_date')?.value || rallyForm.get('end_date')?.value">
     <h3><strong>Inicio actual:</strong> {{ rallyForm.get('start_date')?.value | date }}</h3>

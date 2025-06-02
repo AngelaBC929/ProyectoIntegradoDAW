@@ -32,17 +32,20 @@ export class RallyService {
   }
 
   createRally(rallyData: any): Observable<any> {
-    return this.http.post(this.apiUrl, rallyData).pipe(
-      tap((newRally) => {
+    return this.http.post(this.apiUrl, rallyData, { observe: 'response' }).pipe(
+      tap((res) => {
+        console.log('Respuesta completa del servidor:', res);
+        const newRally = res.body;
         const currentRallies = this.ralliesSubject.value || [];
         this.ralliesSubject.next([...currentRallies, newRally as Rally]);
       }),
       catchError((error) => {
-        console.error('Error al crear rally:', error);
-        return throwError(() => new Error(error));
+        console.error('Error al crear rally (catch):', error);
+        return throwError(() => new Error(error.message || 'Error desconocido'));
       })
     );
   }
+  
 
   updateRally(id: number, rallyData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}?id=${id}`, rallyData).pipe(

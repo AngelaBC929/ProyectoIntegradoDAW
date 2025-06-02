@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   title = 'rallyFotografico';
   role: string | null = null;
   showModal: boolean = false;  // Variable para mostrar el modal
+  isLoggedIn: boolean = false;  // Estado de autenticación
+
 
   constructor(private authService: AuthenticationService, private router: Router) {}
 
@@ -33,8 +35,16 @@ export class AppComponent implements OnInit {
     });
   
     // Verificar si ya está autenticado (por ejemplo, al recargar)
-    if (!this.authService.isAuthenticated()) {
-      this.showSessionExpiredModal();
+    //lo comento xq si no pasa directamenta al popup en vez de al home
+    // if (!this.authService.isAuthenticated()) {
+    //   this.showSessionExpiredModal();
+    // }
+    // Verificar si el usuario está autenticado
+    this.isLoggedIn = this.authService.isAuthenticated();
+
+    // Si no está autenticado, redirigir al home (evitar mostrar el modal si ya no está autenticado)
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/home']);
     }
   }
   

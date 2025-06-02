@@ -16,7 +16,7 @@ username$ = this.usernameSubject.asObservable();
 
   // 🆕 Modal y timeout
   private timeout: any;
-  private readonly TIMEOUT_LIMIT = 10 * 60 * 1000; // 30 minutos
+  private readonly TIMEOUT_LIMIT = 15 * 60 * 1000; // 15 minutos
   private sessionExpiredSubject = new Subject<void>();
   sessionExpired$ = this.sessionExpiredSubject.asObservable();
 

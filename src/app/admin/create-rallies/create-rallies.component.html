@@ -1,22 +1,29 @@
 <div class="container">
   <h2>Crear Rally</h2>
   <form [formGroup]="rallyForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Título -->
     <div class="form-group">
       <label for="title">Título</label>
       <input id="title" formControlName="title" class="form-control" />
       <div *ngIf="rallyForm.get('title')?.invalid && rallyForm.get('title')?.touched" class="text-danger">
-        El título es obligatorio.
+        <small *ngIf="rallyForm.get('title')?.hasError('required')">El título es obligatorio.</small>
+        <small *ngIf="rallyForm.get('title')?.hasError('minlength')">El título debe tener al menos 6 caracteres.</small>
       </div>
     </div>
 
+    <!-- Descripción -->
     <div class="form-group">
       <label for="description">Descripción</label>
       <textarea id="description" formControlName="description" class="form-control"></textarea>
       <div *ngIf="rallyForm.get('description')?.invalid && rallyForm.get('description')?.touched" class="text-danger">
-        La descripción es obligatoria.
+        <small *ngIf="rallyForm.get('description')?.hasError('required')">La descripción es obligatoria.</small>
+        <small *ngIf="rallyForm.get('description')?.hasError('minlength')">La descripción debe tener al menos 10 caracteres.</small>
+        <small *ngIf="rallyForm.get('description')?.hasError('maxlength')">La descripción no puede tener más de 250 caracteres.</small>
       </div>
     </div>
 
+    <!-- Fecha de inicio -->
     <div class="form-group">
       <label for="start_date">Fecha de inicio</label>
       <input id="start_date" type="date" formControlName="start_date" class="form-control" />
@@ -25,6 +32,7 @@
       </div>
     </div>
 
+    <!-- Fecha de finalización -->
     <div class="form-group">
       <label for="end_date">Fecha de finalización</label>
       <input id="end_date" type="date" formControlName="end_date" class="form-control" />
@@ -33,6 +41,12 @@
       </div>
     </div>
 
+    <!-- Mostrar error de validación de fecha si existe -->
+    <div *ngIf="dateRangeError" class="text-danger">
+      {{ dateRangeError }}
+    </div>
+
+    <!-- Ubicación -->
     <div class="form-group">
       <label for="location">Ubicación</label>
       <input id="location" formControlName="location" class="form-control" />
@@ -41,6 +55,7 @@
       </div>
     </div>
 
+    <!-- Tema -->
     <div class="form-group">
       <label for="theme">Tema</label>
       <input id="theme" formControlName="theme" class="form-control" />
@@ -55,10 +70,29 @@
         Crear Rally
       </button>
     </div>
-  
 
-  <div *ngIf="message" class="alert alert-info">
-    {{ message }}
+    <!-- Mensajes de estado -->
+    <div *ngIf="message" class="alert alert-info">
+      {{ message }}
+    </div>
+  </form>
+
+  <!-- Lista de rallies -->
+  <div *ngIf="rallies.length > 0">
+    <h3>Rallies creados</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let rally of rallies">
+        <strong>{{ rally.title }}</strong><br>
+        Fecha de inicio: {{ rally.start_date | date }}<br>
+        Fecha de finalización: {{ rally.end_date | date }}<br>
+        Ubicación: {{ rally.location }}<br>
+        Tema: {{ rally.theme }}
+      </li>
+    </ul>
   </div>
-</form>
+<!-- 
+  Si no hay rallies, mostramos un mensaje
+  <div *ngIf="!rallies.length">
+    <p>No hay rallies disponibles.</p>
+  </div> -->
 </div>
