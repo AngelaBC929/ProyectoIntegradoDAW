@@ -15,6 +15,11 @@ export class FaqsComponent implements OnInit {
   tabActivo: string = 'faqs'; // por si usas tabs
 
   preguntasRespuestas = [
+     {
+    pregunta: '¿Quieres saber cómo moverte por toda la App?',
+    respuesta: `Aquí puedes descargar nuestro <a href="/docs/manual-usuario.pdf" download target="_blank" class="btn-descarga">manual de usuario (PDF)</a>.`,
+    abierta: false
+    },
     {
       pregunta: '¿Cuántas fotos puedo subir por rally?',
       respuesta: 'Puedes subir hasta 3 fotos por cada rally'+
@@ -26,7 +31,7 @@ export class FaqsComponent implements OnInit {
       respuesta: 'Las fotos deben seguir la temática del rally para ser aceptadas.'+
       '<br>• Deben ser originales y no haber sido publicadas anteriormente en ningún otro lugar.' +
       '<br>• Deben ser tomadas por el participante y no pueden ser editadas con programas de edición de imágenes.' +
-      '<br>• Deben ser enviadas en formato digital (JPG o PNG) y no superar los 10 MB.',
+      '<br>• Deben ser enviadas en formato digital (JPG o PNG) y no superar los 5 MB.',
       abierta: false
     },
     {
@@ -57,6 +62,11 @@ export class FaqsComponent implements OnInit {
     {
       pregunta: '¿Qué pasa con las fotos ganadoras?',
       respuesta: 'Las fotos ganadoras se anunciarán en la galería.',
+      abierta: false
+    },
+     {
+      pregunta: '¿Tienes más dudas o necesitas ayuda?',
+      respuesta: 'Puedes ponerte en contacto a gtraves de nuestro correo eléctronico: expresscapturesvz.admin@gmail.com.',
       abierta: false
     }
   ];

@@ -4,17 +4,30 @@
   font-family: 'Merriweather', serif;
   background-size: cover;
   min-height: 80vh;
+
+  color: #5c3a1e;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-gallery {
+  background: url('/images/fondo3.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
   padding: 1rem;
   color: #5c3a1e;
 }
 
-/* Contenedor principal */
-.app-gallery {
-  max-width: 1200px;
+.app-gallery-content {
+  max-width: 1000px;
   margin: 0 auto;
   background: #fdf7edcc;
   border-radius: 10px;
   padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
   box-shadow: 0 4px 12px rgba(123, 79, 36, 0.3);
 }
 

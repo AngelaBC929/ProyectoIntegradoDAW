@@ -136,6 +136,22 @@
 .back-button:hover {
   background-color: #8d5f38;
 }
+.btn-descarga {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #8B4513; /* marrón cálido */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-descarga:hover {
+  background-color: #5c3a1e; /* tono más oscuro al pasar el ratón */
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .tabs {
@@ -214,5 +230,9 @@
 
   .back-button {
     padding: 0.6rem 1.2rem;
+  }
+  .btn-descarga {
+    padding: 6px 12px;
+    font-size: 0.9rem;
   }
 }

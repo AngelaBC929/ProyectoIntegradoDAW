@@ -1,6 +1,7 @@
 <!-- HERO -->
 <section class="urban-hero container-fluid position-relative py-5">
-  <div class="d-flex justify-content-end gap-2 px-4 position-absolute top-0 end-0 mt-4 z-3">
+  <!-- Botones flotantes arriba a la derecha -->
+  <div class="urban-buttons-top d-flex justify-content-end gap-2 px-4 position-absolute top-0 end-0 mt-4 z-3">
     <button class="urban-btn urban-login" (click)="mostrarLogin()">Iniciar sesión</button>
     <button class="urban-btn urban-register" (click)="goToRegister()">Registrarse</button>
   </div>
@@ -8,14 +9,17 @@
   <!-- Contenedor para el texto sobre la imagen -->
   <div class="urban-hero-text-wrapper">
     <div class="urban-hero-text mx-auto px-3">
-      <h1 class="urban-title">Rally Fotográfico</h1>
-
+      <div class="urban-brand-text">
+        <h1 class="urban-brand-title">ExpressCaptureVz<span style="font-size: 0.6em; vertical-align: super;">®</span></h1>
+        <h2 class="urban-title">Rally Fotográfico</h2>
+      </div>
       <p class="urban-subtitle">
         "Captura lo extraordinario en lo cotidiano. Comparte tu visión única con el mundo."
       </p>
     </div>
   </div>
 </section>
+
 <!-- BLOQUE DE INSTRUCCIONES -->
 <section class="urban-instructions-container py-5">
   <div class="container text-center">
@@ -57,5 +61,5 @@
 
 <!-- FOOTER -->
 <footer class="urban-footer mt-auto">
-  <p>&copy; 2025 Rally Fotográfico. Encuentra arte en cada rincón.</p>
+  <p>&copy; 2025 ExpressCaptureVz - Rally Fotográfico. Todos los derechos reservados.</p>
 </footer>

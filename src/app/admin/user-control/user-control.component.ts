@@ -22,6 +22,7 @@ export class UserControlComponent implements OnInit {
     // Obtener los usuarios al cargar el componente
     this.userService.getAllUsers().subscribe({
       next: (users) => {
+        console.log('Usuarios recibidos:', users);
         this.users = users;  // Asignamos los usuarios a la lista
         this.loading = false;  // Dejamos de mostrar el loading
       },
@@ -32,30 +33,30 @@ export class UserControlComponent implements OnInit {
     });
   }
 
+
+
+
   // Eliminar usuario
 deleteUser(userId: number): void {
-  // Encontramos el usuario a eliminar usando su ID
-  const userToDelete = this.users.find(user => user.id === userId);
-
-  if (userToDelete) {
-    // Creamos el mensaje de confirmación personalizado
-    const confirmMessage = `¿Estás seguro de que quieres eliminar al usuario: ${userToDelete.name} ${userToDelete.lastName}?`;
-
-    if (confirm(confirmMessage)) {
-      this.userService.deleteUser(userId).subscribe({
-        next: () => {
-          this.sweetAlert.success('Usuario eliminado correctamente');
-          // Actualizamos la lista de usuarios después de la eliminación
-          this.users = this.users.filter(user => user.id !== userId);
-        },
-        error: (error) => {
-          console.error('Error al eliminar el usuario', error);
+  this.userService.getUserById(userId).subscribe(user => {
+    if (user) {
+      const userName = `${user.name} ${user.lastName}`;
+      this.sweetAlert.confirm(
+        `¿Estás seguro de que quieres eliminar al usuario: ${userName}?`,
+        'Esta acción no se puede deshacer.'
+      ).then(isConfirmed => {
+        if (isConfirmed) {
+          this.userService.deleteUser(userId).subscribe(() => {
+            this.sweetAlert.success('Usuario eliminado correctamente');
+            // Actualizamos la lista de usuarios después de la eliminación
+            this.users = this.users.filter(u => u.id !== userId);
+          });
         }
       });
+    } else {
+      console.error('Usuario no encontrado');
     }
-  } else {
-    console.error('Usuario no encontrado');
-  }
+  });
 }
 
 
