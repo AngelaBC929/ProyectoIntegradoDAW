@@ -11,7 +11,7 @@
     <div class="photos-grid">
       <!-- Iterar por cada foto del rally -->
       <div class="photo-card" *ngFor="let photo of rally.photos" 
-           [ngClass]="{'winner-photo': photo.isWinner}">
+         [ngClass]="{'winner-photo': isWinner(photo, rally)}">      
         <img [src]="photo.photo_url" alt="Foto del rally">
         <div class="photo-info">
           <p class="author">📸 {{ photo.autor }}</p>

@@ -48,29 +48,34 @@ export class GalleryComponent implements OnInit {
   }
 
   // Función para establecer las fotos ganadoras de cada rally
- setWinners() {
+setWinners() {
   this.rallies.forEach(rally => {
     let maxVotes = 0;
-    let winners: any[] = []; // Declaramos winners como un arreglo de tipo any
+    let winners: any[] = [];
 
-    // Encuentra las fotos con el máximo número de votos en el rally
+    // Encuentra el número máximo de votos
     rally.photos.forEach(photo => {
       if (photo.votos > maxVotes) {
-        maxVotes = photo.votos;
-        winners = [photo]; // Reinicia los ganadores si se encuentra una foto con más votos
+        maxVotes = photo.votos; // Establece el nuevo máximo
+        winners = [photo]; // Reinicia los ganadores si se encuentra un nuevo máximo
       } else if (photo.votos === maxVotes) {
-        winners.push(photo); // Agrega la foto al arreglo de ganadores si hay empate
+        winners.push(photo); // Agrega la foto si tiene el mismo número de votos
       }
     });
 
-    // Asigna las fotos ganadoras al rally
-    rally.winnerPhoto = winners;
-
-    // Marca las fotos ganadoras con una propiedad 'isWinner'
-    rally.photos.forEach(photo => {
-      photo.isWinner = winners.some(winner => winner.id === photo.id);
-    });
+    // Solo asigna ganadores si hay fotos con más de 0 votos
+    if (maxVotes > 0) {
+      rally.winnerPhoto = winners; // Asigna las fotos con el máximo número de votos
+    } else {
+      rally.winnerPhoto = []; // Si no hay fotos con más de 0 votos, no hay ganadores
+    }
   });
+}
+
+
+isWinner(photo: any, rally: any): boolean {
+  // Verifica si la foto está en la lista de ganadores para este rally
+  return rally.winnerPhoto?.some((winner: any) => winner.id === photo.id) ?? false;
 }
 
 
