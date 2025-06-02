@@ -15,7 +15,7 @@
 
   <div *ngIf="fotos.length > 0" class="photo-grid">
     <div *ngFor="let photo of fotos" class="photo-card">
-      <img [src]="photo.photo_url" alt="{{ photo.title }}" class="photo-img" />
+      <img *ngIf="photo.photo_url" [src]="getFullImageUrl(photo.photo_url)" alt="{{ photo.title }}" class="photo-img" (error)="photo.photo_url = null"/>
       <h3>{{ photo.title }}</h3>
       <p class="status-text">
   <span style="color: #5c3a1e;">Estado:</span>

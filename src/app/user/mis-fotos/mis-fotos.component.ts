@@ -186,6 +186,14 @@ onSaveEdit(): void {
     reader.readAsDataURL(file);
   }
 }
+getFullImageUrl(photoUrl: string): string {
+  if (photoUrl.startsWith('http')) {
+    return photoUrl;
+  }
+  return `${environment.apiUrl}/${photoUrl}`;
+}
+
+
 
   openEditModal(rally: any): void {
     this.isModalOpen = true;
