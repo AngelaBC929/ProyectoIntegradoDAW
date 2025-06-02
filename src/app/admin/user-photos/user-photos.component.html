@@ -5,6 +5,7 @@
       <tr>
         <th>Foto</th>
         <th>Usuario</th>
+        <th>Nombre de la foto</th>  
         <th>Rally</th>
         <th>Estado</th>
         <th>Acciones</th>
@@ -14,10 +15,14 @@
       <tr *ngFor="let photo of allPhotos">
         <td><img [src]="photo.photo_url" alt="Foto" width="100" /></td>
         <td>{{ photo.user_name || 'Sin nombre' }}</td>
+        <td>{{ photo.title || 'Sin título' }}</td>
         <td>{{ photo.rally_name || 'Sin rally' }}</td>
         <td>{{ photo.status }}</td>
         <td>
-          <button (click)="openModal(photo)">Revisar</button>
+          <!-- Desactivar el botón si la foto ya ha sido revisada -->
+          <button (click)="openModal(photo)" [disabled]="photo.status === 'aprobada' || photo.status === 'rechazada'">
+            Revisar
+          </button>
         </td>
       </tr>
     </tbody>
@@ -31,10 +36,17 @@
     <h3>Revisar Foto</h3>
     <img [src]="selectedPhoto.photo_url" alt="Foto seleccionada" width="300" />
     <p>Usuario: {{ selectedPhoto.user_name || 'Desconocido' }}</p>
+    <p>Nombre de la foto: {{ selectedPhoto.title || 'Desconocido' }}</p>
     <p>Rally: {{ selectedPhoto.rally_name || 'Desconocido' }}</p>
     <p>Estado actual: {{ selectedPhoto.status }}</p>
 
-    <button (click)="updatePhotoStatus('approved')">Aprobar</button>
-    <button (click)="updatePhotoStatus('rejected')">Rechazar</button>
+    <!-- Botones de aprobar o rechazar -->
+    <button (click)="updatePhotoStatus('aprobada')" [disabled]="selectedPhoto.status !== 'pendiente'">Aprobar</button>
+    <button (click)="updatePhotoStatus('rechazada')" [disabled]="selectedPhoto.status !== 'pendiente'">Rechazar</button>
+
+    <!-- Mensaje si la foto ya fue revisada -->
+    <p *ngIf="selectedPhoto.status === 'aprobada' || selectedPhoto.status === 'rechazada'">
+      Esta foto ya ha sido revisada.
+    </p>
   </div>
 </div>

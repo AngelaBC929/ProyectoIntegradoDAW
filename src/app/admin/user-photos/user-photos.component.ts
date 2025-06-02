@@ -48,19 +48,44 @@ export class UserPhotosComponent implements OnInit {
     this.selectedPhoto = null; // Limpiar la foto seleccionada
   }
 
-  // Método para actualizar el estado de la foto (Aprobar/Rechazar)
-  updatePhotoStatus(status: string) {
-    if (this.selectedPhoto) {
-      // Aquí se podría hacer una llamada al backend para actualizar el estado
-      console.log(`Foto ${this.selectedPhoto.id} actualizada a estado: ${status}`);
-      
-      // Simulamos una actualización en el estado, por ejemplo, directamente en la vista
-      this.selectedPhoto.status = status;
+ // Método para actualizar el estado de la foto (Aprobar/Rechazar)
+updatePhotoStatus(status: string) {
+  if (this.selectedPhoto) {
+    console.log('Enviando solicitud con estos datos: ', {
+      action: 'approve_or_reject',
+      photo_id: this.selectedPhoto.id,
+      status: status
+    });
 
-      // Llamada para cerrar el modal después de actualizar el estado
-      this.closeModal();
-    } else {
-      console.error('No se ha seleccionado ninguna foto');
-    }
+    this.http.post('http://localhost/backendRallyFotografico/fotos.php', {
+      action: 'approve_or_reject',
+      photo_id: this.selectedPhoto.id,
+      status: status
+    })
+    .subscribe((response: any) => {
+      if (response.success) {
+        // Actualizamos el estado en la foto seleccionada
+        this.selectedPhoto.status = status;
+        this.selectedPhoto.isReviewed = true; // Marcamos la foto como revisada
+
+        // También actualizamos el estado de esa foto en allPhotos
+        const updatedIndex = this.allPhotos.findIndex(photo => photo.id === this.selectedPhoto.id);
+        if (updatedIndex !== -1) {
+          this.allPhotos[updatedIndex].status = status; // Actualizamos el estado de la foto en la lista
+        }
+
+        // Cerramos el modal después de actualizar el estado
+        this.closeModal();
+      } else {
+        console.error('Error al actualizar el estado de la foto');
+      }
+    }, (error) => {
+      console.error('Error en la solicitud HTTP', error);
+    });
+  } else {
+    console.error('No se ha seleccionado ninguna foto');
   }
+}
+
+  
 }

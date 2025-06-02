@@ -1,3 +1,4 @@
+/* Modal styles */
 .modal {
   position: fixed;
   top: 0;
@@ -8,18 +9,71 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
+  background-color: #fff;
+  padding: 24px;
   border-radius: 8px;
-  max-width: 90%;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  position: relative;
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.modal-content button {
+  margin: 8px 4px;
+  padding: 8px 16px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Table styling */
+.photo-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.photo-list th, .photo-list td {
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: center;
 }
 
-.close {
-  float: right;
-  font-size: 24px;
-  cursor: pointer;
+.photo-list th {
+  background-color: #f2f2f2;
+}
+
+.photo-list img {
+  border-radius: 4px;
+}
+
+button:disabled {
+  background-color: #ccc; /* Color de fondo cuando el botón está deshabilitado */
+  cursor: not-allowed; /* Cambiar el cursor a un "no permitido" */
 }
