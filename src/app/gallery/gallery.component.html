@@ -1,17 +1,23 @@
 <div class="gallery">
-    <h2>Galería de Fotografías</h2>
-    <div class="photos">
-      <div class="photo-card" *ngFor="let photo of photos">
-        <img [src]="photo.url" alt="Foto">
-        <div class="photo-actions">
-          <!-- <button (click)="vote(photo.id)">Votar</button> -->
-        </div>
+  <h2>Galería del Rally</h2>
+
+  <div class="photos-grid">
+    <div class="photo-card" *ngFor="let photo of photos">
+      <img [src]="'http://localhost/backendRallyFotografico/' + photo.photo_path" alt="Foto del rally">
+      <div class="photo-info">
+        <p class="author">📸 {{ photo.autor }}</p>
+        <p class="votes">❤️ {{ photo.votes }} votos</p>
+        
+        <!-- Botón de Votar que se desactiva si ya votaste -->
+        <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
+          {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
+        </button>
       </div>
     </div>
-    
+  </div>
+</div>
+
 <!-- Botón para volver -->
 <div class="button-container">
   <button (click)="goBackToHome()" class="back-button">Volver</button>
 </div>
-  </div>
-  

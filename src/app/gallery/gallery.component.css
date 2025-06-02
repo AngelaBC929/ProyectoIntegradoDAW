@@ -1,56 +1,77 @@
 .gallery {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .photos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  .photo-card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    width: 200px;
-  }
-  
-  .photo-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-    /* Asegura que el botón se vea bien y esté centrado */
-    .button-container {
-      text-align: center; /* Centra el contenido dentro del contenedor */
-      margin-top: 20px; /* Espacio superior para separar el botón de los rallies */
-    }
-  
-    .back-button {
-      background-color: #4CAF50; /* Un color verde bonito */
-      color: white; /* Texto blanco */
-      border: none;
-      padding: 12px 24px; /* Un buen padding para que el botón se vea grande */
-      font-size: 16px; /* Un tamaño de fuente legible */
-      cursor: pointer; /* Cambia el cursor a mano para indicar que es un botón clickeable */
-      border-radius: 5px; /* Bordes redondeados para un diseño más suave */
-      transition: background-color 0.3s ease; /* Transición para cuando el botón cambia de color */
-    }
-  
-    .back-button:hover {
-      background-color: #45a049; /* Color un poco más oscuro cuando pasa el mouse sobre el botón */
-    }
-  
+  padding: 20px;
+  text-align: center;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.photo-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.photo-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.photo-info {
+  margin-top: 10px;
+}
+
+.author {
+  font-size: 14px;
+  color: #555;
+}
+
+.votes {
+  font-size: 16px;
+  color: #ff6347;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}

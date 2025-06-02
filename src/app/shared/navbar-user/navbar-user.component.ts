@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'navbar-user',
@@ -15,7 +16,7 @@ export class NavbarUserComponent implements OnInit {
   userName: string = 'Invitado';  // Inicializamos con 'Invitado' por defecto
   userId: number = 0;  // El ID del usuario que obtendremos de localStorage
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, private authenticationService: AuthenticationService) {
     console.log('NavbarUserComponent instanciado');
   }
   
@@ -43,6 +44,9 @@ export class NavbarUserComponent implements OnInit {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userId');
+    
+    this.authenticationService.setRole(null);  // Notificar a la app que ya no hay usuario logueado
+    this.router.navigate(['/home']); // Redirigir donde quieras
   
     // 🔄 Opcional: limpiar todos los datos
     // localStorage.clear();

@@ -1,55 +1,48 @@
-<div class="container">
+<div class="form-container">
   <h2>Editar Rally</h2>
-  
-  <!-- Mostrar mensaje de éxito o error -->
-  <div *ngIf="message" class="alert alert-info">{{ message }}</div>
 
   <form [formGroup]="rallyForm" (ngSubmit)="onSubmit()">
-    <!-- Campo para el título -->
     <div class="form-group">
       <label for="title">Título</label>
-      <input id="title" formControlName="title" class="form-control" />
+      <input id="title" formControlName="title" type="text" required />
     </div>
 
-    <!-- Campo para la descripción -->
     <div class="form-group">
       <label for="description">Descripción</label>
-      <textarea id="description" formControlName="description" class="form-control"></textarea>
+      <textarea id="description" formControlName="description" required></textarea>
     </div>
 
-    <!-- Campo para la fecha de inicio -->
     <div class="form-group">
       <label for="start_date">Fecha de inicio</label>
-      <input id="start_date" type="date" formControlName="start_date" class="form-control" />
+      <input id="start_date" type="date" formControlName="start_date" required />
     </div>
 
-    <!-- Campo para la fecha de finalización -->
     <div class="form-group">
       <label for="end_date">Fecha de finalización</label>
-      <input id="end_date" type="date" formControlName="end_date" class="form-control" />
+      <input id="end_date" type="date" formControlName="end_date" required />
     </div>
 
-    <!-- Campo para la ubicación -->
     <div class="form-group">
       <label for="location">Ubicación</label>
-      <input id="location" formControlName="location" class="form-control" />
+      <input id="location" formControlName="location" type="text" required />
     </div>
 
-    <!-- Campo para el tema -->
     <div class="form-group">
       <label for="theme">Tema</label>
-      <input id="theme" formControlName="theme" class="form-control" />
+      <input id="theme" formControlName="theme" type="text" required />
     </div>
 
-    <!-- Botón de actualización -->
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" [disabled]="isLoading">Actualizar</button>
+    <div *ngIf="rallyForm.invalid" class="error-message">
+      Por favor, completa todos los campos correctamente.
     </div>
+
+    <button type="submit" [disabled]="rallyForm.invalid || isLoading">Actualizar</button>
+    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
   </form>
-
-  <!-- Mostrar los datos actuales formateados -->
-  <div class="mb-3">
-    <p><strong>Inicio actual:</strong> {{ rallyForm.get('start_date')?.value | dateFormat }}</p>
-    <p><strong>Fin actual:</strong> {{ rallyForm.get('end_date')?.value | dateFormat }}</p>
+<br>
+  <!-- Opcional: mostrar datos actuales -->
+  <div *ngIf="rallyForm.get('start_date')?.value || rallyForm.get('end_date')?.value">
+    <h3><strong>Inicio actual:</strong> {{ rallyForm.get('start_date')?.value | date }}</h3>
+    <h3><strong>Fin actual:</strong> {{ rallyForm.get('end_date')?.value | date }}</h3>
   </div>
 </div>

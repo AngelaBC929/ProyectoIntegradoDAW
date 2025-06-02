@@ -1,4 +1,5 @@
 export interface Rally {
+  photos: any[];
   id: number;
   title: string;
   description?: string;

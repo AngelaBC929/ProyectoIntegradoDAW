@@ -86,4 +86,8 @@ export class EditRalliesComponent implements OnInit {
       this.message = 'Por favor, completa todos los campos correctamente.';
     }
   }
+ // Método para cancelar la edición y volver al listado de rallies
+ cancel(): void {
+  this.router.navigate(['/admin/gestion-rallies']);  // Redirige al listado de rallies
+}
 }

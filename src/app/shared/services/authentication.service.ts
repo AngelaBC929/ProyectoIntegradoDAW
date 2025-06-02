@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -8,7 +8,9 @@ import { tap, catchError } from 'rxjs/operators';
 })
 export class AuthenticationService {
   private apiUrl = 'http://localhost/backendRallyFotografico'; // ⚠️ Asegúrate de que esto coincide con tu XAMPP
-
+  private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('userRole'));
+  role$ = this.roleSubject.asObservable();
+  
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
@@ -16,7 +18,7 @@ export class AuthenticationService {
       tap(response => {
         // Guardar el token, rol, username y userId en localStorage
         localStorage.setItem('authToken', response.token);
-        localStorage.setItem('userRole', response.role);
+        this.setRole(response.role);
         localStorage.setItem('username', response.username); // si quieres usarlo en alguna parte
         localStorage.setItem('userId', response.id); // Guardar el ID del usuario en localStorage
       }),
@@ -62,4 +64,17 @@ export class AuthenticationService {
       })
     );
   }
+  setRole(role: string | null) {
+    if (role) {
+      localStorage.setItem('userRole', role);
+    } else {
+      localStorage.removeItem('userRole');
+    }
+    this.roleSubject.next(role);
+  }
+  
+  getRole(): string | null {
+    return this.roleSubject.getValue();
+  }
+  
 }
