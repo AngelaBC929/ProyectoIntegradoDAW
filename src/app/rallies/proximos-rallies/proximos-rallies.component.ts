@@ -27,7 +27,7 @@ export class ProximosRalliesComponent implements OnInit {
     });
   }
    // Método para redirigir al usuario al panel de usuario
-   goBackToUserPanel(): void {
+   volverAlPanelUsuario(): void {
     this.router.navigate(['user/dashboard']);
   }
 }

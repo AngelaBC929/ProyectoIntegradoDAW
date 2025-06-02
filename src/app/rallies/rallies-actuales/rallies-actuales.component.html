@@ -3,27 +3,22 @@
   <li *ngFor="let rally of ralliesActuales">
     <h3>{{ rally.title }}</h3>
     <p>{{ rally.description }}</p>
-    <p>
-      Inicio: <span>{{ rally.start_date | date: 'dd/MM/yyyy' }}</span> -
-      Fin: <span>{{ rally.end_date | date: 'dd/MM/yyyy' }}</span>
-    </p>
+    <p>Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span></p>
 
-    <!-- Botón que cambia dependiendo de si ya estás inscrito -->
-    <button *ngIf="!isUserInscribed(rally)" class="apuntarme-btn" (click)="apuntarse(rally.id)">
-      Apuntarse
+    <!-- Botón que cambia dependiendo de si ya estás inscrito
+    <button *ngIf="!estaInscrito(rally.id)" class="apuntarme-btn" (click)="alternarInscripcion(rally.id)">
+      Inscribirse
     </button>
 
-    <button *ngIf="isUserInscribed(rally)" class="cancelar-btn" (click)="cancelarInscripcion(rally.id)">
-      Cancelar Inscripción
+    <button *ngIf="estaInscrito(rally.id)" class="cancelar-btn" (click)="alternarInscripcion(rally.id)">
+      Anular Inscripción
     </button>
-  </li>
-  
-<!-- Mensaje si no hay rallies -->
-<p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">No hay rallies actualmente.</p>
+  </li> -->
 
-  
-<!-- Botón para volver -->
-<div class="button-container">
-  <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
-</div>
+  <!-- Mensaje si no hay rallies -->
+  <p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">No hay rallies actualmente.</p>
 </ul>
+ <!-- Botón para volver -->
+ <div class="button-container">
+  <button (click)="volverAlPanelUsuario()" class="back-button">Volver</button>
+</div>

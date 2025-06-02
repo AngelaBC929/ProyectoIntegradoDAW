@@ -56,9 +56,13 @@ export class LoginComponent {
 
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
+            // Verifica el contenido de la respuesta en la consola
+    console.log('Respuesta del login:', response);
         // Guardamos el token, el rol y el id del usuario en localStorage
+        if (response.token && response.role && response.username && response.id) {
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('userRole', response.role);
+        localStorage.setItem('username', response.username);
         localStorage.setItem('userId', response.id.toString());
  // Guardar el id del usuario
 
@@ -69,15 +73,18 @@ export class LoginComponent {
         } else {
           this.router.navigate(['/user/dashboard']); // Ajusta esta ruta según corresponda
         }
+      }
+        // Si no se recibe el token, rol o id, puedes manejarlo como desees
       },
       error: (error) => {
         console.error('Error de autenticación', error);
       },
     });
+
   }
 
   closeModalMethod() {
     this.showModal = false;
-    this.router.navigate(['/']); // Redirige al home
+    this.router.navigate(['/home']); // Redirige al home
   }
 }

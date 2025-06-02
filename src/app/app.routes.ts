@@ -12,6 +12,10 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { GestionRalliesComponent } from './admin/gestion-rallies/gestion-rallies.component';
 import { EditRalliesComponent } from './admin/edit-rallies/edit-rallies.component';
 import { CreateRalliesComponent } from './admin/create-rallies/create-rallies.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { AdminGuard } from './shared/guards/admin.guard';
+import { UserGuard } from './shared/guards/user.guard';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,15 +23,21 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'profile', component: ProfileComponent },
-  {path: 'user/dashboard', loadComponent: () => import('./user/dashboard/dashboard.component').then(m => m.DashboardComponent)},
-  { path: 'proximos-rallies', component: ProximosRalliesComponent },
-  { path: 'rallies-actuales', component: RalliesActualesComponent },
-  { path: 'rallies-pasados', component: RalliesPasadosComponent },
-  { path: 'admin', component: AdminComponent},
-  { path: 'admin/edit-user/:id', component: EditUserComponent },
-  { path: 'admin/gestion-rallies', component: GestionRalliesComponent },
-  { path: 'admin/create-rallies', component: CreateRalliesComponent },
-  { path: 'admin/edit-rallies/:id', component: EditRalliesComponent },
-  { path: 'admin/user-control', loadComponent: () => import('./admin/user-control/user-control.component').then(m => m.UserControlComponent)},
+  { path: 'user/dashboard',
+    loadComponent: () => import('./user/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [AuthGuard, UserGuard]  // Aseguramos que esté autenticado y no sea un admin
+  },
+
+  { path: 'proximos-rallies', component: ProximosRalliesComponent, canActivate: [AuthGuard, UserGuard] },
+  { path: 'rallies-actuales', component: RalliesActualesComponent, canActivate: [AuthGuard, UserGuard] },
+  { path: 'rallies-pasados', component: RalliesPasadosComponent, canActivate: [AuthGuard, UserGuard] },
+  { path: 'admin/edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin/gestion-rallies', component: GestionRalliesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin/create-rallies', component: CreateRalliesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin/edit-rallies/:id', component: EditRalliesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin/user-control', 
+    loadComponent: () => import('./admin/user-control/user-control.component').then(m => m.UserControlComponent), 
+    canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

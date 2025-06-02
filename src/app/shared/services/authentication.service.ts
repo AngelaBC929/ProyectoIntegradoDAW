@@ -76,5 +76,9 @@ export class AuthenticationService {
   getRole(): string | null {
     return this.roleSubject.getValue();
   }
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+  
   
 }

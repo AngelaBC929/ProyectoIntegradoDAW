@@ -139,5 +139,8 @@ export class RegisterComponent {
       // Quitamos el check de errorMessages aquí
     );
   }
-  
+   // Método para cancelar la edición y volver al listado de usuarios
+   cancel(): void {
+    this.router.navigate(['/home']);  // Redirige al listado de usuarios
+  }
 }
