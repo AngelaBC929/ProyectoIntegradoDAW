@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
+import { PhotoService } from '../shared/services/photo.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +29,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit(): void {
@@ -39,19 +42,22 @@ export class HomeComponent implements OnInit {
     this.loadRecentPhotos();
   }
 
-  loadRecentPhotos(): void {
-    
-    this.http.get('http://localhost/backendRallyFotografico/fotos.php?action=getApprovedPhotos&limit=6&offset=0')
-  .subscribe(
-    (response: any) => {
-      this.recentPhotos = response.photos?.slice(0, 4) || [];
+loadRecentPhotos(): void {
+  this.photoService.getFotosAprobadasPaginated(1, 6).subscribe({
+    next: (response) => {
+      const fotos = response.photos || [];
+      // Ajustamos la URL completa
+      fotos.forEach((photo: { photo_url: string; }) => {
+        photo.photo_url = `${environment.apiUrl}/${photo.photo_url}`;
+      });
+      this.recentPhotos = fotos.slice(0, 4);
     },
-    (error) => {
-      console.error('Error al cargar las fotos recientes', error);
+    error: (err) => {
+      console.error('Error al cargar las fotos recientes', err);
     }
-  );
+  });
+}
 
-  }
 
   closeSuccessMessage(): void {
     this.successMessage = null;

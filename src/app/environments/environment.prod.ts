@@ -1,5 +1,4 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://tu-backend-en-produccion.com/api' // <-- Cambia esta URL cuando despliegues el backend
-  };
-  
+  production: true,
+  apiUrl: "https://expresscapturevz.wuaze.com/"
+};

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-user-photos',
@@ -24,18 +25,21 @@ export class UserPhotosComponent implements OnInit {
   }
 
   // Método para cargar todas las fotos desde el backend
-  loadPhotos() {
-    this.http.get('http://localhost/backendRallyFotografico/fotos.php?action=getAllPhotos')
-      .subscribe((response: any) => {
-        if (response.photos) {
-          this.allPhotos = response.photos;
-        } else {
-          console.error('No se encontraron fotos');
-        }
-      }, (error) => {
-        console.error('Error al cargar fotos', error);
-      });
-  }
+ loadPhotos() {
+  this.http.get(`${environment.apiUrl}/fotos.php?action=getAllPhotos`)
+    .subscribe((response: any) => {
+      if (response.photos) {
+        this.allPhotos = response.photos.map((foto: any) => ({
+          ...foto,
+          photo_url: `${environment.apiUrl}/${foto.photo_url}`
+        }));
+      } else {
+        console.error('No se encontraron fotos');
+      }
+    }, (error) => {
+      console.error('Error al cargar fotos', error);
+    });
+}
 
   // Método para abrir el modal con la foto seleccionada
   openModal(photo: any) {

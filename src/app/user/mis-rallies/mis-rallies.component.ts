@@ -6,6 +6,7 @@ import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
 import { FormsModule } from '@angular/forms';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-mis-rallies',
@@ -111,21 +112,23 @@ imagenModalUrl: string | null = null;
     }
   }
 
-  loadFotosSubidas(rallyId: number) {
-    this.photoService.getFotosPorRallyYUsuario(rallyId, this.usuario.id).subscribe({
-      next: (res: any) => {
-        console.log(res);  // Verifica la respuesta aquí
-        this.fotosPorRally[rallyId] = res.photos || [];
-       
-      },
-      error: (err: any) => {
-        console.error('Error al cargar fotos:', err);
-        this.fotosPorRally[rallyId] = [];
-      }
-    });
-    
-  }
-  
+loadFotosSubidas(rallyId: number) {
+  this.photoService.getFotosPorRallyYUsuario(rallyId, this.usuario.id).subscribe({
+    next: (res: any) => {
+      console.log(res);
+      this.fotosPorRally[rallyId] = (res.photos || []).map((foto: any) => {
+        return {
+          ...foto,
+          photo_url: `${environment.apiUrl}/${foto.photo_url}`
+        };
+      });
+    },
+    error: (err: any) => {
+      console.error('Error al cargar fotos:', err);
+      this.fotosPorRally[rallyId] = [];
+    }
+  });
+}
 onSubmit() {
   if (!this.selectedFile) {
     this.sweetAlert.info('Por favor selecciona una foto.');

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
-import Swal from 'sweetalert2';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-mis-fotos',
@@ -45,17 +45,21 @@ export class MisFotosComponent implements OnInit {
   }
 
   
-  loadPhotos(): void {
-    this.photoService.getFotosUsuarioActuales(this.userId).subscribe({
-      next: (response: { photos: any[]; }) => {
-        this.fotos = response?.photos || [];
-      },
-      error: (err: any) => {
-        console.error('Error al cargar las fotos:', err);
-        this.sweetAlert.warning('Error al cargar las fotos.');
-      }
-    });
-  }
+ loadPhotos(): void {
+  this.photoService.getFotosUsuarioActuales(this.userId).subscribe({
+    next: (response: { photos: any[]; }) => {
+      this.fotos = (response?.photos || []).map(photo => ({
+        ...photo,
+        photo_url: `${environment.apiUrl}/${photo.photo_url}`
+      }));
+    },
+    error: (err: any) => {
+      console.error('Error al cargar las fotos:', err);
+      this.sweetAlert.warning('Error al cargar las fotos.');
+    }
+  });
+}
+
   
  deletePhoto(photoId: number): void {
   this.sweetAlert.confirm('¿Estás seguro?', 'Esta acción eliminará la foto permanentemente.')

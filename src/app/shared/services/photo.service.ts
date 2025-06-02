@@ -1,10 +1,15 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+
 
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
-  private apiUrl = 'http://localhost/backendRallyFotografico/fotos.php';
+  // private apiUrl = 'http://localhost/backendRallyFotografico/fotos.php';
+  private apiUrl = `${environment.apiUrl}/fotos.php`;
+
 
   constructor(private http: HttpClient) {}
 
@@ -88,15 +93,13 @@ export class PhotoService {
   }
  
 
-  getAllPhotos(userId: number): Observable<any> {
-    const data = new FormData();
-    data.append('userId', userId.toString());
-    data.append('action', 'getUserPhotosActuales');
+  getAllPhotos(): Observable<any> {
+  const params = { action: 'getAllPhotos' };
+  return this.http.get<any>(this.apiUrl, { params }).pipe(
+    catchError((error: HttpErrorResponse) => throwError(() => new Error(error.error?.error || error.message)))
+  );
+}
 
-    return this.http.get<{ photos: any[] }>(
-      'http://localhost/backendRallyFotografico/fotos.php?action=getAllPhotos'
-    );
-  }
 
   updatePhotoStatus(photoId: number, newStatus: 'aprobada' | 'rechazada'): Observable<any> {
     const data = new FormData();

@@ -19,6 +19,7 @@ export class UserControlComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private sweetAlert: SweetAlertService) {}
 
   ngOnInit(): void {
+
     // Obtener los usuarios al cargar el componente
     this.userService.getAllUsers().subscribe({
       next: (users) => {

@@ -57,8 +57,7 @@ if (!registerForm.valid || !this.acceptTerms) {
   return;
 }
 
-  
-    this.authenticationService.register(
+   this.authenticationService.register(
       this.email, this.username, this.password, this.name, this.lastName, this.birthdate
     ).subscribe(
       (response: any) => {

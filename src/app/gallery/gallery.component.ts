@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhotoService } from '../shared/services/photo.service';
 import { SweetAlertService } from '../shared/services/sweet-alert.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-gallery',
@@ -81,25 +82,28 @@ isWinner(photo: any, rally: any): boolean {
 
 
   // Función para agrupar las fotos por rally
-  groupPhotosByRally(photos: any[]): any[] {
-    const grouped: { [key: number]: any } = {};
+ groupPhotosByRally(photos: any[]): any[] {
+  const grouped: { [key: number]: any } = {};
 
-    photos.forEach(photo => {
-      const rallyId = photo.rally_id;
-      if (!grouped[rallyId]) {
-        grouped[rallyId] = {
-          id: rallyId,
-          title: photo.rally_title || 'Rally sin nombre',
-          start_date: photo.rally_start_date,
-          end_date: photo.rally_end_date,
-          photos: []
-        };
-      }
-      grouped[rallyId].photos.push(photo);
-    });
+  photos.forEach(photo => {
+    // Completar URL
+    photo.photo_url = `${environment.apiUrl}/${photo.photo_url}`;
 
-    return Object.values(grouped);
-  }
+    const rallyId = photo.rally_id;
+    if (!grouped[rallyId]) {
+      grouped[rallyId] = {
+        id: rallyId,
+        title: photo.rally_title || 'Rally sin nombre',
+        start_date: photo.rally_start_date,
+        end_date: photo.rally_end_date,
+        photos: []
+      };
+    }
+    grouped[rallyId].photos.push(photo);
+  });
+
+  return Object.values(grouped);
+}
 
   loadVotedPhotos() {
     const userId = localStorage.getItem('userId');
