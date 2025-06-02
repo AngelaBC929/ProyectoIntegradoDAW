@@ -225,3 +225,8 @@ button:hover:not(:disabled) {
 .pagination-btn:hover:not(:disabled) {
   background-color: #0056b3;
 }
+.winner-photo {
+  border: 3px solid gold;  /* Borde dorado */
+  box-shadow: 0 0 15px rgba(255, 223, 0, 0.8);  /* Sombra dorada */
+  transform: scale(1.05);  /* Agrandar un poco la imagen */
+}

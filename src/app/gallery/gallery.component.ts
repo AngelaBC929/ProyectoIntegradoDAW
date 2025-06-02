@@ -17,8 +17,8 @@ export class GalleryComponent implements OnInit {
     start_date?: string;
     end_date?: string;
     photos: any[];
+    winnerPhoto?: any[];  // Propiedad para las fotos ganadoras de cada rally
   }[] = [];
-
   votedPhotos: Set<number> = new Set();
   currentPage: number = 1; // Página global
   limit: number = 6; // Fotos por página
@@ -30,21 +30,51 @@ export class GalleryComponent implements OnInit {
     this.loadRallies();
   }
 
- loadRallies() {
-  this.photoService.getFotosAprobadasPaginated(this.currentPage, this.limit).subscribe({
-    next: (response) => {
-      console.log('Fotos aprobadas:', response);
-      this.rallies = this.groupPhotosByRally(response.photos || []); // Agrupa las fotos por rally
-      this.totalPhotos = response.totalPhotos || 0; // Establece el total de fotos para la paginación
-      this.loadVotedPhotos();
-    },
-    error: (err) => {
-      console.error('Error al cargar fotos aprobadas:', err);
-    }
+  loadRallies() {
+    this.photoService.getFotosAprobadasPaginated(this.currentPage, this.limit).subscribe({
+      next: (response) => {
+        console.log('Fotos aprobadas:', response);
+        this.rallies = this.groupPhotosByRally(response.photos || []); // Agrupa las fotos por rally
+        this.totalPhotos = response.totalPhotos || 0; // Establece el total de fotos para la paginación
+        this.loadVotedPhotos();
+
+        // Establecer las fotos ganadoras para cada rally
+        this.setWinners();
+      },
+      error: (err) => {
+        console.error('Error al cargar fotos aprobadas:', err);
+      }
+    });
+  }
+
+  // Función para establecer las fotos ganadoras de cada rally
+ setWinners() {
+  this.rallies.forEach(rally => {
+    let maxVotes = 0;
+    let winners: any[] = []; // Declaramos winners como un arreglo de tipo any
+
+    // Encuentra las fotos con el máximo número de votos en el rally
+    rally.photos.forEach(photo => {
+      if (photo.votos > maxVotes) {
+        maxVotes = photo.votos;
+        winners = [photo]; // Reinicia los ganadores si se encuentra una foto con más votos
+      } else if (photo.votos === maxVotes) {
+        winners.push(photo); // Agrega la foto al arreglo de ganadores si hay empate
+      }
+    });
+
+    // Asigna las fotos ganadoras al rally
+    rally.winnerPhoto = winners;
+
+    // Marca las fotos ganadoras con una propiedad 'isWinner'
+    rally.photos.forEach(photo => {
+      photo.isWinner = winners.some(winner => winner.id === photo.id);
+    });
   });
 }
 
 
+  // Función para agrupar las fotos por rally
   groupPhotosByRally(photos: any[]): any[] {
     const grouped: { [key: number]: any } = {};
 
@@ -124,22 +154,22 @@ export class GalleryComponent implements OnInit {
 
   // Funciones de paginación global
   nextPage() {
-  if ((this.currentPage * this.limit) < this.totalPhotos) {
-    this.currentPage++;
-    this.loadRallies(); // Carga la siguiente página
+    if ((this.currentPage * this.limit) < this.totalPhotos) {
+      this.currentPage++;
+      this.loadRallies(); // Carga la siguiente página
+    }
   }
-}
 
-prevPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-    this.loadRallies(); // Carga la página anterior
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadRallies(); // Carga la página anterior
+    }
   }
-}
 
-hasMorePhotos(): boolean {
-  return (this.currentPage * this.limit) < this.totalPhotos; // Verifica si hay más fotos
-}
+  hasMorePhotos(): boolean {
+    return (this.currentPage * this.limit) < this.totalPhotos; // Verifica si hay más fotos
+  }
 
   goBackToHome(): void {
     this.router.navigate(['home']);
