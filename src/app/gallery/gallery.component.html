@@ -1,21 +1,48 @@
 <div class="gallery">
   <h2>Galería del Rally</h2>
 
-  <div class="photos-grid">
-    <div class="photo-card" *ngFor="let photo of photos">
-      <img [src]="photo.photo_url" alt="Foto del rally">
-      <div class="photo-info">
-        <p class="author">📸 {{ photo.autor }}</p> <!-- Autor de la foto -->
-        <p class="votos">❤️ {{ photo.votos }} votos</p>
+  <!-- Iterar por cada rally -->
+  <div class="rally-card" *ngFor="let rally of rallies">
+    <h3>{{ rally.title }}</h3>
+    <p class="rally-dates">
+      🗓️ Del {{ rally.start_date | date: 'dd/MM/yyyy' }} al {{ rally.end_date | date: 'dd/MM/yyyy' }}
+    </p>
 
-        <!-- Botón de Votar que se desactiva si ya votaste -->
-        <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
-          {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
-        </button>
+    <div class="photos-grid">
+      <div class="photo-card" *ngFor="let photo of rally.photos">
+        <img [src]="photo.photo_url" alt="Foto del rally">
+        <div class="photo-info">
+          <p class="author">📸 {{ photo.autor }}</p>
+          <p class="votos">❤️ {{ photo.votos || 0 }} votos</p>
+
+          <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
+            {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
+          </button>
+        </div>
+        
       </div>
+      
     </div>
+    <!-- Paginación -->
+<div class="pagination-container">
+  <!-- Botón de Anterior -->
+  <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-btn">
+    Anterior
+  </button>
+  
+  <!-- Número de la página -->
+  <span class="page-number">{{ currentPage }}</span>
+  
+  <!-- Botón de Siguiente -->
+  <button (click)="nextPage()" [disabled]="!hasMorePhotos()" class="pagination-btn">
+    Siguiente
+  </button>
+</div>
+
   </div>
 </div>
+
+
 
 <!-- Botón para volver -->
 <div class="button-container">

@@ -11,26 +11,58 @@ import { PhotoService } from '../shared/services/photo.service';
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit {
-  photos: any[] = [];
-  votedPhotos: Set<number> = new Set();
+  rallies: {
+    id: number;
+    title: string;
+    start_date?: string;
+    end_date?: string;
+    photos: any[];
+  }[] = [];
 
-  constructor(private photoService: PhotoService, private router: Router) { }
+  votedPhotos: Set<number> = new Set();
+  currentPage: number = 1; // Página global
+  limit: number = 6; // Fotos por página
+  totalPhotos: number = 0; // Total de fotos, para calcular las páginas
+
+  constructor(private photoService: PhotoService, private router: Router) {}
 
   ngOnInit() {
-    this.loadPhotos();
+    this.loadRallies();
   }
 
-  loadPhotos() {
-    this.photoService.getFotosAprobadas().subscribe({
-      next: (response) => {
-        console.log('Fotos aprobadas:', response);
-        this.photos = response.photos || [];
-        this.loadVotedPhotos();
-      },
-      error: (err) => {
-        console.error('Error al cargar fotos aprobadas:', err);
+ loadRallies() {
+  this.photoService.getFotosAprobadasPaginated(this.currentPage, this.limit).subscribe({
+    next: (response) => {
+      console.log('Fotos aprobadas:', response);
+      this.rallies = this.groupPhotosByRally(response.photos || []); // Agrupa las fotos por rally
+      this.totalPhotos = response.totalPhotos || 0; // Establece el total de fotos para la paginación
+      this.loadVotedPhotos();
+    },
+    error: (err) => {
+      console.error('Error al cargar fotos aprobadas:', err);
+    }
+  });
+}
+
+
+  groupPhotosByRally(photos: any[]): any[] {
+    const grouped: { [key: number]: any } = {};
+
+    photos.forEach(photo => {
+      const rallyId = photo.rally_id;
+      if (!grouped[rallyId]) {
+        grouped[rallyId] = {
+          id: rallyId,
+          title: photo.rally_title || 'Rally sin nombre',
+          start_date: photo.rally_start_date,
+          end_date: photo.rally_end_date,
+          photos: []
+        };
       }
+      grouped[rallyId].photos.push(photo);
     });
+
+    return Object.values(grouped);
   }
 
   loadVotedPhotos() {
@@ -65,7 +97,7 @@ export class GalleryComponent implements OnInit {
       next: (response) => {
         console.log('Voto registrado correctamente:', response);
 
-        const photo = this.photos.find(p => p.id === photoId);
+        const photo = this.findPhotoById(photoId);
         if (photo) {
           photo.votos = (photo.votos || 0) + 1;
         }
@@ -81,6 +113,33 @@ export class GalleryComponent implements OnInit {
       }
     });
   }
+
+  findPhotoById(photoId: number): any | null {
+    for (let rally of this.rallies) {
+      const photo = rally.photos.find(p => p.id === photoId);
+      if (photo) return photo;
+    }
+    return null;
+  }
+
+  // Funciones de paginación global
+  nextPage() {
+  if ((this.currentPage * this.limit) < this.totalPhotos) {
+    this.currentPage++;
+    this.loadRallies(); // Carga la siguiente página
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.loadRallies(); // Carga la página anterior
+  }
+}
+
+hasMorePhotos(): boolean {
+  return (this.currentPage * this.limit) < this.totalPhotos; // Verifica si hay más fotos
+}
 
   goBackToHome(): void {
     this.router.navigate(['home']);

@@ -21,6 +21,7 @@ export class RallyService {
 
   constructor(private http: HttpClient) {}
 
+  
   getAllRallies(): Observable<Rally[]> {
     return this.http.get<Rally[]>(this.apiUrl).pipe(
       tap((rallies) => this.ralliesSubject.next(rallies)),

@@ -86,6 +86,7 @@ export class PhotoService {
       catchError((error: HttpErrorResponse) => throwError(() => new Error(error.error?.error || error.message)))
     );
   }
+ 
 
   getAllPhotos(userId: number): Observable<any> {
     const data = new FormData();
@@ -108,9 +109,16 @@ export class PhotoService {
     );
   }
 
-  getFotosAprobadas(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?action=getApprovedPhotos`).pipe(
-      catchError((error: HttpErrorResponse) => throwError(() => new Error(error.error?.error || error.message)))
-    );
-  }
+  // ✅ FUNCIÓN CORRECTA PARA OBTENER LAS FOTOS APROBADAS CON PÁGINACIÓN
+getFotosAprobadasPaginated(page: number, limit: number): Observable<any> {
+  const params = {
+    action: 'getApprovedPhotos',
+    limit: limit.toString(),
+    offset: ((page - 1) * limit).toString()
+  };
+
+  return this.http.get<any>(this.apiUrl, { params }).pipe(
+    catchError((error: HttpErrorResponse) => throwError(() => new Error(error.error?.error || error.message)))
+  );
+}
 }
