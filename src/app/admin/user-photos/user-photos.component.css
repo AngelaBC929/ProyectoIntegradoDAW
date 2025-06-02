@@ -206,6 +206,7 @@ word-break: break-word;
   opacity: 0.9;
 }
 
+
 /* Responsive */
 @media (max-width: 768px) {
   .table-container {

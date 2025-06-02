@@ -115,8 +115,10 @@ h6 {
 }
 
 .foto-preview img {
-  width: 370px;
-  height: 300px;
+   width: 100%;
+  max-width: 370px;
+  height: auto;
+  aspect-ratio: 370 / 300; /* Mantiene proporción */
   object-fit: cover;
   border: 0.25rem solid #d4a373;
   border-radius: 1rem;
@@ -206,7 +208,8 @@ h6 {
   border-radius: 1.25rem;
   border: 0.0625rem solid #e0c9a6;
   box-shadow: 0 0.375rem 0.9375rem rgba(139, 69, 19, 0.25);
-  width: 150%;
+  width: 90%;
+  max-width: 70rem;
   height: auto;
   max-width: 70rem;
   max-height: 100vh; /* límite de altura del modal */
@@ -236,6 +239,7 @@ h6 {
   animation: fadeInOut 3s ease-in-out;
   font-family: 'Merriweather', serif;
 }
+
 
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateY(-0.625rem); }
@@ -304,3 +308,11 @@ h6 {
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

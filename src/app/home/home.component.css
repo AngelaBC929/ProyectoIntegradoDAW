@@ -125,9 +125,11 @@ img {
 
 /* GALERÍA */
 .urban-section-title {
-  font-size: 1.8rem;
-  margin: 2rem 0 1rem;
-  color: #f4d6b5;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: #3d1c0f 1px 1px 3px;
+  margin: 1.8rem 0 1rem;
+  color: #a54825;
   text-align: center;
 }
 
@@ -205,16 +207,6 @@ img {
   color: #fff0d9;
 }
 
-/* FOOTER */
-.urban-footer {
-  background-color: #2b160a;
-  color: #d5c4aa;
-  text-align: center;
-  padding: 0.8rem;
-  font-size: 0.7rem;
-  border-top: 0.6px solid #5b3c26;
-}
-
 /* 📱 MEDIA QUERIES (RESPONSIVE) */
 @media (max-width: 768px) {
   .urban-hero {
@@ -287,8 +279,8 @@ img {
 }
 
   .urban-brand-title {
+    margin-top: 2rem;
     font-size: 2.2rem;
-    margin-bottom: 0.4rem;
   }
 
   .urban-title {

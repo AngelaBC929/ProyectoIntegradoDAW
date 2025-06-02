@@ -131,6 +131,8 @@ h2{
   box-shadow: 0 6px 14px rgba(160, 105, 55, 0.8);
 }
 
+
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .table-container {
