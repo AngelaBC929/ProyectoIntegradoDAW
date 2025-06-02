@@ -3,11 +3,11 @@
 
   <div class="photos-grid">
     <div class="photo-card" *ngFor="let photo of photos">
-      <img [src]="'http://localhost/backendRallyFotografico/' + photo.photo_path" alt="Foto del rally">
+      <img [src]="photo.photo_url" alt="Foto del rally">
       <div class="photo-info">
-        <p class="author">📸 {{ photo.autor }}</p>
+        <p class="author">📸 {{ photo.autor }}</p> <!-- Autor de la foto -->
         <p class="votes">❤️ {{ photo.votes }} votos</p>
-        
+
         <!-- Botón de Votar que se desactiva si ya votaste -->
         <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
           {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}

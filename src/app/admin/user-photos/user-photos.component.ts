@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-photos',
@@ -15,7 +16,7 @@ export class UserPhotosComponent implements OnInit {
   isModalOpen: boolean = false; // Para controlar la apertura del modal
   selectedPhoto: any = null;    // Foto seleccionada para revisar
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // Al iniciar el componente, cargamos las fotos
   ngOnInit(): void {
@@ -86,6 +87,9 @@ updatePhotoStatus(status: string) {
     console.error('No se ha seleccionado ninguna foto');
   }
 }
-
+// Método para redirigir al usuario al panel de usuario
+goBackToAdminPanel(): void {
+  this.router.navigate(['admin']); 
+}
   
 }

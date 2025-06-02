@@ -118,7 +118,7 @@ export class PhotoService {
     );
   }
   
-  updatePhotoStatus(photoId: number, newStatus: 'approved' | 'rejected'): Observable<any> {
+  updatePhotoStatus(photoId: number, newStatus: 'aprobada' | 'rechazada'): Observable<any> {
     const data = new FormData();
     data.append('photo_id', photoId.toString());
     data.append('status', newStatus); // 'approved' o 'rejected'
@@ -131,6 +131,11 @@ export class PhotoService {
       })
     );
   }
-  
+  // Método para obtener fotos aprobadas
+  getFotosAprobadas(): Observable<any> {
+    return this.http.get<any>('http://localhost/backendRallyFotografico/fotos.php?action=getApprovedPhotos');
+  }
+
+
 
 }

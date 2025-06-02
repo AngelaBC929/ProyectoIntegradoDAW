@@ -40,6 +40,10 @@
     <button (click)="closeModal()">Cerrar</button>
   </div>
 </div>
+<div *ngIf="popupVisible" class="popup-error">
+  {{ popupMensaje }}
+</div>
+
 
 <!-- Botón para volver -->
 <div class="button-container">

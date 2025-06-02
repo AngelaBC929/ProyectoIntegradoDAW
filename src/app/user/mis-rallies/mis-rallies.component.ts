@@ -21,6 +21,8 @@ export class MisRalliesComponent implements OnInit {
   imagePreview: string | null = null;
   usuario: any = null;
   tituloFoto: string = ''; // Añade esta propiedad en tu componente
+  popupVisible: boolean = false;
+  popupMensaje: string = '';
 
 
   // Mapa para guardar fotos por rally
@@ -64,11 +66,23 @@ export class MisRalliesComponent implements OnInit {
 
   openModal(rally: any) {
     this.rallySeleccionado = rally;
+  
+    // Verificar cuántas fotos ha subido el usuario para este rally
+    const fotosSubidas = this.fotosPorRally[rally.id]?.length || 0;
+  
+    // Si ya ha subido 3 fotos, mostrar el popup y no abrir el modal
+    if (fotosSubidas >= 3) {
+      this.mostrarPopup('Ya has subido el número máximo de fotos para este rally.');
+      return; // No abrir el modal
+    }
+  
+    // Si no ha alcanzado el límite, abrir el modal
     this.isModalOpen = true;
     if (this.usuario) {
       this.loadFotosSubidas(rally.id);
     }
   }
+  
 
   closeModal() {
     this.isModalOpen = false;
@@ -93,20 +107,22 @@ export class MisRalliesComponent implements OnInit {
       next: (res: any) => {
         console.log(res);  // Verifica la respuesta aquí
         this.fotosPorRally[rallyId] = res.photos || [];
+       
       },
       error: (err: any) => {
         console.error('Error al cargar fotos:', err);
         this.fotosPorRally[rallyId] = [];
       }
     });
+    
   }
-
+  
   onSubmit() {
     if (this.selectedFile && this.usuario) {
       const userId = this.usuario.id;
       const rallyId = this.rallySeleccionado?.id;
       const title = this.tituloFoto || this.selectedFile?.name || 'Sin título';
-
+  
       if (rallyId) {
         this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
           next: (response) => {
@@ -115,6 +131,7 @@ export class MisRalliesComponent implements OnInit {
             this.selectedFile = null;
             this.imagePreview = null;
             this.tituloFoto = ''; // Limpiar el campo
+            this.closeModal(); // <- Aquí se cierra el modal automáticamente
           },
           error: (err: any) => {
             console.error('Error al subir la foto:', err);
@@ -128,7 +145,19 @@ export class MisRalliesComponent implements OnInit {
       alert('Por favor selecciona una foto.');
     }
   }
+  
 
+mostrarPopup(mensaje: string) {
+  this.popupMensaje = mensaje;
+  this.popupVisible = true;
+
+  // Después de 3 segundos, cerrar el popup
+  setTimeout(() => {
+    this.popupVisible = false;
+  }, 5000); // Popup se cierra automáticamente después de 5 segundos
+}
+
+  
   goBackToUserPanel(): void {
     this.router.navigate(['user/dashboard']);
   }
