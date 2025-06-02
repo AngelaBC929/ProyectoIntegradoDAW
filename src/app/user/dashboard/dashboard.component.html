@@ -1,0 +1,95 @@
+<div class="dashboard">
+    <header class="header">
+      <h1>Bienvenido a tu Panel de Usuario</h1>
+      <nav class="tabs">
+        <button (click)="seleccionarTab('perfil')" [class.active]="tabActivo === 'perfil'">Perfil</button>
+        <button (click)="seleccionarTab('subir')" [class.active]="tabActivo === 'subir'" (click)="openModal()">Subir Fotos</button>
+        <button (click)="seleccionarTab('misfotos')" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
+      </nav>
+    </header>
+  
+    <div class="user-dashboard">
+      <div class="card-container">
+        <div class="card">
+          <h2>Próximos Rallies</h2>
+          <p>Participa en los próximos rallies fotográficos que tenemos preparados para ti.</p>
+          <button class="btn-enter" (click)="entrarProximosRallies()">Entrar</button>
+        </div>
+  
+        <div class="card">
+          <h2>Rallies Actuales</h2>
+          <p>Únete a los rallies en los que estás participando actualmente.</p>
+          <button class="btn-enter" (click)="entrarRalliesActuales()">Entrar</button>
+        </div>
+  
+        <div class="card">
+          <h2>Rallies Finalizados</h2>
+          <p>Revive los rallies pasados y mira las fotos que tomaste.</p>
+          <button class="btn-enter" (click)="entrarRalliesPasados()">Entrar</button>
+        </div>
+      </div>
+    </div>
+  
+    <main>
+      <section *ngIf="tabActivo === 'perfil'" class="perfil-container">
+        <div class="perfil-card">
+          <h2>Perfil</h2>
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="usuario.name" *ngIf="usuario" />
+          <label>Apellidos</label>
+          <input type="text" [(ngModel)]="usuario.lastName" *ngIf="usuario" />
+          <label>Correo Electrónico</label>
+          <input type="email" [(ngModel)]="usuario.email" *ngIf="usuario" />
+          <button class="btn-guardar" (click)="modificarPerfil()">Guardar cambios</button>
+        </div>
+  
+        <div class="fotos-card">
+          <h2>Mis Fotos</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let foto of fotos">
+                <td>{{ foto.titulo }}</td>
+                <td>{{ foto.estado }}</td>
+                <td><a href="#" (click)="eliminarFoto(foto)">Eliminar</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  
+    <!-- Modal para Subir Foto -->
+    <div id="uploadModal" class="modal" *ngIf="isModalOpen">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>Sube tu foto</h2>
+  
+        <!-- Formulario de carga -->
+        <form (ngSubmit)="onSubmit()">
+          <label for="photoInput">Selecciona una foto:</label>
+          <input type="file" id="photoInput" name="photo" accept="image/*" (change)="onFileSelected($event)" />
+  
+          <!-- Vista previa de la foto -->
+          <div *ngIf="imagePreview" id="previewContainer">
+            <h3>Vista previa:</h3>
+            <img [src]="imagePreview" alt="Vista previa" style="max-width: 100%; height: auto;">
+          </div>
+  
+          <button type="submit" [disabled]="!selectedFile">Subir Foto</button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Botón para volver -->
+    <div class="button-container">
+      <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
+    </div>
+  </div>
+  

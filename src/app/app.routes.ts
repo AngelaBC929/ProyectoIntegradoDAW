@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ProfileComponent } from './profile/profile.component';
-import { UserComponent } from './user/user/user.component';
 import { ProximosRalliesComponent } from './rallies/proximos-rallies/proximos-rallies.component';
 import { RalliesActualesComponent } from './rallies/rallies-actuales/rallies-actuales.component';
 import { RalliesPasadosComponent } from './rallies/rallies-pasados/rallies-pasados.component';
@@ -20,7 +19,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: UserComponent },
+  {path: 'user/dashboard', loadComponent: () => import('./user/dashboard/dashboard.component').then(m => m.DashboardComponent)},
   { path: 'proximos-rallies', component: ProximosRalliesComponent },
   { path: 'rallies-actuales', component: RalliesActualesComponent },
   { path: 'rallies-pasados', component: RalliesPasadosComponent },

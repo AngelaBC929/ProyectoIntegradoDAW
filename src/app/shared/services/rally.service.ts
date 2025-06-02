@@ -10,7 +10,7 @@ import { Rally } from '../models/rally.model';
 export class RallyService {
   private apiUrl = 'http://localhost/backendRallyFotografico/rallies.php';
   private apiInscripcionesUrl = 'http://localhost/backendRallyFotografico/inscripciones.php'; // URL del backend para inscripciones
-  private apiUploadPhotosUrl = 'http://localhost/backendRallyFotografico/upload_photos.php'; // URL para subir fotos
+  private apiUploadPhotosUrl = 'http://localhost/backendRallyFotografico/fotos.php'; // URL para subir fotos
 
   // Creamos un BehaviorSubject para almacenar los rallies
   private ralliesSubject = new BehaviorSubject<Rally[]>([]);
@@ -23,12 +23,19 @@ export class RallyService {
   getAllRallies(): Observable<Rally[]> {
     return this.http.get<Rally[]>(this.apiUrl).pipe(
       tap((rallies) => {
-        // Actualizamos el BehaviorSubject con todos los rallies recibidos
-        this.ralliesSubject.next(rallies);
+        // Filtrar los rallies para mostrar solo los que son futuros o actuales
+        const currentDate = new Date();
+        const filteredRallies = rallies.filter(rally => {
+          const rallyDate = new Date(rally.fecha); // Asumiendo que el campo fecha está en formato 'YYYY-MM-DD'
+          return rallyDate >= currentDate; // Solo rallies cuyo fecha es mayor o igual a la fecha actual
+        });
+        
+        // Actualizar el Subject con los rallies filtrados
+        this.ralliesSubject.next(filteredRallies);
       })
     );
   }
-
+  
   // Subir fotos a un rally
   uploadPhotos(rallyId: number, photos: File[]): Observable<any> {
     const formData = new FormData();

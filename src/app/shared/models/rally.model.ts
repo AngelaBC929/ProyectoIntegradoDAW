@@ -1,4 +1,6 @@
 export interface Rally {
+  users: any;
+  fecha: string | number | Date;
   photos: any[];
   id: number;
   title: string;

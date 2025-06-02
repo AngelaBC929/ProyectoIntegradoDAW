@@ -9,7 +9,7 @@ import { DateFormatPipe } from '../../shared/pipes/date-format.pipe';
 @Component({
   selector: 'app-edit-rallies',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DateFormatPipe],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-rallies.component.html',
   styleUrls: ['./edit-rallies.component.css']
 })

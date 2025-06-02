@@ -1,66 +1,29 @@
 <h2>Rallies Actuales</h2>
-
 <ul>
-  <li *ngFor="let rally of ralliesActuales" class="rally-card">
+  <li *ngFor="let rally of ralliesActuales">
     <h3>{{ rally.title }}</h3>
     <p>{{ rally.description }}</p>
     <p>
-      Inicio: <span>{{ rally.start_date | date: 'dd/MM/yyyy' }}</span> - 
+      Inicio: <span>{{ rally.start_date | date: 'dd/MM/yyyy' }}</span> -
       Fin: <span>{{ rally.end_date | date: 'dd/MM/yyyy' }}</span>
     </p>
 
-    <!-- Botón para inscribirse -->
-    <div *ngIf="!isUserInscribed(rally.id)">
-      <button (click)="apuntarse(rally.id)" class="back-button">
-        Apuntarse
-      </button>
-    </div>
+    <!-- Botón que cambia dependiendo de si ya estás inscrito -->
+    <button *ngIf="!isUserInscribed(rally)" class="apuntarme-btn" (click)="apuntarse(rally.id)">
+      Apuntarse
+    </button>
 
-    <!-- Formulario para subir fotos -->
-    <div *ngIf="isUserInscribed(rally.id)">
-      <form (ngSubmit)="submitPhotos(rally.id)" #photoForm="ngForm" style="margin-top: 15px;">
-        <input
-          type="file"
-          (change)="onFileChange($event)"
-          multiple
-          required
-          accept="image/*"
-        />
-        <button type="submit" class="back-button" [disabled]="!photoForm.form.valid">
-          Subir Fotos
-        </button>
-
-        <!-- Botón para cancelar inscripción -->
-        <div style="margin-top: 10px;">
-          <button (click)="cancelarInscripcion(rally.id)" class="cancel-button">
-            Cancelar Inscripción
-          </button>
-        </div>
-      </form>
-
-      <!-- Galería de fotos -->
-      <div *ngIf="rally.photos && rally.photos.length > 0" style="margin-top: 15px;">
-        <h4>Fotos Cargadas:</h4>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <img
-            *ngFor="let photo of rally.photos"
-            [src]="photo.url"
-            alt="Foto del rally"
-            width="150"
-            style="border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);"
-          />
-        </div>
-      </div>
-    </div>
+    <button *ngIf="isUserInscribed(rally)" class="cancelar-btn" (click)="cancelarInscripcion(rally.id)">
+      Cancelar Inscripción
+    </button>
   </li>
-</ul>
+  
+<!-- Mensaje si no hay rallies -->
+<p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">No hay rallies actualmente.</p>
 
-<!-- Mensaje si no hay rallies actuales -->
-<p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">
-  No hay rallies actuales.
-</p>
-
+  
 <!-- Botón para volver -->
 <div class="button-container">
   <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
 </div>
+</ul>

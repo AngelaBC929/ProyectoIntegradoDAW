@@ -67,7 +67,7 @@ export class LoginComponent {
         if (response.role === 'admin') {
           this.router.navigate(['/admin']);
         } else {
-          this.router.navigate(['/user']); // Ajusta esta ruta según corresponda
+          this.router.navigate(['/user/dashboard']); // Ajusta esta ruta según corresponda
         }
       },
       error: (error) => {
