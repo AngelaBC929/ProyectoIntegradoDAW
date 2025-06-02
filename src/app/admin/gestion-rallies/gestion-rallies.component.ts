@@ -44,13 +44,22 @@ export class GestionRalliesComponent implements OnInit {
 
   // Eliminar un rally
   deleteRally(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este rally?')) {
-      this.rallyService.deleteRally(id).subscribe(() => {
-        alert('Rally eliminado');
-        // No necesitamos recargar la lista manualmente, ya que el BehaviorSubject se actualizará automáticamente
-      });
-    }
+    this.rallyService.getRallyById(id).subscribe(rally => {
+      if (rally) {
+        const rallyName = rally.title; // Suponiendo que 'title' es el nombre del rally
+  
+        if (confirm(`¿Estás seguro de que deseas eliminar el rally: ${rallyName}?`)) {
+          this.rallyService.deleteRally(id).subscribe(() => {
+            alert('Rally eliminado');
+            // No es necesario recargar la lista manualmente, ya que el BehaviorSubject se actualizará automáticamente
+          });
+        }
+      } else {
+        alert('No se encontró el rally.');
+      }
+    });
   }
+  
     // Método para redirigir al usuario al panel de usuario
     goBackToAdminPanel(): void {
       this.router.navigate(['admin']); 

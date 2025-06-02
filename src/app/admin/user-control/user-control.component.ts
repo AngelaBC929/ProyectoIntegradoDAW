@@ -32,10 +32,18 @@ export class UserControlComponent implements OnInit {
   }
 
   // Eliminar usuario
-  deleteUser(userId: number): void {
-    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+deleteUser(userId: number): void {
+  // Encontramos el usuario a eliminar usando su ID
+  const userToDelete = this.users.find(user => user.id === userId);
+
+  if (userToDelete) {
+    // Creamos el mensaje de confirmación personalizado
+    const confirmMessage = `¿Estás seguro de que quieres eliminar al usuario: ${userToDelete.name} ${userToDelete.lastName}?`;
+
+    if (confirm(confirmMessage)) {
       this.userService.deleteUser(userId).subscribe({
         next: () => {
+          alert('Usuario eliminado correctamente');
           // Actualizamos la lista de usuarios después de la eliminación
           this.users = this.users.filter(user => user.id !== userId);
         },
@@ -44,7 +52,11 @@ export class UserControlComponent implements OnInit {
         }
       });
     }
+  } else {
+    console.error('Usuario no encontrado');
   }
+}
+
 
   // Editar usuario
   
