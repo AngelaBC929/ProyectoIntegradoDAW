@@ -1,25 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
 
-.mis-rallies {
-  background: url('/images/fondo3.jpg') no-repeat center top;
-  background-size: cover;
-  min-height: 100vh;
-  padding: 1rem 1rem 1rem 0rem;
-}
 :host {
   font-family: 'Merriweather', serif;
 }
 
-/* Header y Tabs */
+.mis-rallies {
+  background: url('/images/fondo3.jpg') no-repeat center top;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* HEADER */
 .mis-rallies-header {
   background-color: #7b4f24;
   color: #f9f4e6;
   padding: 1.5rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.5);
-  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(123, 79, 36, 0.5);
+  margin: 0 1rem 2rem;
   user-select: none;
-  margin-left: 1rem;
 }
 
 .mis-rallies-header h1 {
@@ -29,10 +29,10 @@
   text-shadow: 1px 1px 4px #3c2608;
 }
 
+/* TABS */
 .tabs {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .tabs button {
@@ -42,7 +42,7 @@
   font-weight: 600;
   font-size: 1rem;
   padding: 0.5rem 1rem;
-  border-bottom: 3px solid transparent;
+  border-bottom: 0.25rem solid transparent;
   cursor: pointer;
   transition: color 0.3s ease, border-bottom-color 0.3s ease;
   white-space: nowrap;
@@ -58,88 +58,134 @@
   font-weight: 700;
 }
 
+/* TITULO */
 .titulo-seccion {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 1rem;
-  margin-bottom: 1rem;
   color: #4a2c14;
   font-weight: bold;
-  text-shadow: 1px 1px 2px #d4a373;
+  text-shadow: 0.0625rem 0.0625rem 0.125rem #d4a373;
 }
 
+/* RALLY CARD */
 .rally-card {
   background-color: #f2d388;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
-  border: 1px solid #e0c9a6;
-  margin-bottom: 2rem;
-  margin-left: 4rem;
-  margin-right: 3.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(139, 69, 19, 0.1);
+  border: 0.0625rem solid #e0c9a6;
+  margin: 2rem auto;
+  max-width: 95%;
 }
 
 .card-title {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #5c3a1e;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   text-align: center;
-  text-shadow: 1px 1px 2px #d4a373;
+  text-shadow: 0.1rem 0.1rem 0.2rem #d4a373;
 }
 
 h6 {
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: #5c3a1e;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-.btn {
+/* MINIATURAS */
+.miniaturas-container {
+  margin-top: 2rem;
+}
+
+.miniaturas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.foto-preview {
+  text-align: center;
+  max-width: 25rem;
+  flex: 1 1 30%;
+  position: relative;
+}
+
+.foto-preview img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border: 0.25rem solid #d4a373;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.foto-preview p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ESTADO */
+.estado-aprobada {
+  color: #4CAF50;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  color: #ac8511;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.estado-rechazada {
+  color: #F44336;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* BOTONES */
+.btn,
+.btn.volver {
   background-color: #a0522d;
   color: white;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 5px;
+  padding: 1rem 2rem;
+  border-radius: 0.625rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   text-align: center;
   display: block;
-  margin: 1rem auto;
-}
-
-.btn:hover {
-  background-color: #8b4513;
-}
-
-.btn.volver {
-  background-color: #8b4513;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 5px;
-  cursor: pointer;
+  margin: 2rem auto;
   transition: background-color 0.3s ease;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
+}
+
+.btn:hover,
+.btn.volver:hover {
+  background-color: #8b4513;
 }
 
 .btn-secondary {
   background-color: #ddd;
   color: #333;
-  padding: 0.5rem 1rem;
-  margin-left: 10px;
-  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  margin-left: 1rem;
+  border-radius: 0.5rem;
   border: none;
   cursor: pointer;
 }
 
+/* MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -150,133 +196,78 @@ h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999;
+  cursor: zoom-out;
 }
 
 .modal-content {
   background: #fffaf5;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid #e0c9a6;
-  box-shadow: 0 6px 15px rgba(139, 69, 19, 0.25);
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 0.0625rem solid #e0c9a6;
+  box-shadow: 0 0.375rem 0.9375rem rgba(139, 69, 19, 0.25);
   width: 90%;
-  max-width: 500px;
+  max-width: 40rem;
+  max-height: 80vh; /* límite de altura del modal */
+  overflow-y: auto;  /* scroll interno si se pasa */
   text-align: center;
+  cursor: default;
 }
 
-.preview-img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 1rem;
-  border: 1px solid #d4a373;
-  border-radius: 8px;
-}
-
-.miniaturas-container {
-  margin-top: 1rem;
-}
-
-.miniaturas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-  justify-content: center;
-}
-
-.foto-preview {
-  text-align: center;
-  max-width: 300px;
-  flex: 1 1 100%;
-}
-
-.foto-preview img {
+.modal-content img {
   width: 100%;
   height: auto;
-  border: 2px solid #d4a373;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  object-fit: contain;
 }
 
-.foto-preview p {
-  margin: 5px 0;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.button-container {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.estado-aprobada {
-  color: #4CAF50;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.estado-pendiente {
-  color: #ac8511;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.estado-rechazada {
-  color: #F44336;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
+/* POPUP */
 .popup-error {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 1.25rem;
+  right: 1.25rem;
   background-color: #b22222;
   color: white;
-  padding: 16px 24px;
-  border-radius: 8px;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  z-index: 10000;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
   animation: fadeInOut 3s ease-in-out;
   font-family: 'Merriweather', serif;
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-10px); }
+  0% { opacity: 0; transform: translateY(-0.625rem); }
   10% { opacity: 1; transform: translateY(0); }
   90% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 0; transform: translateY(-0.625rem); }
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .rally-card {
-    margin-left: 2rem;
-    margin-right: 2rem;
-    max-width: 90%;
+    padding: 2rem;
+    max-width: 95%;
   }
 
-  .tabs {
-    justify-content: center;
-  }
-  
   .foto-preview {
-    max-width: 45%;
+    max-width: 80%;
     flex: 1 1 45%;
+  }
+
+  .card-title {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 600px) {
   .mis-rallies {
-    padding: 1rem 0.5rem 1rem 0.5rem;
-    background-size: cover;
+    padding: 1rem 0.5rem;
   }
 
   .mis-rallies-header {
     padding: 1rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin: 0 0.5rem;
   }
 
   .tabs {
@@ -284,20 +275,16 @@ h6 {
   }
 
   .tabs button {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
   }
 
   .titulo-seccion {
     font-size: 2rem;
-    margin: 0.5rem 0;
   }
 
   .rally-card {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    max-width: 100%;
-    padding: 0.8rem;
+    padding: 1.5rem;
   }
 
   .foto-preview {
@@ -306,12 +293,12 @@ h6 {
   }
 
   .btn {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
   }
 
   .modal-content {
-    padding: 1.5rem;
+    padding: 2rem;
     width: 95%;
   }
 }

@@ -24,6 +24,8 @@ export class MisRalliesComponent implements OnInit {
   tituloFoto: string = ''; // Añade esta propiedad en tu componente
   popupVisible: boolean = false;
   popupMensaje: string = '';
+  imagenModalVisible = false;
+imagenModalUrl: string | null = null;
 
 
   // Mapa para guardar fotos por rally
@@ -149,6 +151,17 @@ export class MisRalliesComponent implements OnInit {
       alert('Por favor selecciona una foto.');
     }
   }
+  
+// Métodos para abrir y cerrar el modal de imagen
+openImageModal(url: string) {
+  this.imagenModalUrl = url;
+  this.imagenModalVisible = true;
+}
+
+closeImageModal() {
+  this.imagenModalVisible = false;
+  this.imagenModalUrl = null;
+}
   
 
 mostrarPopup(mensaje: string) {

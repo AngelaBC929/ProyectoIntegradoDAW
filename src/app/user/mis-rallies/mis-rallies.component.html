@@ -16,32 +16,56 @@
       <div class="card-body">
         <h5 class="card-title">{{ rally.title }}</h5>
 
-        <!-- Miniaturas de fotos subidas por rally -->
-        <ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
-          <div class="miniaturas-container" *ngIf="fotos.length > 0">
-            <h6>Mis fotos subidas:</h6>
-            <div class="miniaturas">
-              <div *ngFor="let foto of fotos" class="foto-preview">
-                <img [src]="foto.photo_url" alt="Foto subida" />
-                <p>{{ foto.title || 'Sin título' }}</p>
-                <p>
-                  <span style="color: #5c3a1e;">Status:</span>
-                  <span [ngClass]="{
+    <!-- Miniaturas de fotos subidas por rally -->
+<ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
+  <div class="miniaturas-container" *ngIf="fotos.length > 0">
+    <h6>Mis fotos subidas:</h6>
+    <div class="miniaturas">
+      <div *ngFor="let foto of fotos" class="foto-preview">
+        <img
+          [src]="foto.photo_url"
+          alt="Foto subida"
+          (click)="openImageModal(foto.photo_url)"
+          style="cursor: pointer;"
+        />
+        <p>{{ foto.title || 'Sin título' }}</p>
+        <p>
+          <span style="color: #5c3a1e;">Status:</span>
+          <span
+            [ngClass]="{
               'estado-aprobada': foto.status === 'aprobada',
               'estado-pendiente': foto.status === 'pendiente',
               'estado-rechazada': foto.status === 'rechazada'
-            }">
-                    <ng-container [ngSwitch]="foto.status">
-                      <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
-                      <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
-                      <span *ngSwitchCase="'rechazada'"> Rechazada ❌</span>
-                    </ng-container>
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </ng-container>
+            }"
+          >
+            <ng-container [ngSwitch]="foto.status">
+              <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
+              <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
+              <span *ngSwitchCase="'rechazada'"> Rechazada ❌</span>
+            </ng-container>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Modal para mostrar imagen ampliada -->
+<div
+  class="modal-overlay"
+  *ngIf="imagenModalVisible"
+  (click)="closeImageModal()"
+  style="cursor: zoom-out;"
+>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <img
+      [src]="imagenModalUrl"
+      alt="Imagen ampliada"
+      style="width: 100%; height: auto; border-radius: 1rem;"
+    />
+  </div>
+</div>
+
 
         <div class="card-buttons">
           <button (click)="openModal(rally)" class="btn">Subir Foto</button>

@@ -17,18 +17,22 @@ export class FaqsComponent implements OnInit {
   preguntasRespuestas = [
     {
       pregunta: '¿Cuántas fotos puedo subir por rally?',
-      respuesta: 'Puedes subir hasta 3 fotos por cada rally.',
+      respuesta: 'Puedes subir hasta 3 fotos por cada rally'+
+      '<br> !Mientras más fotos subas más posibiliades de ganar!',
       abierta: false
     },
     {
       pregunta: '¿Qué requisitos deben cumplir las fotos?',
-      respuesta: 'Las fotos deben seguir la temática del rally para ser aceptadas.',
+      respuesta: 'Las fotos deben seguir la temática del rally para ser aceptadas.'+
+      '<br>• Deben ser originales y no haber sido publicadas anteriormente en ningún otro lugar.' +
+      '<br>• Deben ser tomadas por el participante y no pueden ser editadas con programas de edición de imágenes.' +
+      '<br>• Deben ser enviadas en formato digital (JPG o PNG) y no superar los 10 MB.',
       abierta: false
     },
     {
       pregunta: '¿Qué estados puede tener mi foto?',
       respuesta: `
-        El equipo de jurado revisará las fotos y cambiará su estado a:<br>
+        El administrador revisará las fotos y cambiará su estado a:<br>
         • <strong>Admitida</strong>: ¡Tu foto participa oficialmente!<br>
         • <strong>Pendiente</strong>: Está en revisión.<br>
         • <strong>Rechazada</strong>: No cumple con los requisitos.
