@@ -5,8 +5,8 @@
      <button (click)="volverADashboard()" [class.active]="tabActivo === 'perfil'">Perfil</button>
       <button [routerLink]="['/mis-rallies']" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
       <button (click)="seleccionarTab('mis-fotos')" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
-     <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
-
+      <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
+      <button [routerLink]="['/faqs']" [class.active]="tabActivo === 'faqs'">FAQs</button>
     </nav>
   </header>
 

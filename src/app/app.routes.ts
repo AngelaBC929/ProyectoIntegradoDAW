@@ -16,6 +16,7 @@ import { AdminGuard } from './shared/guards/admin.guard';
 import { UserGuard } from './shared/guards/user.guard';
 import { MisRalliesComponent } from './user/mis-rallies/mis-rallies.component';
 import { MisFotosComponent } from './user/mis-fotos/mis-fotos.component';
+import { FaqsComponent } from './user/faqs/faqs.component';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
   },
    { path: 'mis-rallies', component: MisRalliesComponent, canActivate: [AuthGuard, UserGuard] },
    { path: 'mis-fotos', component: MisFotosComponent, canActivate: [AuthGuard, UserGuard] },
+   {path: 'faqs', component: FaqsComponent, canActivate: [AuthGuard, UserGuard]},
   { path: 'proximos-rallies', component: ProximosRalliesComponent, canActivate: [AuthGuard, UserGuard] },
   { path: 'rallies-actuales', component: RalliesActualesComponent, canActivate: [AuthGuard, UserGuard] },
   { path: 'rallies-pasados', component: RalliesPasadosComponent, canActivate: [AuthGuard, UserGuard] },

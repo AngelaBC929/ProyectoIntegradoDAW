@@ -108,6 +108,16 @@ username$ = this.usernameSubject.asObservable();
     }
     this.roleSubject.next(role);
   }
+  private sessionExpiredLogin = false;
+
+setLoginAfterSessionExpired(value: boolean) {
+  this.sessionExpiredLogin = value;
+}
+
+getLoginAfterSessionExpired(): boolean {
+  return this.sessionExpiredLogin;
+}
+
 
   getRole(): string | null {
     return this.roleSubject.getValue();

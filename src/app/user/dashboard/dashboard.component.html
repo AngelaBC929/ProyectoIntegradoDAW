@@ -8,6 +8,7 @@
       <button [routerLink]="['/mis-rallies']" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
       <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
       <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
+      <button [routerLink]="['/faqs']" [class.active]="tabActivo === 'faqs'">FAQs</button>
       
     </nav>
   </header>
@@ -60,26 +61,13 @@
       </div>
 
       <!-- INSTRUCCIONES DE FOTOS -->
-      <div class="fotos-card">
-        <h2>¿Cómo funciona la subida de fotos?</h2>
-        <ul>
-          <li>Puedes subir hasta <strong>3 fotos</strong> por cada rally.</li>
-          <li>Las fotos deben seguir la temática del rally para ser aceptadas.</li>
-          <li>El equipo de jurado revisará las fotos y cambiará su estado a:
-            <ul>
-              <li><strong>Admitida</strong>: ¡Tu foto participa oficialmente!</li>
-              <li><strong>Pendiente</strong>: Está en revisión.</li>
-              <li><strong>Rechazada</strong>: No cumple con los requisitos.</li>
-            </ul>
-          </li>
-          <li>Puedes eliminar o reemplazar tus fotos mientras el rally esté activo.</li>
-          <li>Una vez finalizado el rally, no podrás modificar tus fotos.</li>
-          <li>Recuerda que puedes votar por tus fotos favoritas en la galería.</li>
-          <li>Una vez finalizado el Rally las fotos estarán durante 2 días hábiles para votar</li>
-          <li>Las fotos ganadoras se anunciarán en la galería y recibirán un premio especial.</li>
-          <li>Si tienes dudas, consulta las <strong>FAQs</strong> o contacta con el soporte.</li>
-        </ul>
-      </div>
+    <div class="fotos-card">
+  <h2>Subida de Fotos</h2>
+  <p>Puedes subir hasta <strong>3 fotos</strong> por rally. Asegúrate de que sigan la temática y cumplan las normas.</p>
+  <p>Tu foto puede ser <strong>admitida</strong>, quedar <strong>pendiente</strong> o ser <strong>rechazada</strong> tras revisión del administrador.</p>
+  <p>Podrás modificar tus fotos mientras no hayas subido las 3 fotos máximas al rally y podrás votar tus fotos favoritas mientras el rally este <strong>activo</strong>.</p>
+  <p>Consulta las <a routerLink="/faqs">FAQs</a> para más detalles.</p>
+</div>
 
     </section>
   </main>

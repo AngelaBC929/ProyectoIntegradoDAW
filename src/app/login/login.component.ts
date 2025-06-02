@@ -84,6 +84,13 @@ export class LoginComponent {
 
   // Método para volver al home
   goHome() {
-    this.cerrar.emit(); // Emite evento para cerrar modal
+  if (this.authService.getLoginAfterSessionExpired()) {
+    // si venías del modal de sesión expirada
+    this.authService.setLoginAfterSessionExpired(false); // reset
+    this.router.navigate(['/home']); // ✅ forzamos volver a home
+  } else {
+    this.cerrar.emit(); // caso normal
   }
+}
+
 }

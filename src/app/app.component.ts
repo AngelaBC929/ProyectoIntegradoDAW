@@ -16,64 +16,59 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 export class AppComponent implements OnInit {
   title = 'rallyFotografico';
   role: string | null = null;
-  showModal: boolean = false;  // Variable para mostrar el modal
-  isLoggedIn: boolean = false;  // Estado de autenticación
+  showModal: boolean = false;
+  isLoggedIn: boolean = false;
 
-
-
-
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // Escuchar cambios en el rol de usuario
+    // Escuchar el cambio de rol (para navbar)
     this.authService.role$.subscribe(role => {
       this.role = role;
     });
-  
-    // ✅ Escuchar el evento de sesión expirada
+
+    // Mostrar el modal de sesión expirada si se detecta
     this.authService.sessionExpired$.subscribe(() => {
       this.showSessionExpiredModal();
     });
-  
-    // Verificar si ya está autenticado (por ejemplo, al recargar)
-    //lo comento xq si no pasa directamenta al popup en vez de al home
-    // if (!this.authService.isAuthenticated()) {
-    //   this.showSessionExpiredModal();
-    // }
-    // Verificar si el usuario está autenticado
-    this.isLoggedIn = this.authService.isAuthenticated();
 
-    // Si no está autenticado, redirigir al home (evitar mostrar el modal si ya no está autenticado)
+    // Comprobar si está autenticado al arrancar
+    this.isLoggedIn = this.authService.isAuthenticated();
     if (!this.isLoggedIn) {
       this.router.navigate(['/home']);
     }
   }
-  
-  
 
-  // Captura los eventos de interacción del usuario (movimiento del ratón, pulsación de teclas, clics)
+  // Eventos del usuario para resetear timeout de inactividad
   @HostListener('document:mousemove', ['$event'])
   @HostListener('document:keydown', ['$event'])
   @HostListener('document:click', ['$event'])
   onUserActivity() {
-    this.authService.resetTimeout(); // Reinicia el temporizador de inactividad
+    this.authService.resetTimeout();
   }
 
-  // Método para mostrar el modal de sesión expirada
+  // Mostrar el modal de sesión expirada
   showSessionExpiredModal() {
-    this.showModal = true;  // Muestra el modal
+    this.showModal = true;
+    
   }
 
-  // Maneja la acción de logueo, cierra la sesión y redirige al login
-  handleLogout() {
-    this.authService.logout();  // Llama al método de logout
-    this.router.navigate(['/login']);  // Redirige al formulario de login
-    this.showModal = false;  // Cierra el modal
-  }
+  // Si elige iniciar sesión nuevamente tras sesión expirada
+handleLogin() {
+  this.showModal = false;
+  this.authService.logout();
+  this.authService.setLoginAfterSessionExpired(true); // ✅ marcamos que venimos de expiración
+  this.router.navigate(['/login']);
+}
+
+
+  // Si elige cancelar, cierra sesión y vuelve al inicio
   handleCancel() {
-    this.authService.logout(); // ✅ Cierra la sesión completamente
-    this.showModal = false;    // Oculta el modal
-    this.router.navigate(['/home']); // Redirige al Home
+    this.authService.logout();
+    this.showModal = false;
+    this.router.navigate(['/home']);
   }
-  
 }
