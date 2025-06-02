@@ -6,7 +6,7 @@
       <img [src]="photo.photo_url" alt="Foto del rally">
       <div class="photo-info">
         <p class="author">📸 {{ photo.autor }}</p> <!-- Autor de la foto -->
-        <p class="votes">❤️ {{ photo.votes }} votos</p>
+        <p class="votos">❤️ {{ photo.votos }} votos</p>
 
         <!-- Botón de Votar que se desactiva si ya votaste -->
         <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
