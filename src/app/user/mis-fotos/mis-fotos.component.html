@@ -1,28 +1,44 @@
 <div class="container">
   <h2>Mis Fotos</h2>
 
-  <div *ngIf="photos.length === 0">
-    <p>No has subido ninguna foto aún.</p>
+  <div *ngIf="fotos.length > 0" class="photo-grid">
+    <div *ngFor="let photo of fotos" class="photo-card">
+      <img [src]="photo.photo_url" alt="{{ photo.title }}" class="photo-img" />
+      <h3>{{ photo.title }}</h3>
+      <p>Status: {{ photo.status }}</p>
+      <button (click)="openEditModal(photo)">Editar</button>
+      <button (click)="deletePhoto(photo.id)">Eliminar</button>
+    </div>
   </div>
 
-  <div class="photo-grid">
-    <div *ngFor="let photo of photos" class="photo-card">
-      <img [src]="photo.url" [alt]="photo.title" class="photo-img" />
+  <div *ngIf="fotos.length === 0">
+    <p>No hay fotos para mostrar.</p>
+  </div>
 
-      <div class="photo-info">
-        <h3>{{ photo.title }}</h3>
+  <!-- Modal de edición de foto -->
+  <div *ngIf="isEditModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <h5>Editar Foto: {{ selectedPhoto?.title }}</h5>
 
-        <div *ngIf="isEditing && selectedPhotoId === photo.id">
-          <input [(ngModel)]="editTitle" placeholder="Nuevo título" />
-          <button (click)="saveEdit()">Guardar</button>
-          <button (click)="cancelEdit()">Cancelar</button>
-        </div>
+      <label for="title">Nuevo Título</label>
+      <input [(ngModel)]="selectedPhoto.title" id="title" type="text" placeholder="Nuevo título" class="photo-title-input" />
 
-        <div *ngIf="!isEditing || selectedPhotoId !== photo.id">
-          <button (click)="editPhoto(photo)">Editar título</button>
-          <button (click)="deletePhoto(photo.id)">Eliminar</button>
-          <button (click)="votePhoto(photo.id)">Votar</button>
-        </div>
+      <label for="photo">Nueva Foto</label>
+      <input type="file" (change)="onFileSelected($event)" id="photo" />
+      <div *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Vista previa de la foto" class="preview-img" />
+      </div>
+
+      <label for="status">Estado</label>
+      <select [(ngModel)]="selectedPhoto.status" id="status" class="photo-status-select">
+        <option value="public">Público</option>
+        <option value="private">Privado</option>
+        <option value="draft">Borrador</option>
+      </select>
+
+      <div class="modal-buttons">
+        <button (click)="onSaveEdit()">Guardar cambios</button>
+        <button (click)="closeEditModal()">Cerrar</button>
       </div>
     </div>
   </div>

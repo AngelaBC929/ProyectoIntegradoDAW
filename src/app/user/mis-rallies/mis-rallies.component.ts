@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RallyService } from '../../shared/services/rally.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { InscripcionesService } from '../../shared/services/inscripciones.service';
 import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mis-rallies',
@@ -16,44 +15,56 @@ import { Router } from '@angular/router';
 export class MisRalliesComponent implements OnInit {
   misRallies: any[] = [];
   rallySeleccionado: any = null;
-
-  // Variables para controlar la visibilidad del modal y la vista previa
   isModalOpen = false;
   selectedFile: File | null = null;
   imagePreview: string | null = null;
-  usuario: any = null;  // Asegúrate de que tienes al usuario cargado correctamente
+  usuario: any = null;
 
-  constructor(private inscripcionesService: InscripcionesService, private router: Router, private userService: UserService, private photoService: PhotoService) {}
+  // Mapa para guardar fotos por rally
+  fotosPorRally: { [rallyId: number]: any[] } = {};
+
+  constructor(
+    private inscripcionesService: InscripcionesService,
+    private router: Router,
+    private userService: UserService,
+    private photoService: PhotoService
+  ) {}
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
-    console.log('userId desde localStorage:', userId);
+    if (!userId) {
+      console.error('Usuario no encontrado o no tiene un ID válido.');
+      return;
+    }
   
-    if (userId) {
+    this.userService.getUserById(Number(userId)).subscribe((usuario) => {
+      this.usuario = usuario;
+  
       this.inscripcionesService.obtenerInscripciones(Number(userId)).subscribe({
         next: (response) => {
           if (response.success) {
             this.misRallies = response.inscritos;
+  
+            // Ahora que tenemos al usuario y los rallies, cargamos las fotos
+            for (const rally of this.misRallies) {
+              this.loadFotosSubidas(rally.id);
+            }
           } else {
             console.error(response.message);
           }
         },
         error: (err) => console.error('Error al obtener mis rallies:', err)
       });
-
-      // Suponiendo que tienes un servicio para obtener la información del usuario
-      this.userService.getUserById(Number(userId)).subscribe((usuario) => {
-        this.usuario = usuario;
-      });
-    } else {
-      console.error('Usuario no encontrado o no tiene un ID válido.');
-    }
+    });
   }
+  
 
   openModal(rally: any) {
-    console.log("Abriendo el modal para el rally", rally);
-    this.rallySeleccionado = rally;  // Asignamos el rally seleccionado
-    this.isModalOpen = true;  // Abrimos el modal
+    this.rallySeleccionado = rally;
+    this.isModalOpen = true;
+    if (this.usuario) {
+      this.loadFotosSubidas(rally.id);
+    }
   }
 
   closeModal() {
@@ -62,11 +73,10 @@ export class MisRalliesComponent implements OnInit {
     this.imagePreview = null;
   }
 
-  // Manejo del archivo seleccionado
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file; // 👈 Faltaba asignarla
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
@@ -74,20 +84,31 @@ export class MisRalliesComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
-  
+
+  loadFotosSubidas(rallyId: number) {
+    this.photoService.getFotosPorRallyYUsuario(rallyId, this.usuario.id).subscribe({
+      next: (res: any) => {
+        this.fotosPorRally[rallyId] = res.photos || [];
+      },
+      error: (err: any) => {
+        console.error('Error al cargar fotos:', err);
+        this.fotosPorRally[rallyId] = [];
+      }
+    });
+  }
 
   onSubmit() {
     if (this.selectedFile && this.usuario) {
-      const userId = this.usuario.id; // Obtener el userId del usuario actual
-      const rallyId = this.rallySeleccionado?.id;  // Obtener el rallyId del rally seleccionado
+      const userId = this.usuario.id;
+      const rallyId = this.rallySeleccionado?.id;
 
       if (rallyId) {
-        // Llamar al servicio para subir la foto
         this.photoService.uploadPhoto(this.selectedFile, userId, rallyId).subscribe({
           next: (response) => {
-            console.log('Foto subida con éxito:', response);
             alert('Foto subida correctamente');
-            this.closeModal();
+            this.loadFotosSubidas(rallyId); // Refrescar fotos
+            this.selectedFile = null;
+            this.imagePreview = null;
           },
           error: (err: any) => {
             console.error('Error al subir la foto:', err);
@@ -101,6 +122,7 @@ export class MisRalliesComponent implements OnInit {
       alert('Por favor selecciona una foto.');
     }
   }
+
   goBackToUserPanel(): void {
     this.router.navigate(['user/dashboard']);
   }

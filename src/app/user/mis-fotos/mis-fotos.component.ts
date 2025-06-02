@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'; // Asegúrate de tener la URL base aquí
+import { PhotoService } from '../../shared/services/photo.service';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,92 +12,127 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./mis-fotos.component.css']
 })
 export class MisFotosComponent implements OnInit {
-  photos: any[] = [];
-  isEditing: boolean = false;
-  editTitle: string = '';
-  selectedPhotoId: number | null = null;
+  fotos: any[] = [];
+  rallySeleccionado: any;
+  isModalOpen = false;
+  imagePreview: string | undefined;
+  selectedFile: File | null = null;
 
-  constructor(private http: HttpClient) {}
+  isEditModalOpen = false;
+  selectedPhoto: any = null;
+
+  userId = 11; // Definir el userId de forma explícita, ajusta según sea necesario
+
+  constructor(private photoService: PhotoService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadPhotos();
+    this.loadPhotos(7, this.userId);  // Cambia estos valores según tu lógica de usuario y rally
   }
 
-  loadPhotos(): void {
-    const userId = 1; // Reemplaza con el ID real del usuario logueado
-    const rallyId = 1; // Reemplaza con el rallyId real
-
-    this.http.get<{ photos: any[] }>(
-      `http://localhost/backendRallyFotografico/fotos.php?userId=${userId}&rallyId=${rallyId}`
-    ).subscribe(response => {
-      this.photos = response.photos;
+  loadPhotos(rallyId: number, userId: number): void {
+    this.photoService.getFotosPorRallyYUsuario(rallyId, userId).subscribe({
+      next: (response: { photos: any[]; }) => {
+        this.fotos = response?.photos || [];
+      },
+      error: (err: any) => {
+        console.error('Error al cargar las fotos:', err);
+        alert('Error al cargar las fotos');
+      }
     });
   }
 
-  editPhoto(photo: any): void {
-    this.isEditing = true;
-    this.editTitle = photo.title;
-    this.selectedPhotoId = photo.id;
-  }
-
-  saveEdit(): void {
-    if (this.selectedPhotoId !== null) {
-      const userId = 1;
-      const photoId = this.selectedPhotoId;
-      const title = this.editTitle;
-
-      this.http.post<{ success: boolean; message?: string }>(
-        'http://localhost/backendRallyFotografico/fotos.php',
-        {
-          action: 'edit',
-          userId: userId,
-          photo_id: photoId,
-          title: title
-        }
-      ).subscribe(response => {
-        if (response.success) {
-          this.loadPhotos();
-          this.isEditing = false;
+  deletePhoto(photoId: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar esta foto?')) {
+      this.photoService.deletePhoto(photoId, this.userId).subscribe({
+        next: () => {
+          this.fotos = this.fotos.filter(photo => photo.id !== photoId);
+          alert('Foto eliminada correctamente');
+        },
+        error: (err: any) => {
+          console.error('Error al eliminar la foto:', err);
+          alert('Error al eliminar la foto');
         }
       });
     }
   }
 
-  cancelEdit(): void {
-    this.isEditing = false;
+  // Abre el modal de edición
+  editPhoto(photo: any): void {
+    this.selectedPhoto = { ...photo }; // Copia para editar
+    this.imagePreview = photo.photo_url;
+    this.selectedFile = null; // limpia archivo anterior
+    this.isEditModalOpen = true;
   }
 
-  deletePhoto(photoId: number): void {
-    const userId = 1;
-
-    this.http.post<{ success: boolean; message?: string }>(
-      'http://localhost/backendRallyFotografico/fotos.php',
-      {
-        action: 'delete',
-        userId: userId,
-        photo_id: photoId
-      }
-    ).subscribe(response => {
-      if (response.success) {
-        this.loadPhotos();
-      }
-    });
+  // Cierra el modal de edición
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.selectedPhoto = null;
+    this.imagePreview = undefined;
+    this.selectedFile = null;
   }
 
-  votePhoto(photoId: number): void {
-    const userId = 1;
+  // Actualiza título y opcionalmente la imagen
+  onSaveEdit(): void {
+    if (this.selectedPhoto && this.selectedPhoto.title) {
+      const fileToSend = this.selectedFile ? this.selectedFile : null;
 
-    this.http.post<{ success: boolean; message?: string }>(
-      'http://localhost/backendRallyFotografico/fotos.php',
-      {
-        action: 'vote',
-        userId: userId,
-        photo_id: photoId
-      }
-    ).subscribe(response => {
-      if (response.success) {
-        alert('Votación exitosa');
-      }
-    });
+      this.photoService.editPhoto(this.userId, this.selectedPhoto.id, this.selectedPhoto.title)
+        .subscribe({
+          next: () => {
+            alert('Foto editada correctamente');
+            this.loadPhotos(7, this.userId); // Recarga las fotos después de editar
+            this.closeEditModal();  // Cierra el modal de edición
+          },
+          error: (err) => {
+            console.error('Error al editar la foto:', err);
+            alert('Error al editar la foto');
+          }
+        });
+    } else {
+      alert('Por favor ingresa un título');
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.imagePreview = URL.createObjectURL(file);
+    }
+  }
+
+  // Modal para nueva carga (no edición)
+  openEditModal(rally: any): void {
+    this.isModalOpen = true;
+    this.rallySeleccionado = rally;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.imagePreview = undefined;
+    this.selectedFile = null;
+  }
+
+  onSubmit(): void {
+    if (this.rallySeleccionado && this.selectedFile) {
+      this.photoService.uploadPhoto(this.selectedFile, this.userId, this.rallySeleccionado.id, this.rallySeleccionado.title).subscribe({
+        next: () => {
+          alert('Foto subida correctamente');
+          this.closeModal();
+          this.loadPhotos(this.rallySeleccionado.id, this.userId);
+        },
+        error: (err) => {
+          console.error('Error al subir la foto:', err);
+          alert('Error al subir la foto');
+        }
+      });
+    } else {
+      alert('Selecciona una imagen primero');
+    }
+  }
+
+  goBackToUserPanel(): void {
+    this.router.navigate(['/user/dashboard']);
   }
 }

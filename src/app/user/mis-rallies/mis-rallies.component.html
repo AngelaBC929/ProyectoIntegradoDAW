@@ -2,7 +2,21 @@
 <div *ngFor="let rally of misRallies" class="rally-card">
   <div class="card-body">
     <h5 class="card-title">{{ rally.title }}</h5>
-    <br>
+
+    <!-- Miniaturas de fotos subidas por rally -->
+    <ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
+      <div class="miniaturas-container" *ngIf="fotos.length > 0">
+        <h6>Mis fotos subidas:</h6>
+        <div class="miniaturas">
+          <div *ngFor="let foto of fotos" class="foto-preview">
+            <img [src]="foto.photo_url" alt="Foto subida" />
+            <p>{{ foto.title || 'Sin título' }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <br />
     <button (click)="openModal(rally)" class="btn btn-primary">Subir Foto</button>
   </div>
 </div>
@@ -11,10 +25,12 @@
 <div *ngIf="isModalOpen" class="modal-overlay">
   <div class="modal-content">
     <h5>Subir foto para el rally: {{ rallySeleccionado?.title }}</h5>
-    <input type="file" (change)="onFileSelected($event)">
+
+    <input type="file" (change)="onFileSelected($event)" />
     <div *ngIf="imagePreview">
-      <img [src]="imagePreview" alt="Vista previa" class="preview-img">
+      <img [src]="imagePreview" alt="Vista previa" class="preview-img" />
     </div>
+
     <button (click)="onSubmit()">Subir Foto</button>
     <button (click)="closeModal()">Cerrar</button>
   </div>
