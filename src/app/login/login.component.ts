@@ -72,7 +72,7 @@ export class LoginComponent {
         if (error.status === 404) {
           this.errorMessage = error.error.error || 'Este usuario no está registrado. ¿Deseas registrarte?';  // Mensaje personalizado si no está registrado
         } else if (error.status === 401) {
-          this.errorMessage = error.error.error || 'Credenciales incorrectas. Intenta de nuevo.';  // Mensaje si las credenciales son incorrectas
+          this.errorMessage = error.error.error || 'Contraseña incorrecta. Intenta de nuevo.';  // Mensaje si las credenciales son incorrectas
         } else {
           this.errorMessage = 'Hubo un problema al intentar iniciar sesión. Por favor, intenta de nuevo más tarde.'; // Mensaje genérico en caso de otro tipo de error
         }

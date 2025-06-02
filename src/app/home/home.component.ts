@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from '../login/login.component'; // Ajusta la ruta si es diferente
@@ -10,10 +10,11 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    LoginComponent,
+    LoginComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+
 })
 export class HomeComponent implements OnInit {
   showLoginModal: boolean = false;

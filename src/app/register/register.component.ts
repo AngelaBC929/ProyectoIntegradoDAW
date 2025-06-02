@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
@@ -10,6 +10,8 @@ import { AuthenticationService } from '../shared/services/authentication.service
   imports: [CommonModule, FormsModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+    encapsulation: ViewEncapsulation.None  // 🔥 Esto permite que los estilos del CSS se apliquen al body/global
+
 })
 export class RegisterComponent {
   username: string = '';
@@ -22,6 +24,7 @@ export class RegisterComponent {
   errorMessages: string[] = [];
   userAge: number = 0;
   backendFieldErrors: { [key: string]: string } = {};
+  
 
 
   passwordVisible: boolean = false;
@@ -30,6 +33,8 @@ export class RegisterComponent {
 
   private readonly passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*]).{8,12}$/;
   private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+showRegisterModal: boolean = true;  // O la condición que uses para mostrar el modal
+
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
