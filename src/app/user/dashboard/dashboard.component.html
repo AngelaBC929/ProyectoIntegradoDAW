@@ -3,9 +3,15 @@
       <h1>Bienvenido a tu Panel de Usuario</h1>
       <nav class="tabs">
         <button (click)="seleccionarTab('perfil')" [class.active]="tabActivo === 'perfil'">Perfil</button>
-        <button (click)="seleccionarTab('subir')" [class.active]="tabActivo === 'subir'" (click)="openModal()">Subir Fotos</button>
-        <button (click)="seleccionarTab('misfotos')" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
-      </nav>
+          
+          <!-- Usamos routerLink para redirigir a las rutas de Mis Rallies -->
+          <button [routerLink]="['/mis-rallies']" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
+          
+          <!-- Usamos routerLink para redirigir a las rutas de Mis Fotos -->
+          <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
+        </nav>
+        
+
     </header>
   
     <div class="user-dashboard">
@@ -65,7 +71,7 @@
       </section>
     </main>
   
-    <!-- Modal para Subir Foto -->
+
     <div id="uploadModal" class="modal" *ngIf="isModalOpen">
       <div class="modal-content">
         <span class="close" (click)="closeModal()">&times;</span>
@@ -88,8 +94,8 @@
     </div>
   
     <!-- Botón para volver -->
-    <div class="button-container">
+    <!-- <div class="button-container">
       <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
     </div>
-  </div>
+  </div> -->
   

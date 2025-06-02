@@ -16,6 +16,8 @@ import { AuthenticationService } from './shared/services/authentication.service'
 export class AppComponent implements OnInit {
   title = 'rallyFotografico';
   role: string | null = null;
+  currentUser: any;
+  router: any;
 
   constructor(private authService: AuthenticationService) {}
 
@@ -26,4 +28,12 @@ export class AppComponent implements OnInit {
       console.log('Rol actualizado desde AppComponent:', role);
     });
   }
+  // ngOnInit() {
+  //   const user = localStorage.getItem('user');
+  //   if (user) {
+  //     this.currentUser = JSON.parse(user);
+  //   } else {
+  //     this.router.navigate(['/login']);
+  //   }
+  // }
 }

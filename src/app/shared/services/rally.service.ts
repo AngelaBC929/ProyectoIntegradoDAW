@@ -9,22 +9,21 @@ import { EMPTY } from 'rxjs';
 })
 export class RallyService {
   private apiUrl = 'http://localhost/backendRallyFotografico/rallies.php';
-  private apiInscripcionesUrl = 'http://localhost/backendRallyFotografico/inscripciones.php'; // URL para inscripciones
-  private apiUploadPhotosUrl = 'http://localhost/backendRallyFotografico/fotos.php'; // URL para subir fotos
+  private apiInscripcionesUrl = 'http://localhost/backendRallyFotografico/inscripciones.php';
+  private apiUploadPhotosUrl = 'http://localhost/backendRallyFotografico/fotos.php';
 
-  // Creamos un BehaviorSubject para almacenar los rallies
   private ralliesSubject = new BehaviorSubject<Rally[]>([]);
-
-  // Exponemos un observable para que los componentes puedan suscribirse
   rallies$ = this.ralliesSubject.asObservable();
+
+  // 🔥 BehaviorSubject para inscripciones
+  private userInscriptionsSubject = new BehaviorSubject<number[]>([]);
+  userInscriptions$ = this.userInscriptionsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getAllRallies(): Observable<Rally[]> {
     return this.http.get<Rally[]>(this.apiUrl).pipe(
-      tap((rallies) => {
-        this.ralliesSubject.next(rallies); // No filtramos, mostramos todos
-      }),
+      tap((rallies) => this.ralliesSubject.next(rallies)),
       catchError((error) => {
         console.error('Error al obtener rallies:', error);
         return throwError(() => new Error(error));
@@ -32,7 +31,6 @@ export class RallyService {
     );
   }
 
-  // Método para crear un rally
   createRally(rallyData: any): Observable<any> {
     return this.http.post(this.apiUrl, rallyData).pipe(
       tap((newRally) => {
@@ -46,7 +44,6 @@ export class RallyService {
     );
   }
 
-  // Método para actualizar un rally
   updateRally(id: number, rallyData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}?id=${id}`, rallyData).pipe(
       tap((updatedRally) => {
@@ -64,7 +61,6 @@ export class RallyService {
     );
   }
 
-  // Método para obtener un rally por su ID
   getRallyById(id: number): Observable<Rally> {
     return this.http.get<Rally>(`${this.apiUrl}?id=${id}`).pipe(
       catchError((error) => {
@@ -74,7 +70,6 @@ export class RallyService {
     );
   }
 
-  // Método para eliminar un rally
   deleteRally(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}?id=${id}`).pipe(
       tap(() => {
@@ -89,45 +84,75 @@ export class RallyService {
     );
   }
 
-  getUserInscriptions(userId: number): Observable<number[]> {
-    return this.http.get<{ success: boolean; data: number[] }>(`${this.apiInscripcionesUrl}?user_id=${userId}`).pipe(
-      map((response) => response.data),
-      catchError((error) => {
-        console.error('Error al obtener inscripciones del usuario:', error);
-        return throwError(() => new Error(error));
-      })
-    );
-  }
-
-  apuntarseARally(rallyId: number, userId: number): Observable<any> {
-    const body = { rallyId, userId };
-    return this.http.post<any>(this.apiInscripcionesUrl, body).pipe(
+  // ✅ Método unificado para cargar y propagar inscripciones
+  loadUserInscriptions(userId: number): void {
+    this.http.get<any>(`${this.apiUrl}?userId=${userId}`).pipe(
+      tap(response => console.log('Respuesta del servidor:', response)), // Ver la respuesta aquí
       map((response) => {
-        if (response && response.success) {
+        return Array.isArray(response.inscritos) ? response.inscritos.map((r: any) => r.id) : [];
+      }),
+      catchError((err) => {
+       // console.error('Error al cargar inscripciones:', err);
+        return []; // evitar reventar
+      })
+    ).subscribe({
+      next: (ids) => this.userInscriptionsSubject.next(ids),
+      error: () => this.userInscriptionsSubject.next([])
+    });
+  }
+  
+
+  // ✅ Alternar inscripción y actualizar inscripciones del usuario
+  toggleInscripcion(rallyId: number, userId: number, actualmenteInscrito: boolean): Observable<any> {
+    const body = {
+      rallyId,
+      userId,
+      action: actualmenteInscrito ? 'desinscribir' : 'inscribir'
+    };
+
+    return this.http.post<any>(this.apiInscripcionesUrl, body, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      tap((response) => {
+        if (response.success) {
+          // 🔁 Actualiza inscripciones
+          this.loadUserInscriptions(userId);
+        }
+      }),
+      map((response) => {
+        if (response.success) {
           return response;
         } else {
-          throw new Error(response.message || 'Error al intentar apuntarse al rally');
+          throw new Error(response.message || 'Error al alternar inscripción');
         }
       }),
       catchError((error) => {
-        console.error('Error al apuntarse al rally:', error);
+        console.error('Error al alternar inscripción:', error);
         return throwError(() => new Error(error));
       })
     );
   }
 
+  // No necesario si usas `toggleInscripcion`, pero lo dejo por si lo usas en otro sitio
   cancelarInscripcion(rallyId: number): Observable<any> {
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     if (!userId) {
       console.error('No se ha encontrado un usuario autenticado.');
-      return EMPTY; // Retorna un observable vacío
+      return EMPTY;
     }
     return this.cancelarInscripcionBackend(rallyId, userId);
   }
 
   private cancelarInscripcionBackend(rallyId: number, userId: number): Observable<any> {
-    const body = { rallyId, userId };
-    return this.http.post<any>(this.apiInscripcionesUrl, body).pipe(
+    const body = {
+      rallyId,
+      userId,
+      action: 'desinscribir'
+    };
+
+    return this.http.post<any>(this.apiInscripcionesUrl, body, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
       catchError((error) => {
         console.error('Error al cancelar inscripción:', error);
         return throwError(() => new Error(error));
@@ -139,7 +164,6 @@ export class RallyService {
     const formData = new FormData();
     photos.forEach((photo) => formData.append('photos[]', photo, photo.name));
 
-    // Validar que las fotos sean de un tipo adecuado
     photos.forEach((photo) => {
       if (!photo.type.startsWith('image/')) {
         console.error('El archivo no es una imagen');
@@ -147,7 +171,7 @@ export class RallyService {
       }
     });
 
-    return this.http.post<any>(`${this.apiUploadPhotosUrl}?rally_id=${rallyId}`, formData).pipe(
+    return this.http.post<any>(`${this.apiUploadPhotosUrl}?rallyId=${rallyId}`, formData).pipe(
       catchError((error) => {
         console.error('Error al subir fotos:', error);
         return throwError(() => new Error(error));

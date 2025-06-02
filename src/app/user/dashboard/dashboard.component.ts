@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { PhotoService } from '../../shared/services/photo.service'; // Importamos el servicio de fotos
 import { User } from '../../shared/models/user.model';
@@ -9,7 +9,7 @@ import { User } from '../../shared/models/user.model';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

@@ -54,7 +54,7 @@ export class GalleryComponent implements OnInit {
 
     this.http.post('http://localhost/backendRallyFotografico/votar_foto.php', {
       photo_id: photoId,
-      user_id: parseInt(userId)
+      userId: parseInt(userId)
     }).subscribe({
       next: () => {
         const photo = this.photos.find(p => p.id === photoId);

@@ -1,24 +1,35 @@
 <h2>Rallies Actuales</h2>
-<ul>
+
+<ul *ngIf="ralliesActuales.length > 0; else sinRallies">
   <li *ngFor="let rally of ralliesActuales">
     <h3>{{ rally.title }}</h3>
     <p>{{ rally.description }}</p>
-    <p>Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span></p>
+    <p>
+      Inicio: <span>{{ rally.start_date | date:'dd/MM/yyyy' }}</span> -
+      Fin: <span>{{ rally.end_date | date:'dd/MM/yyyy' }}</span>
+    </p>
 
-    <!-- Botón que cambia dependiendo de si ya estás inscrito
-    <button *ngIf="!estaInscrito(rally.id)" class="apuntarme-btn" (click)="alternarInscripcion(rally.id)">
-      Inscribirse
-    </button>
+    <!-- Botón que cambia dependiendo del estado de inscripción -->
+    <ng-container *ngIf="estaInscrito(rally.id); else noInscrito">
+      <button class="cancelar-btn" (click)="alternarInscripcion(rally.id)">
+        Anular Inscripción
+      </button>
+    </ng-container>
 
-    <button *ngIf="estaInscrito(rally.id)" class="cancelar-btn" (click)="alternarInscripcion(rally.id)">
-      Anular Inscripción
-    </button>
-  </li> -->
-
-  <!-- Mensaje si no hay rallies -->
-  <p *ngIf="ralliesActuales.length === 0" class="no-rallies-message">No hay rallies actualmente.</p>
+    <ng-template #noInscrito>
+      <button class="apuntarme-btn" (click)="alternarInscripcion(rally.id)">
+        Inscribirse
+      </button>
+    </ng-template>
+  </li>
 </ul>
- <!-- Botón para volver -->
- <div class="button-container">
+
+<!-- Mensaje si no hay rallies activos -->
+<ng-template #sinRallies>
+  <p class="no-rallies-message">No hay rallies actualmente.</p>
+</ng-template>
+
+<!-- Botón para volver -->
+<div class="button-container">
   <button (click)="volverAlPanelUsuario()" class="back-button">Volver</button>
 </div>

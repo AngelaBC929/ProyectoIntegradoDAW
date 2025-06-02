@@ -3,7 +3,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { ProfileComponent } from './profile/profile.component';
 import { ProximosRalliesComponent } from './rallies/proximos-rallies/proximos-rallies.component';
 import { RalliesActualesComponent } from './rallies/rallies-actuales/rallies-actuales.component';
 import { RalliesPasadosComponent } from './rallies/rallies-pasados/rallies-pasados.component';
@@ -15,6 +14,8 @@ import { CreateRalliesComponent } from './admin/create-rallies/create-rallies.co
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { UserGuard } from './shared/guards/user.guard';
+import { MisRalliesComponent } from './user/mis-rallies/mis-rallies.component';
+import { MisFotosComponent } from './user/mis-fotos/mis-fotos.component';
 
 
 export const routes: Routes = [
@@ -22,12 +23,12 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'gallery', component: GalleryComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: 'user/dashboard',
     loadComponent: () => import('./user/dashboard/dashboard.component').then(m => m.DashboardComponent),
     canActivate: [AuthGuard, UserGuard]  // Aseguramos que esté autenticado y no sea un admin
   },
-
+   { path: 'mis-rallies', component: MisRalliesComponent, canActivate: [AuthGuard, UserGuard] },
+   { path: 'mis-fotos', component: MisFotosComponent, canActivate: [AuthGuard, UserGuard] },
   { path: 'proximos-rallies', component: ProximosRalliesComponent, canActivate: [AuthGuard, UserGuard] },
   { path: 'rallies-actuales', component: RalliesActualesComponent, canActivate: [AuthGuard, UserGuard] },
   { path: 'rallies-pasados', component: RalliesPasadosComponent, canActivate: [AuthGuard, UserGuard] },
