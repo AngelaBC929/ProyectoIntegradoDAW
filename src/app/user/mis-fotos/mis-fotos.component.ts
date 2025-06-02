@@ -21,16 +21,23 @@ export class MisFotosComponent implements OnInit {
   isEditModalOpen = false;
   selectedPhoto: any = null;
 
-  userId = 11; // Definir el userId de forma explícita, ajusta según sea necesario
+  userId: number = 0;// Definir el userId de forma explícita, ajusta según sea necesario
 
   constructor(private photoService: PhotoService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadPhotos(7, this.userId);  // Cambia estos valores según tu lógica de usuario y rally
+    const idStr = localStorage.getItem('userId');
+    if (idStr) {
+      this.userId = parseInt(idStr, 10);
+      this.loadPhotos();
+    } else {
+      alert('Usuario no encontrado');
+      this.router.navigate(['/login']);
+    }
   }
-
-  loadPhotos(rallyId: number, userId: number): void {
-    this.photoService.getFotosPorRallyYUsuario(rallyId, userId).subscribe({
+  
+  loadPhotos(): void {
+    this.photoService.getFotosUsuarioActuales(this.userId).subscribe({
       next: (response: { photos: any[]; }) => {
         this.fotos = response?.photos || [];
       },
@@ -40,7 +47,8 @@ export class MisFotosComponent implements OnInit {
       }
     });
   }
-
+  
+  
   deletePhoto(photoId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar esta foto?')) {
       this.photoService.deletePhoto(photoId, this.userId).subscribe({
@@ -81,7 +89,7 @@ export class MisFotosComponent implements OnInit {
         .subscribe({
           next: () => {
             alert('Foto editada correctamente');
-            this.loadPhotos(7, this.userId); // Recarga las fotos después de editar
+            this.loadPhotos(); // Recarga las fotos después de editar
             this.closeEditModal();  // Cierra el modal de edición
           },
           error: (err) => {
@@ -120,7 +128,7 @@ export class MisFotosComponent implements OnInit {
         next: () => {
           alert('Foto subida correctamente');
           this.closeModal();
-          this.loadPhotos(this.rallySeleccionado.id, this.userId);
+          this.loadPhotos();
         },
         error: (err) => {
           console.error('Error al subir la foto:', err);

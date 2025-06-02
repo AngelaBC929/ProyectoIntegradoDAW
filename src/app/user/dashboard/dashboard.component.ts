@@ -16,6 +16,7 @@ import { User } from '../../shared/models/user.model';
 export class DashboardComponent implements OnInit {
   tabActivo = 'perfil';
   usuario: User | null = null;
+  tituloFoto: string = '';
 
   // Variables para controlar la visibilidad del modal y la vista previa
   isModalOpen = false;
@@ -81,9 +82,11 @@ export class DashboardComponent implements OnInit {
     if (this.selectedFile && this.usuario) {
       const userId = this.usuario.id; // Obtener el userId del usuario actual
       const rallyId = 456; // Aquí debes pasar el rallyId adecuado, si lo tienes disponible
+      const title = this.tituloFoto || 'Sin título';
+; // Aquí puedes obtener el título de un input o asignar un valor por defecto
 
       // Llamar al servicio para subir la foto
-      this.photoService.uploadPhoto(this.selectedFile, userId, rallyId).subscribe({
+      this.photoService.uploadPhoto(this.selectedFile, userId, rallyId,title).subscribe({
         next: (response) => {
           console.log('Foto subida con éxito:', response);
           alert('Foto subida correctamente');

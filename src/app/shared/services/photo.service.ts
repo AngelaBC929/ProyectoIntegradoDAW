@@ -47,6 +47,19 @@ export class PhotoService {
       })
     );
   }
+  getFotosUsuarioActuales(userId: number): Observable<any> {
+    const params = {
+      userId: userId.toString(),
+      action: 'getUserPhotosActuales'
+    };
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        const message = error.error?.error || error.message;
+        return throwError(() => new Error(message));
+      })
+    );
+  }
+  
 
   deletePhoto(photoId: number, userId: number): Observable<any> {
     const data = new FormData();
@@ -86,6 +99,7 @@ export class PhotoService {
     data.append('userId', userId.toString());
     data.append('photo_id', photoId.toString());
     data.append('action', 'vote');
+
 
     return this.http.post(`${this.apiUrl}`, data).pipe(
       catchError((error: HttpErrorResponse) => {

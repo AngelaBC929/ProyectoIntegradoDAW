@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { InscripcionesService } from '../../shared/services/inscripciones.service';
 import { PhotoService } from '../../shared/services/photo.service';
 import { UserService } from '../../shared/services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-rallies',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './mis-rallies.component.html',
   styleUrls: ['./mis-rallies.component.css']
 })
@@ -19,6 +20,8 @@ export class MisRalliesComponent implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   usuario: any = null;
+  tituloFoto: string = ''; // Añade esta propiedad en tu componente
+
 
   // Mapa para guardar fotos por rally
   fotosPorRally: { [rallyId: number]: any[] } = {};
@@ -88,6 +91,7 @@ export class MisRalliesComponent implements OnInit {
   loadFotosSubidas(rallyId: number) {
     this.photoService.getFotosPorRallyYUsuario(rallyId, this.usuario.id).subscribe({
       next: (res: any) => {
+        console.log(res);  // Verifica la respuesta aquí
         this.fotosPorRally[rallyId] = res.photos || [];
       },
       error: (err: any) => {
@@ -101,14 +105,16 @@ export class MisRalliesComponent implements OnInit {
     if (this.selectedFile && this.usuario) {
       const userId = this.usuario.id;
       const rallyId = this.rallySeleccionado?.id;
+      const title = this.tituloFoto || this.selectedFile?.name || 'Sin título';
 
       if (rallyId) {
-        this.photoService.uploadPhoto(this.selectedFile, userId, rallyId).subscribe({
+        this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
           next: (response) => {
             alert('Foto subida correctamente');
             this.loadFotosSubidas(rallyId); // Refrescar fotos
             this.selectedFile = null;
             this.imagePreview = null;
+            this.tituloFoto = ''; // Limpiar el campo
           },
           error: (err: any) => {
             console.error('Error al subir la foto:', err);

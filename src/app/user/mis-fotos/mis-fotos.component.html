@@ -6,7 +6,7 @@
       <img [src]="photo.photo_url" alt="{{ photo.title }}" class="photo-img" />
       <h3>{{ photo.title }}</h3>
       <p>Status: {{ photo.status }}</p>
-      <button (click)="openEditModal(photo)">Editar</button>
+      <button (click)="editPhoto(photo)">Editar</button>
       <button (click)="deletePhoto(photo.id)">Eliminar</button>
     </div>
   </div>
