@@ -21,20 +21,22 @@
       <h5>Editar Foto: {{ selectedPhoto?.title }}</h5>
 
       <label for="title">Nuevo Título</label>
-      <input [(ngModel)]="selectedPhoto.title" id="title" type="text" placeholder="Nuevo título" class="photo-title-input" />
+      <input [(ngModel)]="selectedPhoto.title" id="title" type="text" placeholder="Nuevo título"
+        class="photo-title-input" />
 
       <label for="photo">Nueva Foto</label>
-      <input type="file" (change)="onFileSelected($event)" id="photo" />
+      <input #editFileInput type="file" (change)="onFileSelected($event)" id="photo"
+  [disabled]="selectedPhoto?.status === 'approved'" />
+
+      <p *ngIf="selectedPhoto?.status === 'approved'" style="color: gray; font-size: 0.9rem;">
+        No se puede cambiar la imagen si la foto está aprobada.
+      </p>
+
+
       <div *ngIf="imagePreview">
+        <!-- Imagen de vista previa, redimensionada al tamaño deseado -->
         <img [src]="imagePreview" alt="Vista previa de la foto" class="preview-img" />
       </div>
-
-      <label for="status">Estado</label>
-      <select [(ngModel)]="selectedPhoto.status" id="status" class="photo-status-select">
-        <option value="public">Público</option>
-        <option value="private">Privado</option>
-        <option value="draft">Borrador</option>
-      </select>
 
       <div class="modal-buttons">
         <button (click)="onSaveEdit()">Guardar cambios</button>
@@ -42,4 +44,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Botón para volver -->
+<div class="button-container">
+  <button (click)="goBackToUserPanel()" class="back-button">Volver</button>
 </div>

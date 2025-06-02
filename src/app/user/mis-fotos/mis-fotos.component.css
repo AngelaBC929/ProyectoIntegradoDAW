@@ -1,96 +1,110 @@
-/* Contenedor principal */
-.container {
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;  /* Esto permite que las fotos se distribuyan en varias filas */
-  gap: 20px;  /* Espacio entre las fotos */
-  justify-content: center;  /* Centra las fotos dentro del contenedor */
-}
-
-/* Estilo para las tarjetas de las fotos */
-.photo-card {
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 250px;  /* Establece un ancho fijo para cada tarjeta de foto */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;  /* Centra el texto y las imágenes */
-}
-
-/* Estilo de la imagen dentro de la tarjeta */
-.photo-card img {
-  width: 100%;  /* Hace que la imagen ocupe todo el ancho de la tarjeta */
-  height: auto;  /* Mantiene la proporción original de la imagen */
-  object-fit: cover;  /* Asegura que la imagen se ajuste correctamente sin distorsión */
-}
-
-/* Contenedor de la información de la foto */
-.photo-info {
-  margin-top: 10px;
-}
-
-/* Estilo de los inputs */
-.photo-title-input {
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 5px;
-}
-
-/* Estilo para botones */
-button {
-  margin-right: 5px;
-}
-
-button.danger {
-  background-color: red;
-  color: white;
-}
-
-/* Estilo adicional para las fotos en miniatura (en caso de usarlas) */
-.foto-preview img {
-  width: 100%;  /* Hace que la imagen ocupe todo el ancho del contenedor de la miniatura */
-  height: 200px; /* Ajusta la altura para mantener proporciones consistentes */
-  object-fit: cover;  /* Asegura que las imágenes se ajusten correctamente sin distorsionarse */
-  margin-bottom: 10px;
-}
-/* Estilos del Modal */
+/* Estilos generales para el modal */
 .modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
+/* Estilo del contenido del modal */
 .modal-content {
-  background-color: white;
+  background-color: #fff;
   padding: 20px;
-  border-radius: 5px;
-  width: 400px;
+  border-radius: 8px;
+  width: 18cm; /* Ancho fijo de 18cm */
+  height: auto;
   max-width: 100%;
-  text-align: center;
+  max-height: 90%; /* Limitamos la altura del modal a un máximo del 90% de la pantalla */
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.modal-content h5 {
-  margin-bottom: 20px;
+/* Imagen en el modal (vista previa) */
+.preview-img {
+  width: 100%; /* Aseguramos que la imagen se ajuste al ancho del modal */
+  height: auto; /* Mantener la proporción original de la imagen */
+  max-width: 12cm; /* Limitar el ancho de la imagen a 12cm */
+  margin: 20px 0;
+  display: block;
+  object-fit: contain; /* Mantener la proporción de la imagen sin recortes */
+  border-radius: 8px;
 }
 
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+/* Estilo para el botón de cerrar */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.modal-content button {
+/* Estilo para los botones del modal */
+.modal-buttons button {
   padding: 10px 15px;
-  margin-top: 10px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.modal-buttons button:hover {
+  background-color: #45a049;
+}
+
+/* Botón de cerrar modal */
+.modal-content button {
+  background-color: #f44336;
+  font-size: 16px;
 }
 
 .modal-content button:hover {
-  background-color: #007bff;
+  background-color: #e53935;
+}
+
+/* Foto en la vista de galería */
+.photo-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.photo-card {
+  width: 300px;
+  margin: 10px;
+  text-align: center;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+button {
+  background-color: #007a8c;
   color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005f6b;
 }

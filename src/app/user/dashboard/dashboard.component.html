@@ -39,7 +39,7 @@
     <main>
       <section *ngIf="tabActivo === 'perfil'" class="perfil-container">
         <div class="perfil-card">
-          <h2>Perfil</h2>
+          <h2>Mis datos</h2>
           <label>Nombre</label>
           <input type="text" [(ngModel)]="usuario.name" *ngIf="usuario" />
           <label>Apellidos</label>
@@ -50,7 +50,7 @@
         </div>
   
         <div class="fotos-card">
-          <h2>Mis Fotos</h2>
+          <h2>Últimas fotos subidas</h2>
           <table>
             <thead>
               <tr>

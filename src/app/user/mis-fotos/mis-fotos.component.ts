@@ -3,6 +3,7 @@ import { PhotoService } from '../../shared/services/photo.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-mis-fotos',
@@ -22,7 +23,7 @@ export class MisFotosComponent implements OnInit {
   selectedPhoto: any = null;
 
   userId: number = 0;// Definir el userId de forma explícita, ajusta según sea necesario
-
+  @ViewChild('editFileInput') editFileInput!: ElementRef<HTMLInputElement>;
   constructor(private photoService: PhotoService, private router: Router) {}
 
   ngOnInit(): void {
@@ -82,26 +83,30 @@ export class MisFotosComponent implements OnInit {
 
   // Actualiza título y opcionalmente la imagen
   onSaveEdit(): void {
-    if (this.selectedPhoto && this.selectedPhoto.title) {
-      const fileToSend = this.selectedFile ? this.selectedFile : null;
-
-      this.photoService.editPhoto(this.userId, this.selectedPhoto.id, this.selectedPhoto.title)
-        .subscribe({
-          next: () => {
-            alert('Foto editada correctamente');
-            this.loadPhotos(); // Recarga las fotos después de editar
-            this.closeEditModal();  // Cierra el modal de edición
-          },
-          error: (err) => {
-            console.error('Error al editar la foto:', err);
-            alert('Error al editar la foto');
-          }
-        });
-    } else {
-      alert('Por favor ingresa un título');
+    let fileToSend: File | undefined = undefined;
+  
+    const inputEl = this.editFileInput?.nativeElement;
+    if (inputEl && inputEl.files?.length) {
+      fileToSend = inputEl.files[0];
     }
+  
+    this.photoService.editPhoto(
+      this.userId,
+      this.selectedPhoto.id,
+      this.selectedPhoto.title,
+      fileToSend
+    ).subscribe({
+      next: () => {
+        alert("Foto actualizada correctamente");
+        this.closeEditModal();
+        this.loadPhotos();
+      },
+      error: (err) => {
+        console.error("Error al editar:", err.message);
+      }
+    });
   }
-
+  
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {

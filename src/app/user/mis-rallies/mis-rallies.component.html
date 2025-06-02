@@ -11,6 +11,7 @@
           <div *ngFor="let foto of fotos" class="foto-preview">
             <img [src]="foto.photo_url" alt="Foto subida" />
             <p>{{ foto.title || 'Sin título' }}</p>
+            <p>Status: {{ foto.status }}</p>
           </div>
         </div>
       </div>

@@ -39,6 +39,9 @@ export const routes: Routes = [
   { path: 'admin/user-control', 
     loadComponent: () => import('./admin/user-control/user-control.component').then(m => m.UserControlComponent), 
     canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin/user-photos', 
+    loadComponent: () => import('./admin/user-photos/user-photos.component').then(m => m.UserPhotosComponent), 
+    canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
