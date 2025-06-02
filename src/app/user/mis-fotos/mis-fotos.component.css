@@ -280,3 +280,151 @@ h3 {
   font-size: 1rem;
   font-weight: bold;
 }
+/* ---------- Responsive ---------- */
+
+/* Para móviles (menos de 600px) */
+@media (max-width: 600px) {
+  .mis-fotos {
+    padding: 1rem 0.5rem;
+  }
+
+  .mis-fotos-header {
+    padding: 1rem;
+  }
+
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* para suavizar scroll en iOS */
+  }
+
+  .tabs button {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin: 1rem 0.5rem;
+  }
+
+  .photo-grid {
+    gap: 1rem;
+  }
+
+  .photo-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.8rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .status-text {
+    font-size: 0.9rem;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .photo-title-input {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .save-btn,
+  .close-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Para tablets (entre 600px y 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .mis-fotos {
+    padding: 1rem 1rem;
+  }
+
+  .tabs button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .photo-grid {
+    gap: 1.2rem;
+  }
+
+  .photo-card {
+    width: calc(50% - 1.2rem);
+  }
+}
+
+/* Para pantallas medianas/grandes */
+@media (min-width: 901px) {
+  .photo-card {
+    width: 280px;
+  }
+}
+
+/* Grid adaptable para móviles y tablets */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Scroll suave para tabs si se salen */
+.tabs {
+  scrollbar-width: thin;
+  scrollbar-color: #f2d388 transparent;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background-color: #f2d388;
+  border-radius: 3px;
+}
+
+/* Ajustes para evitar que input file se descontrole en móviles */
+input[type="file"] {
+  max-width: 100%;
+}
+
+/* Botón volver en móviles */
+.button-container {
+  padding: 0 0.5rem;
+}
+
+.back-button {
+  width: 100%;
+  max-width: 300px;
+  font-size: 1rem;
+}

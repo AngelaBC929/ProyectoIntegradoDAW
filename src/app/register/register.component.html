@@ -89,9 +89,6 @@
       </div>
     </div>
 
-
-
-
     <!-- Confirmar Contraseña -->
     <div class="form-group password-group">
       <label for="confirmPassword">Confirmar Contraseña</label>
@@ -105,6 +102,24 @@
         Las contraseñas no coinciden.
       </div>
     </div>
+<!-- Aceptar términos -->
+<div class="form-group checkbox-group">
+  <label class="checkbox-label">
+    <input
+      type="checkbox"
+      name="acceptTerms"
+      [(ngModel)]="acceptTerms"
+      required
+    />
+    <span>
+      Acepto los términos y condiciones.
+    </span>
+  </label>
+  <div *ngIf="!acceptTerms && formSubmitted" class="error-message">
+    Debes aceptar los términos y condiciones para registrarte.
+  </div>
+</div>
+
 
     <!-- Botón de registro -->
     <button type="submit" [disabled]="!isFormValid">Registrar</button>

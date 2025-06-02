@@ -11,13 +11,13 @@
     <div class="photos-grid">
       <!-- Iterar por cada foto del rally -->
       <div class="photo-card" *ngFor="let photo of rally.photos" 
-         [ngClass]="{'winner-photo': isWinner(photo, rally)}">      
-        <img [src]="photo.photo_url" alt="Foto del rally">
+           [ngClass]="{'winner-photo': isWinner(photo, rally)}">      
+        <img [src]="photo.photo_url" alt="Foto del rally" />
         <div class="photo-info">
           <p class="author">📸 {{ photo.autor }}</p>
           <p class="votos">❤️ {{ photo.votos || 0 }} votos</p>
 
-          <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)">
+          <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)" class="btn-vote">
             {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
           </button>
         </div>
@@ -27,18 +27,9 @@
 
   <!-- Paginación -->
   <div class="pagination-container">
-    <!-- Botón de Anterior -->
-    <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-btn">
-      Anterior
-    </button>
-
-    <!-- Número de la página -->
+    <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-btn">Anterior</button>
     <span class="page-number">{{ currentPage }}</span>
-
-    <!-- Botón de Siguiente -->
-    <button (click)="nextPage()" [disabled]="!hasMorePhotos()" class="pagination-btn">
-      Siguiente
-    </button>
+    <button (click)="nextPage()" [disabled]="!hasMorePhotos()" class="pagination-btn">Siguiente</button>
   </div>
 </div>
 

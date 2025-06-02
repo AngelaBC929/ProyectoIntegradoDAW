@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from '../login/login.component'; // Ajusta la ruta si es diferente
 import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-home',
@@ -10,46 +11,65 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+    HttpClientModule,
     LoginComponent
   ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   showLoginModal: boolean = false;
   successMessage: string | null = null;
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
   isLoginVisible = false;
-  
+
+  recentPhotos: any[] = [];
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {}
+
   ngOnInit(): void {
-    // Verifica si hay un mensaje en el state de la ruta
     const navigation = history.state;
     if (navigation?.message) {
       this.successMessage = navigation.message;
     }
+
+    this.loadRecentPhotos();
+  }
+
+  loadRecentPhotos(): void {
+    
+    this.http.get('http://localhost/backendRallyFotografico/fotos.php?action=getApprovedPhotos&limit=6&offset=0')
+  .subscribe(
+    (response: any) => {
+      this.recentPhotos = response.photos?.slice(0, 4) || [];
+    },
+    (error) => {
+      console.error('Error al cargar las fotos recientes', error);
+    }
+  );
+
   }
 
   closeSuccessMessage(): void {
     this.successMessage = null;
   }
+
   mostrarLogin() {
     this.isLoginVisible = true;
   }
 
   cerrarLogin() {
     this.isLoginVisible = false;
-  } 
+  }
 
-  // Navegar a galería
   goToGallery() {
     this.router.navigate(['/gallery']);
   }
 
-  // Navegar a registro
   goToRegister() {
     this.router.navigate(['/register']);
-  } // Método de logout
-  
+  }
 }

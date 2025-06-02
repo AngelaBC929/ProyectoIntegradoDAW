@@ -1,61 +1,199 @@
-/* Tabla cálida estilo dashboard */
-.tabla-card {
-  background-color: #fff9ec;
-  border-radius: 14px;
-  padding: 2rem;
-  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.4);
+.table-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #f2d388;
+  border: 2px solid #7b4f24;
+  border-radius: 12px;
+  padding: 20px 30px;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.45);
+  font-family: 'Georgia', serif;
+  color: #4b2e05;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #7b4f24;
+  text-align: center;
+  text-shadow: 1px 1px 2px #7b4f24;
+}
+
+/* Scroll horizontal para móviles */
+.table-responsive {
   overflow-x: auto;
 }
 
-.tabla-calida {
+/* Tabla base */
+.table {
   width: 100%;
-  border-collapse: collapse;
-  color: #4b2e05;
-  font-size: 1rem;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  min-width: 600px; /* Para que en móviles haya scroll si es necesario */
 }
 
-.tabla-calida thead {
-  background-color: #f2d388;
-  color: #4b2e05;
-}
-
-.tabla-calida th,
-.tabla-calida td {
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #e7c17b;
+.table thead th {
   text-align: left;
+  padding: 12px 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #a06937;
+  color: #4b2e05;
+  text-shadow: 1px 1px 2px #7b4f24;
 }
 
-.tabla-calida tr:hover {
-  background-color: #fef6dd;
+.table tbody tr {
+  background-color: #f9e3b0;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(210, 160, 70, 0.3);
 }
 
-/* Botones de acción */
-.btn-editar {
-  background-color: #f2a654;
-  color: #fff;
+.table tbody tr:hover {
+  background-color: #ebcb80;
+}
+
+.table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #4b2e05;
+}
+
+.table, .table th, .table td, .table tr {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Botones de acciones */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
   border: none;
-  padding: 0.4rem 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  margin-right: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+  color: #f9f4e6;
+  min-width: 70px;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(123, 79, 36, 0.4);
+  white-space: nowrap;
+}
+
+.edit-btn {
+  background-color: #7b4f24;
+}
+
+.edit-btn:hover {
+  background-color: #a06937;
+  box-shadow: 0 4px 10px rgba(160, 105, 55, 0.6);
+}
+
+.delete-btn {
+  background-color: #c55e25;
+  box-shadow: 0 2px 5px rgba(197, 94, 37, 0.4);
+}
+
+.delete-btn:hover {
+  background-color: #a04a1b;
+  box-shadow: 0 4px 10px rgba(160, 74, 27, 0.6);
+}
+
+/* Botón volver */
+.button-container {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.back-button {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.6);
   transition: background-color 0.3s ease;
 }
 
-.btn-editar:hover {
-  background-color: #db923e;
-}
-
-.btn-eliminar {
-  background-color: #d95d4a;
+.back-button:hover {
+  background-color: #a06937;
   color: #fff;
+  box-shadow: 0 6px 14px rgba(160, 105, 55, 0.8);
+}
+.btn-nuevo {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  background-color: #4b2e05;
+  color: #f9f4e6;
   border: none;
-  padding: 0.4rem 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
+  margin-left: 2rem;
+  padding: 10px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(75, 46, 5, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.add-button-container {
+  display: flex;
+  justify-content: flex-start; /* Alinea a la izquierda */
+  margin-bottom: 1rem;
 }
 
-.btn-eliminar:hover {
-  background-color: #b84334;
+
+.btn-nuevo:hover {
+  background-color: #7b4f24;
+  box-shadow: 0 6px 14px rgba(123, 79, 36, 0.6);
+  color: #fff;
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 15px 15px;
+    margin: 20px auto;
+  }
+
+  .table {
+    min-width: unset;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .actions {
+    gap: 8px;
+  }
+
+  .action-btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    min-width: 60px;
+  }
+
+  .button-container {
+    margin-top: 20px;
+  }
+
+  .back-button {
+    font-size: 1rem;
+    padding: 10px 22px;
+  }
 }

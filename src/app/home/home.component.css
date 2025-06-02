@@ -10,66 +10,76 @@ body {
   margin: 0;
 }
 
+img {
+  max-width: 100%;
+  display: block;
+}
+
 /* HERO */
 .urban-hero {
   background: url('/images/portada2.png') no-repeat center top;
-  background-size: cover; /* 👈 importante */
-  height: calc(100vw / 2.04); /* 👈 ajusta a proporción de tu imagen */
+  background-size: cover;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   position: relative;
   text-align: center;
   color: #fef5e4;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem 1rem;
 }
-
-
 
 /* Botones flotantes arriba a la derecha */
 .urban-buttons-top {
   position: absolute;
-  top: 2.5rem;
-  right: 5rem;
+  top: 2rem;
+  right: 2rem;
   display: flex;
   gap: 1rem;
   z-index: 10;
+  flex-wrap: wrap;
 }
 
+/* Hero text container */
 .urban-hero-text {
   max-width: 800px;
-  margin-right: 35vw;         /* desplazado hacia la izquierda */
   padding: 1rem;
-  margin-bottom: 6rem;
-  text-align: center;         /* texto alineado a la izquierda */
+  margin: 0 auto;
+  text-align: center;
 }
 
-
 .urban-title {
-  font-size: 3.3rem;
+  font-size: 3rem;
   color: #fef5e4;
   text-transform: uppercase;
   font-weight: 500;
   text-shadow: 2px 2px 5px #3d1c0f;
+  margin: 0 auto 1rem;
 }
 
 .urban-subtitle {
   font-size: 1.2rem;
   color: #fbe9d0;
-  margin-bottom: 0.5rem;
   font-style: italic;
+  margin-bottom: 1.5rem;
 }
 
-/* Instrucciones dentro del hero */
-.urban-instructions {
-  width: 90%;
-  margin: 0 auto 2rem;
-  font-size: 1rem;
-  color: #f8e4c4;
-  line-height: 1.5;
+/* Instrucciones (fondo entre hero y galería) */
+.urban-instructions-container {
+  background-color: #8d3c1f;
+  color: #fef5e4;
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
+.urban-instructions-container p {
+  font-size: 1.2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Botones */
 .urban-btn {
   background-color: #8d3c1f;
   color: #fff2e0;
@@ -87,10 +97,14 @@ body {
 }
 
 /* LOGIN/REGISTER botones específicos */
-.urban-login,
-.urban-register {
+.urban-register,
+.urban-login {
   background-color: #9e4d24;
   color: #fff6eb;
+}
+
+.urban-register {
+  margin-right: 0.5rem;
 }
 
 .urban-login:hover,
@@ -98,62 +112,35 @@ body {
   background-color: #b55b30;
 }
 
-/* ÉXITO */
-.urban-success-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.urban-success-box {
-  background-color: #3a1f0d;
-  padding: 2.5rem 3rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
-}
-
-.close-btn {
-  margin-top: 1.5rem;
-  background-color: #6b3d1c;
-  color: #fff0d9;
-}
-
 /* GALERÍA */
-.urban-gallery {
-  background-color: #3e1f0f;
-  padding:0.5rem;
-  text-align: center;
-}
-
 .urban-section-title {
   font-size: 1.8rem;
-  margin-bottom: 1rem;
+  margin: 2rem 0 1rem;
   color: #f4d6b5;
+  text-align: center;
 }
 
 .urban-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.7rem;
-  margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .urban-gallery-item {
-  background-color: #602f1a;
-  padding: 0.8rem;
-  border-radius: 12px;
-  font-size: 3.5rem;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  color: #fff0d9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 200px;
+  transition: transform 0.3s;
+}
+
+.urban-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .urban-gallery-item:hover {
@@ -183,6 +170,30 @@ body {
   z-index: 1000;
 }
 
+.urban-success-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.urban-success-box {
+  background-color: #f8e4c4;
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.close-btn {
+  margin-top: 1.5rem;
+  background-color: #6b3d1c;
+  color: #fff0d9;
+}
+
 /* FOOTER */
 .urban-footer {
   background-color: #2b160a;
@@ -191,4 +202,34 @@ body {
   padding: 0.8rem;
   font-size: 0.7rem;
   border-top: 0.6px solid #5b3c26;
+}
+
+/* 📱 MEDIA QUERIES (RESPONSIVE) */
+@media (max-width: 768px) {
+  .urban-title {
+    font-size: 2rem;
+  }
+
+  .urban-subtitle {
+    font-size: 1rem;
+  }
+
+  .urban-hero {
+    padding-top: 1.5rem;
+  }
+
+  .urban-buttons-top {
+    right: 1rem;
+    top: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .urban-instructions-container p {
+    font-size: 1rem;
+  }
+
+  .urban-gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,131 +1,101 @@
-/* Contenedor principal del formulario */
-.form-container {
-    max-width: 500px; /* Limitar el ancho del formulario */
-    margin: 40px auto; /* Centramos el formulario y le damos un margen superior e inferior */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Asegura que el formulario esté centrado */
-  }
-  
-  textarea {
-    width: 100%;
-    height: 100px; /* Altura inicial del textarea */
-    padding: 8px 12px;
-    font-size: 0.875rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: vertical; /* permite ajustar el alto manualmente */
-    background-color: #fff;
-  }
-  
-  /* Título del formulario */
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-  }
-  
-  /* Estilos para los campos de entrada */
-  .form-group {
-    margin-bottom: 15px;
-    width: 100%; /* Los inputs no deben ocupar más del 100% de la columna */
-  }
-  
-  /* Etiquetas de los campos */
-  label {
-    font-size: 1rem;
-    color: #555;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  /* Campos de entrada */
-  input[type="text"],
-  input[type="email"],
-  select {
-    width: 100%; /* Hacemos que los inputs no ocupen más de un 100% del ancho disponible */
-    padding: 8px 12px; /* Reducimos el padding para hacer los campos más pequeños */
-    font-size: 0.875rem; /* Hacemos la fuente más pequeña */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #fff;
-  }
-  
-  /* Campo de entrada con foco */
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  select:focus {
-    border-color: #4CAF50; /* Color verde para el foco */
-    outline: none;
-  }
-  
-  /* Estilo para los botones */
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #4CAF50; /* Color verde */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%; /* Hacemos que los botones ocupen todo el ancho del formulario */
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #45a049; /* Color más oscuro en hover */
-  }
-  
-  /* Estilo para el botón de cancelar */
-  .cancel-button {
-    background-color: #f44336; /* Rojo para el botón de cancelar */
-    margin-top: 10px;
-  }
-  
-  .cancel-button:hover {
-    background-color: #d32f2f; /* Rojo más oscuro en hover */
-  }
-  
-  /* Mensajes de error o éxito */
-  .error-message {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 0.875rem;
-  }
-  
-  .success-message {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 0.875rem;
-  }
-  
-  /* Estilo para el formulario */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%; /* Aseguramos que el formulario tenga el 100% del ancho disponible */
-  }
-  
-  /* Para mejorar la apariencia de los campos cuando se encuentra vacío */
-  input.ng-invalid.ng-touched,
-  select.ng-invalid.ng-touched {
-    border-color: #f44336; /* Color rojo cuando un campo está inválido */
-  }
-  
-  /* Para resaltar campos inválidos */
-  input.ng-valid.ng-touched,
-  select.ng-valid.ng-touched {
-    border-color: #4CAF50; /* Color verde cuando un campo es válido */
-  }
-  
+/* --- CONTENEDOR GENERAL --- */
+.container {
+  background-color: #fdf4e3;
+  border: 2px solid #e2c799;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 6px 16px rgba(160, 105, 55, 0.25);
+  font-family: 'Georgia', serif;
+  color: #4b2e05;
+}
+
+/* --- TÍTULO PRINCIPAL --- */
+h2 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #7b4f24;
+  text-shadow: 1px 1px 2px #cfa873;
+}
+
+/* --- ETIQUETAS DE FORMULARIO --- */
+.form-label {
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  color: #4b2e05;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* --- INPUTS PERSONALIZADOS --- */
+.custom-input {
+  background-color: #fff8f0;
+  border: 1.5px solid #a06937;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: 'Georgia', serif;
+  color: #4b2e05;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(160, 105, 55, 0.15);
+}
+
+.custom-input:focus {
+  border-color: #7b4f24;
+  outline: none;
+  box-shadow: 0 0 8px #a06937;
+}
+
+/* --- MENSAJES DE ERROR --- */
+.text-danger small,
+.error-message {
+  font-family: 'Georgia', serif;
+  color: #a04a1b;
+  font-weight: 600;
+}
+
+/* --- BOTONES --- */
+.btn-guardar {
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  border: none;
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.6);
+  user-select: none;
+}
+
+.btn-guardar:hover:not(:disabled) {
+  background-color: #a06937;
+  box-shadow: 0 6px 14px rgba(160, 105, 55, 0.75);
+}
+
+.btn-guardar:disabled {
+  background-color: #c4a378;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-cancel {
+  background-color: #f2d388;
+  color: #4b2e05;
+  border: none;
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Georgia', serif;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(123, 79, 36, 0.4);
+  user-select: none;
+}
+
+.btn-cancel:hover {
+  background-color: #d4b66a;
+  box-shadow: 0 5px 12px rgba(160, 105, 55, 0.5);
+}

@@ -24,16 +24,14 @@ export class RegisterComponent {
   errorMessages: string[] = [];
   userAge: number = 0;
   backendFieldErrors: { [key: string]: string } = {};
-  
-
-
+  acceptTerms: boolean = false;
+  formSubmitted: boolean = false;
   passwordVisible: boolean = false;
   confirmPasswordVisible: boolean = false;
   isSubmitting: boolean = false;
-
   private readonly passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*]).{8,12}$/;
   private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-showRegisterModal: boolean = true;  // O la condición que uses para mostrar el modal
+  showRegisterModal: boolean = true;  // O la condición que uses para mostrar el modal
 
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {}
@@ -52,6 +50,13 @@ showRegisterModal: boolean = true;  // O la condición que uses para mostrar el 
 
   onSubmit(registerForm: NgForm) {
     this.isSubmitting = true;
+    this.formSubmitted = true;
+    
+if (!registerForm.valid || !this.acceptTerms) {
+  this.isSubmitting = false;
+  return;
+}
+
   
     this.authenticationService.register(
       this.email, this.username, this.password, this.name, this.lastName, this.birthdate

@@ -7,8 +7,8 @@
       <button (click)="seleccionarTab('perfil')" [class.active]="tabActivo === 'perfil'">Perfil</button>
       <button [routerLink]="['/mis-rallies']" [class.active]="tabActivo === 'misrallies'">Mis Rallies</button>
       <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
-     <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
-
+      <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
+      
     </nav>
   </header>
 
@@ -16,10 +16,9 @@
   <div class="user-dashboard">
     <div class="card-container">
       <div class="card">
-        
         <h2>Próximos Rallies
           <img src="images/carrete.png" alt="carrete" class="icono-rally-carrete" />
-          </h2>
+        </h2>
         <p>Participa en los próximos rallies fotográficos que tenemos preparados para ti.</p>
         <button class="btn-enter" (click)="entrarProximosRallies()">Entrar</button>
       </div>
@@ -61,28 +60,26 @@
       </div>
 
       <!-- INSTRUCCIONES DE FOTOS -->
-<div class="fotos-card">
-  <h2>¿Cómo funciona la subida de fotos?</h2>
-  <ul>
-    <li>Puedes subir hasta <strong>3 fotos</strong> por cada rally.</li>
-    <li>Las fotos deben seguir la temática del rally para ser aceptadas.</li>
-    <li>El equipo de jurado revisará las fotos y cambiará su estado a:
-      <ul>
-        <li><strong>Admitida</strong>: ¡Tu foto participa oficialmente!</li>
-        <li><strong>Pendiente</strong>: Está en revisión.</li>
-        <li><strong>Rechazada</strong>: No cumple con los requisitos.</li>
-      </ul>
-    </li>
-    <li>Puedes eliminar o reemplazar tus fotos mientras el rally esté activo.</li>
-    <li>Una vez finalizado el rally, no podrás modificar tus fotos.</li>
-    <li>Recuerda que puedes votar por tus fotos favoritas en la galería.</li>
-    <li>Una vez finalizado el Rally las fotos estaran durante 2 días habiles parsa votar</li>
-    <li>Las fotos ganadoras se anunciarán en la galería y recibirán un premio especial.</li>
-    <li>Si tienes dudas, consulta las <strong>FAQs</strong> o contacta con el soporte.</li>
-  </ul>
-
-
-</div>
+      <div class="fotos-card">
+        <h2>¿Cómo funciona la subida de fotos?</h2>
+        <ul>
+          <li>Puedes subir hasta <strong>3 fotos</strong> por cada rally.</li>
+          <li>Las fotos deben seguir la temática del rally para ser aceptadas.</li>
+          <li>El equipo de jurado revisará las fotos y cambiará su estado a:
+            <ul>
+              <li><strong>Admitida</strong>: ¡Tu foto participa oficialmente!</li>
+              <li><strong>Pendiente</strong>: Está en revisión.</li>
+              <li><strong>Rechazada</strong>: No cumple con los requisitos.</li>
+            </ul>
+          </li>
+          <li>Puedes eliminar o reemplazar tus fotos mientras el rally esté activo.</li>
+          <li>Una vez finalizado el rally, no podrás modificar tus fotos.</li>
+          <li>Recuerda que puedes votar por tus fotos favoritas en la galería.</li>
+          <li>Una vez finalizado el Rally las fotos estarán durante 2 días hábiles para votar</li>
+          <li>Las fotos ganadoras se anunciarán en la galería y recibirán un premio especial.</li>
+          <li>Si tienes dudas, consulta las <strong>FAQs</strong> o contacta con el soporte.</li>
+        </ul>
+      </div>
 
     </section>
   </main>

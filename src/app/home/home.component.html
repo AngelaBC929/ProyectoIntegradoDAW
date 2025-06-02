@@ -1,25 +1,32 @@
 <!-- HERO -->
-<section class="urban-hero">
-  <!-- Botones en la parte superior derecha -->
-  <div class="urban-buttons-top">
+<section class="urban-hero container-fluid position-relative py-5">
+  <div class="d-flex justify-content-end gap-2 px-4 position-absolute top-0 end-0 mt-4 z-3">
     <button class="urban-btn urban-login" (click)="mostrarLogin()">Iniciar sesión</button>
     <button class="urban-btn urban-register" (click)="goToRegister()">Registrarse</button>
   </div>
 
-  <div class="urban-hero-text">
-    <h1 class="urban-title">Rally Fotográfico</h1>
+  <!-- Contenedor para el texto sobre la imagen -->
+  <div class="urban-hero-text-wrapper">
+    <div class="urban-hero-text mx-auto px-3">
+      <h1 class="urban-title">Rally Fotográfico</h1>
 
-    <p class="urban-subtitle">
-      "Captura lo extraordinario en lo cotidiano. Comparte tu visión única con el mundo."
-    </p>
-
-    <p class="urban-instructions">
+      <p class="urban-subtitle">
+        "Captura lo extraordinario en lo cotidiano. Comparte tu visión única con el mundo."
+      </p>
+    </div>
+  </div>
+</section>
+<!-- BLOQUE DE INSTRUCCIONES -->
+<section class="urban-instructions-container py-5">
+  <div class="container text-center">
+    <p class="urban-instructions-text">
       Para unirte al Rally Fotográfico debes registrarte como participante y completar tu perfil.
       Una vez dentro, podrás acceder a los rallies activos y subir tus fotos dentro del plazo.
       Cada imagen será revisada antes de publicarse en la galería. ¡No olvides votar tus favoritas!
     </p>
   </div>
 </section>
+
 
 <!-- Modal éxito -->
 <div *ngIf="successMessage" class="urban-success-overlay">
@@ -30,15 +37,17 @@
 </div>
 
 <!-- GALERÍA DESTACADA -->
-<section class="urban-gallery">
-  <h2 class="urban-section-title">Galería destacada</h2>
-  <div class="urban-gallery-grid">
-    <div class="urban-gallery-item">🖼️</div>
-    <div class="urban-gallery-item">🌆</div>
-    <div class="urban-gallery-item">📷</div>
-    <div class="urban-gallery-item">🪞</div>
+<section class="urban-gallery py-4">
+  <div class="container text-center">
+    <h2 class="urban-section-title">Galería destacada</h2>
+    <div class="urban-gallery-grid">
+  <div class="urban-gallery-item" *ngFor="let photo of recentPhotos">
+    <img [src]="photo.photo_url" [alt]="photo.title || 'Foto subida'" />
   </div>
-  <button class="urban-btn gallery-btn" (click)="goToGallery()">Ver más</button>
+</div>
+    
+    <button class="urban-btn gallery-btn mt-3" (click)="goToGallery()">Ver más</button>
+  </div>
 </section>
 
 <!-- LOGIN MODAL -->
@@ -47,6 +56,6 @@
 </div>
 
 <!-- FOOTER -->
-<footer class="urban-footer">
+<footer class="urban-footer mt-auto">
   <p>&copy; 2025 Rally Fotográfico. Encuentra arte en cada rincón.</p>
 </footer>

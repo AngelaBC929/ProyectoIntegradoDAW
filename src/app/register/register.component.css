@@ -3,6 +3,13 @@ body {
   margin: 0;
   padding: 0;
 }
+h2{
+  color: #4e2b12;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px #f4efef;
+}
 /* Reutiliza fondo oscuro del login modal */
 .urban-login-overlay {
   position: fixed;
@@ -187,4 +194,31 @@ button.cancel-button {
 button.cancel-button:hover {
   background-color: #7a4a30;
   box-shadow: 0 6px 12px rgba(122, 74, 48, 0.6);
+}
+.checkbox-group {
+  margin: 15px 0;
+  font-size: 0.95rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: brown; /* ✅ Cambia el color del check a marrón */
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-label a {
+  color: #8B4513; /* También marrón, opcional */
+  text-decoration: underline;
+}
+
+.checkbox-group .error-message {
+  color: #b22222;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }

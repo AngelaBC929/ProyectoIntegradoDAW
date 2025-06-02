@@ -1,25 +1,25 @@
-<div class="admin">
+<div class="dashboard admin-panel">
+  <div class="dashboard-header">
     <h1>Panel de Administración</h1>
-  
-    
-    <div class="card-container">
-      <div class="card">
-        <h2>Gestión de Rallies</h2>
-        <p>Crear, editar o eliminar rallies existentes.</p>
-        <button (click)="goToRalliesManagement()">Gestionar Rallies</button>
-      </div>
-  
-      <div class="card">
-        <h2>Gestión de Usuarios</h2>
-        <p>Administrar usuarios registrados en el sistema.</p>
-        <button (click)="goToUsersManagement()">Gestionar Usuarios</button>
-      </div>
+  </div>
 
-      <div class="card">
-        <h2>Gestión de Fotos</h2>
-        <p>Administrar el estados de las fotos de los usuarios.</p>
-        <button (click)="goToPhotosManagement()">Gestionar Fotos</button>
-      </div>
+  <div class="card-container">
+    <div class="card" (click)="goToRalliesManagement()">
+      <h2>Gestión de Rallies</h2>
+      <p>Crear, editar o eliminar rallies existentes.</p>
+      <button class="btn-guardar">Gestionar Rallies</button>
+    </div>
+
+    <div class="card" (click)="goToUsersManagement()">
+      <h2>Gestión de Usuarios</h2>
+      <p>Administrar usuarios registrados en el sistema.</p>
+      <button class="btn-guardar">Gestionar Usuarios</button>
+    </div>
+
+    <div class="card" (click)="goToPhotosManagement()">
+      <h2>Gestión de Fotos</h2>
+      <p>Administrar el estado de las fotos de los usuarios.</p>
+      <button class="btn-guardar">Gestionar Fotos</button>
     </div>
   </div>
-  
+</div>

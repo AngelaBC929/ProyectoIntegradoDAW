@@ -82,7 +82,6 @@
 
 .card h2 {
   text-align: center;
-  
   margin-top: -1rem;
   font-weight: 700;
   font-size: 1.4rem;
@@ -106,7 +105,6 @@
   font-weight: 700;
   border-radius: 8px;
   transition: background-color 0.3s ease;
-
   cursor: pointer;
   align-items: center;
 }
@@ -170,6 +168,7 @@
 .perfil-card input:focus {
   border-color: #b68c2f;
 }
+
 /* --- SECCIÓN INSTRUCCIONES ACTUALIZADA --- */
 .fotos-card {
   flex: 0 0 48%;
@@ -213,8 +212,6 @@
   font-size: 1rem;
 }
 
-
-
 /* Estilos anidados */
 .fotos-card ul ul {
   margin-top: 0.5rem;
@@ -249,7 +246,6 @@
   background-color: #a06937;
 }
 
-
 /* Modal */
 .modal {
   position: fixed;
@@ -277,26 +273,27 @@
   color: #4b2e05;
 }
 
-.icono-rally-carrete{
+.icono-rally-carrete {
   width: 85px;
   height: auto;
   vertical-align: middle;
 }
-.icono-rally-foto{
+
+.icono-rally-foto {
   width: 80px;
-  height: auto;
-  margin: 0 auto;
-   margin-left: 10px;
-  vertical-align: middle;
-}
-.icono-rally-camara{
-  width: 85px;
   height: auto;
   margin: 0 auto;
   margin-left: 10px;
   vertical-align: middle;
 }
 
+.icono-rally-camara {
+  width: 85px;
+  height: auto;
+  margin: 0 auto;
+  margin-left: 10px;
+  vertical-align: middle;
+}
 
 .close {
   position: absolute;
@@ -322,4 +319,74 @@
   border-radius: 6px;
   border: 2px solid #d6a643;
   box-shadow: 0 2px 6px rgba(123, 79, 36, 0.3);
+}
+
+/* ----------------------------------- */
+/* Responsive para tablets y móviles */
+/* ----------------------------------- */
+
+@media (max-width: 1024px) {
+  .card-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .perfil-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .perfil-card,
+  .fotos-card {
+    flex: 1 1 100%;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tabs button {
+    flex: 1 1 45%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .card h2 {
+    font-size: 1.2rem;
+  }
+
+  .btn-enter,
+  .btn-guardar {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .fotos-card {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  /* Ajustar imágenes icono para que no sean tan grandes en móvil */
+  .icono-rally-carrete,
+  .icono-rally-camara,
+  .icono-rally-foto {
+    width: 50px;
+  }
 }

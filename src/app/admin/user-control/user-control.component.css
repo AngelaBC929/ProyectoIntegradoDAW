@@ -1,107 +1,169 @@
-
-/* Estilo básico para la tabla */
 .table-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #f2d388;
+  border: 2px solid #7b4f24;
+  border-radius: 12px;
+  padding: 20px 30px;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.45);
+  font-family: 'Georgia', serif;
+  color: #4b2e05;
+}
+h2{
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #7b4f24;
+  text-align: center;
+  text-shadow: 1px 1px 2px #7b4f24;
+}
+/* Contenedor para scroll horizontal en móviles */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Tabla base */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  min-width: 600px; /* Evita que se encoja demasiado */
+}
+
+.table thead th {
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #a06937;
+  color: #4b2e05;
+  text-shadow: 1px 1px 2px #7b4f24;
+}
+
+.table tbody tr {
+  background-color: #f9e3b0;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(210, 160, 70, 0.3);
+}
+
+.table tbody tr:hover {
+  background-color: #ebcb80;
+}
+
+.table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #4b2e05;
+}
+
+.table, .table th, .table td, .table tr {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* Para que en móvil los botones bajen de línea si hace falta */
+}
+
+/* Botones de acciones */
+.action-btn {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+  color: #f9f4e6;
+  min-width: 70px;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(123, 79, 36, 0.4);
+  white-space: nowrap; /* Evita que el texto se parta */
+}
+
+.edit-btn {
+  background-color: #7b4f24;
+}
+
+.edit-btn:hover {
+  background-color: #a06937;
+  box-shadow: 0 4px 10px rgba(160, 105, 55, 0.6);
+}
+
+.delete-btn {
+  background-color: #c55e25;
+  box-shadow: 0 2px 5px rgba(197, 94, 37, 0.4);
+}
+
+.delete-btn:hover {
+  background-color: #a04a1b;
+  box-shadow: 0 4px 10px rgba(160, 74, 27, 0.6);
+}
+
+/* Contenedor botón volver */
+.button-container {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.back-button {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  background-color: #7b4f24;
+  color: #f9f4e6;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(123, 79, 36, 0.6);
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #a06937;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(160, 105, 55, 0.8);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 15px 15px;
     margin: 20px auto;
-    max-width: 800px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    min-width: unset; /* que se ajuste al contenedor y scroll */
   }
-  
-  .table th, .table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+
+  .table thead th,
+  .table tbody td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
   }
-  
-  .table th {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
+
+  .actions {
+    gap: 8px;
   }
-  
-  .table tr:nth-child(even) {
-    background-color: #f2f2f2;
+
+  .action-btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    min-width: 60px;
   }
-  
-  .table tr:hover {
-    background-color: #e2f4e1;
-  }
-  
-  .table .actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .table .action-btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .table .edit-btn {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .table .delete-btn {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .table .action-btn:hover {
-    opacity: 0.8;
-  }
-  
-  /* Estilo de los botones de acción */
-  .action-btn-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  /* Estilo para los mensajes de error o éxito */
-  .error-message {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .success-message {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  /* Asegura que el botón se vea bien y esté centrado */
+
   .button-container {
-    text-align: center; /* Centra el contenido dentro del contenedor */
-    margin-top: 20px; /* Espacio superior para separar el botón de los rallies */
+    margin-top: 20px;
   }
 
   .back-button {
-    background-color: #4CAF50; /* Un color verde bonito */
-    color: white; /* Texto blanco */
-    border: none;
-    padding: 12px 24px; /* Un buen padding para que el botón se vea grande */
-    font-size: 16px; /* Un tamaño de fuente legible */
-    cursor: pointer; /* Cambia el cursor a mano para indicar que es un botón clickeable */
-    border-radius: 5px; /* Bordes redondeados para un diseño más suave */
-    transition: background-color 0.3s ease; /* Transición para cuando el botón cambia de color */
+    font-size: 1rem;
+    padding: 10px 22px;
   }
-
-  .back-button:hover {
-    background-color: #45a049; /* Color un poco más oscuro cuando pasa el mouse sobre el botón */
-  }
-
-  
+}

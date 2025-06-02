@@ -152,7 +152,7 @@ getIconClassByTheme(tema: string = ''): string {
 
 
 cancelCreation() {
-  this.router.navigate(['/gestion-rallies']); // o la ruta que corresponda a tu panel de admin
+  this.router.navigate(['admin/gestion-rallies']); // o la ruta que corresponda a tu panel de admin
 }
 
   
