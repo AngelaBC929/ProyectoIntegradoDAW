@@ -125,14 +125,16 @@ C:.
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Angular 17+** (standalone components)  
+- **Angular CLI: 19.2.7 (standalone components)  
 - **Bootstrap** 5  
 - **FontAwesome**  
-- **PHP 7+**  
-- **MySQL 8 (XAMPP)**  
+- **PHP 8.2.12** (a través de XAMPP)
+- **MySQL 8+**
 - **Git + GitHub**  
 - **Visual Studio Code**  
 - **InfinityFree (Wuaze)**
+
+> Nota: Se utiliza phpMyAdmin como herramienta para gestionar la base de datos MySQL localmente.
 
 ---
 
