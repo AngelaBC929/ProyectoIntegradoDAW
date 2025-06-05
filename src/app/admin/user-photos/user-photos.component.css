@@ -153,10 +153,10 @@ word-break: break-word;
 }
 
 .modal-content {
+  max-width: 400px;
   background-color: #fff8ec;
   padding: 25px;
   border-radius: 12px;
-  max-width: 500px;
   width: 90%;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   text-align: center;

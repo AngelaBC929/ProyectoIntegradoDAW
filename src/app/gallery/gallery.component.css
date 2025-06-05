@@ -161,42 +161,6 @@ html, body {
 }
 
 
-/* Paginación */
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem 0 1rem 0;
-}
-
-.pagination-btn {
-  background-color: #a0522d;
-  border: none;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.pagination-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  color: #666;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  background-color: #8b4513;
-}
-
-.page-number {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #5c3a1e;
-}
-
 /* Botón volver */
 .button-container {
   text-align: center;

@@ -129,6 +129,13 @@ loadFotosSubidas(rallyId: number) {
     }
   });
 }
+isRallyFinished(endDateStr: string): boolean {
+  const today = new Date();
+  const rallyEndDate = new Date(endDateStr);
+  // Si la fecha de finalización es anterior a hoy, está terminado
+  return rallyEndDate < today;
+}
+
 onSubmit() {
   if (!this.selectedFile) {
     this.sweetAlert.info('Por favor selecciona una foto.');

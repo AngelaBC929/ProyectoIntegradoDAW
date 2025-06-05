@@ -54,16 +54,21 @@
           </div>
         </ng-container>
 
-<!-- Modal para imagen ampliada -->
-  <div class="image-modal" *ngIf="imagenModalVisible" (click)="closeImageModal()">
-    <span class="close">&times;</span>
-    <img class="modal-content modal-imagen-ampliada" [src]="imagenModalUrl" alt="Imagen ampliada" />
-  </div>
+        <!-- Modal para imagen ampliada -->
+        <div class="image-modal" *ngIf="imagenModalVisible" (click)="closeImageModal()">
+          <span class="close">&times;</span>
+          <img class="modal-content modal-imagen-ampliada" [src]="imagenModalUrl" alt="Imagen ampliada" />
+        </div>
 
 
         <div class="card-buttons">
-          <button (click)="openModal(rally)" class="btn">Subir Foto</button>
+          <button (click)="openModal(rally)" class="btn" [disabled]="isRallyFinished(rally.end_date)">
+            {{ isRallyFinished(rally.end_date) ? 'Rally finalizado' : 'Subir Foto' }}
+          </button>
+
+
         </div>
+
       </div>
     </div>
 

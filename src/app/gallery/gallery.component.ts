@@ -23,7 +23,7 @@ export class GalleryComponent implements OnInit {
   }[] = [];
   votedPhotos: Set<number> = new Set();
   currentPage: number = 1; // Página global
-  limit: number = 6; // Fotos por página
+  limit: number = 100; // Fotos por página
   totalPhotos: number = 0; // Total de fotos, para calcular las páginas
   imagenModalVisible = false;
   imagenModalUrl: string | null = null;
