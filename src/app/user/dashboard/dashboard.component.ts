@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { AuthenticationService } from '../../shared/services/authentication.service';
 import { ChartData, ChartType, Chart } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -70,7 +70,8 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private photoService: PhotoService,
     private sweetAlert: SweetAlertService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authenticationService: AuthenticationService  
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +99,7 @@ export class DashboardComponent implements OnInit {
   cargarTopRallies() {
     const url = `${environment.apiUrl}/inscripciones.php?stats=top`;
     this.http.get<any>(url).subscribe({
-      next: (response) => {
+      next: (response: { success: any; topRallies: { id: number; title: string; inscritos: number; }[]; message: string; }) => {
         if (response.success) {
           this.topRallies = response.topRallies;
           this.updateChartData();
@@ -169,19 +170,23 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  modificarPerfil(): void {
-    if (this.usuario) {
-      const updatedUser: User = { ...this.usuario };
-      this.userService.updateUser(this.usuario.id, updatedUser).subscribe({
-        next: () => {
-          this.sweetAlert.success('Perfil actualizado correctamente');
-        },
-        error: () => {
-          this.sweetAlert.error('Error', 'No se pudo actualizar el perfil');
-        }
-      });
-    }
+modificarPerfil(): void {
+  if (this.usuario) {
+    const updatedUser: User = { ...this.usuario };
+    this.userService.updateUser(this.usuario.id, updatedUser).subscribe({
+      next: () => {
+        this.sweetAlert.success('Perfil actualizado correctamente');
+        // Actualizar el nombre en localStorage
+        this.authenticationService.setUsername(updatedUser.name);
+
+      },
+      error: () => {
+        this.sweetAlert.error('Error', 'No se pudo actualizar el perfil');
+      }
+    });
   }
+}
+
 
   entrarProximosRallies() {
     this.router.navigate(['/proximos-rallies']);

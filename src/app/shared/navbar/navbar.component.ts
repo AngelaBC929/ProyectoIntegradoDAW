@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';  // Asegúrate de importar el servicio
-import { User } from '../models/user.model';  // Importa el modelo de usuario
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,41 +14,45 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
-  userName: string = 'Invitado';  // Inicializamos con 'Invitado' por defecto
-  userId: number = 0;  // El ID del usuario que obtendremos de localStorage
+export class NavbarComponent implements OnInit, OnDestroy {
+  userName: string = 'Invitado';
+  private subscription!: Subscription;
 
-  constructor(private router: Router, private userService: UserService,   private authenticationService: AuthenticationService  ) {}
+  constructor(
+    private router: Router, 
+    private userService: UserService,   
+    private authenticationService: AuthenticationService  
+  ) {}
 
   ngOnInit(): void {
-    // Obtener el ID del usuario desde localStorage
-    this.userId = +localStorage.getItem('userId')!; // Asegúrate de que 'userId' esté guardado en localStorage
+    // Suscribimos al BehaviorSubject para actualizar el nombre en vivo
+    this.subscription = this.authenticationService.username$.subscribe(name => {
+      this.userName = name || 'Invitado';
+    });
 
-    if (this.userId) {
-      // Obtener los datos del usuario desde la API
-      this.userService.getUserById(this.userId).subscribe((user: User) => {
-        // Asignar el nombre del usuario a la variable userName
-        this.userName = user.name;  // Asegúrate de que el modelo User tenga el campo 'name'
-        console.log('Nombre del usuario:', this.userName);
-      });
+    // Si no hay nombre en el BehaviorSubject, intentamos cargarlo (solo la primera vez)
+    if (!this.authenticationService.getUsername()) {
+      const userId = +localStorage.getItem('userId')!;
+      if (userId) {
+        this.userService.getUserById(userId).subscribe((user: User) => {
+          this.authenticationService.setUsername(user.name);
+          localStorage.setItem('user_name', user.name);
+        });
+      }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userId');
-    
-    this.authenticationService.setRole(null);  // Notificar a la app que ya no hay usuario logueado
-    this.router.navigate(['/home']); // Redirigir donde quieras
+    localStorage.removeItem('user_name');
+    this.authenticationService.setRole(null);
+    this.authenticationService.setUsername(null);
+    this.router.navigate(['/home']);
   }
-  
-  
-    // 🔄 Opcional: limpiar todos los datos
-    // localStorage.clear();
-  
-    // 🔄 Forzar recarga para que AppComponent vuelva a evaluar el role
-    // window.location.href = '/home';
-  }
-  
-
+}
