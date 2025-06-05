@@ -1,78 +1,210 @@
-# 📸 RallyFotografico
 
-Proyecto Integrado de Desarrollo de Aplicaciones Web.
+# 📸 RallyFotografico – Aplicación Web
+
+Proyecto Integrado del ciclo formativo Desarrollo de Aplicaciones Web (DAW).  
+Desarrollado por Ángela Borges Cantarino – IES Velázquez.
+
+---
 
 ## 🧠 Descripción General
 
-**RallyFotografico** es una aplicación web desarrollada con Angular (frontend) y Spring Boot (backend), pensada para la gestión de eventos de fotografía donde los usuarios pueden registrarse, iniciar sesión, subir fotos, ver galerías y gestionar su perfil.
+RallyFotografico es una aplicación web de gestión de eventos fotográficos donde los usuarios pueden:
+
+- Registrarse como participantes  
+- Subir fotografías  
+- Votar imágenes  
+- Visualizar resultados y rankings  
+
+Incluye un sistema de administración que permite validar fotos, gestionar usuarios y configurar los rallies.
+
+---
 
 ## 🗂️ Estructura del Proyecto
 
-### Frontend
-- **Framework**: Angular
-- **Lenguajes**: TypeScript, HTML, CSS
-- **Estructura Modular**: Componentes standalone y carpetas organizadas por funcionalidad (auth, shared, gallery, etc.)
+### 🖥️ Frontend (Angular)
+- **Framework**: Angular Standalone  
+- **Lenguajes**: TypeScript, HTML, CSS  
+- **Librerías**: Bootstrap, FontAwesome  
+- **Estructura modular**: componentes agrupados por funcionalidades
 
-### Backend (por desarrollar)
-- **Framework**: Spring Boot
-- **Lenguaje**: Java
-- **API RESTful** para autenticación y gestión de recursos
+### 🔧 Backend (PHP)
+- **Lenguaje**: PHP 7+  
+- **Base de datos**: MySQL (XAMPP)  
+- **Estilo**: API REST simulada (POST + action)  
+- **Despliegue**: InfinityFree (Wuaze)
 
-## 🎯 Funcionalidades Clave
+---
 
-- Autenticación de usuarios (login y registro)
-- Navegación por rutas protegidas
-- Visualización de galería de fotos
-- Gestión del perfil de usuario
-- Preparado para integración con backend REST
+## 🧩 Funcionalidades Clave
+
+### 👤 Participantes
+- Registro y autenticación  
+- Gestión de perfil  
+- Subida de fotos con validaciones  
+- Consulta del estado de sus fotos  
+- Visualización del ranking  
+
+### 🔑 Administrador
+- Validación o rechazo de fotografías  
+- Gestión de usuarios  
+- Creación y edición de rallies  
+- Configuración de fechas y límites  
+- Visualización de estadísticas  
+
+### 🌐 Público general (logueado)
+- Visualización de la galería pública  
+- Votación de fotos  
+- Consulta del ranking de votaciones  
+
+---
 
 ## 🚀 Cómo Ejecutar el Proyecto
 
 1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/IES-Velazquez/rallyFotografico.git
-   ```
+```bash
+git clone https://github.com/AngelaBC929/ProyectoIntegradoDAW.git
+```
 
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
+2. Instala dependencias de Angular:
+```bash
+npm install
+```
 
-3. Inicia el servidor de desarrollo:
-   ```bash
-   ng serve
-   ```
+3. Levanta el servidor de desarrollo:
+```bash
+ng serve
+```
 
-4. Abre tu navegador en `http://localhost:4200`
+4. Abre en tu navegador:  
+`http://localhost:4200`
 
-## 🛠️ Tecnologías Utilizadas
+5. Configura la conexión con el backend PHP:
+- Asegúrate de tener XAMPP levantado (Apache + MySQL)
+- Modifica `src/environments/environment.ts` con la URL correspondiente
 
-- Angular CLI
-- Angular 17+ (con routing y CSS standalone)
-- Git + GitHub
-- Visual Studio Code
+---
 
 ## 📦 Estructura del Código
 
 ```
-src/
-├── app/
-│   ├── login/
-│   ├── register/
-│   ├── gallery/
-│   ├── shared/
-│   └── app.routes.ts
-├── assets/
-├── environments/
-└── index.html
+C:.
+├───app
+│   ├───admin
+│   │   ├───admin
+│   │   ├───create-rallies
+│   │   ├───edit-rallies
+│   │   ├───edit-user
+│   │   ├───gestion-rallies
+│   │   ├───user-control
+│   │   └───user-photos
+│   ├───gallery
+│   ├───home
+│   ├───login
+│   ├───rallies
+│   │   ├───proximos-rallies
+│   │   ├───rallies-actuales
+│   │   └───rallies-pasados
+│   ├───register
+│   ├───shared
+│   │   ├───guards
+│   │   ├───interceptors
+│   │   ├───models
+│   │   ├───navbar
+│   │   ├───pipes
+│   │   └───services
+│   └───user
+│       ├───dashboard
+│       ├───faqs
+│       ├───mis-fotos
+│       └───mis-rallies
+├───assets
+└───environments
 ```
-
-## 📌 Notas
-
-- Se usa `environment.ts` para gestionar la URL base del backend.
-- Los archivos `node_modules`, `.vscode/`, y `dist/` están ignorados en `.gitignore`.
-- El proyecto ya está versionado en GitHub.
 
 ---
 
-🎓 *Proyecto creado y desarrollado por Angela Borges Cantarino como parte del módulo de Proyecto Integrado en el IES Velázquez*.
+## 🛠️ Tecnologías Utilizadas
+
+- **Angular 17+** (standalone components)  
+- **Bootstrap** 5  
+- **FontAwesome**  
+- **PHP 7+**  
+- **MySQL 8 (XAMPP)**  
+- **Git + GitHub**  
+- **Visual Studio Code**  
+- **InfinityFree (Wuaze)**
+
+---
+
+## 🧪 Notas Técnicas
+
+- El backend no utiliza un patrón MVC formal, pero está modularizado en archivos como `usuarios.php`, `rallies.php`, `fotos.php`, etc.  
+- Se simulan métodos `PUT`/`DELETE` mediante `POST` con campo `action` y lógica `switch-case`.  
+- El entorno de desarrollo se basa en **Visual Studio Code** con extensiones útiles como Angular Essentials, GitLens, etc.
+
+---
+
+## 📤 Despliegue en Producción
+
+Este proyecto ha sido desplegado en producción usando el hosting gratuito **Wuaze.com (InfinityFree)**. A continuación se explica cómo se realiza el despliegue completo:
+
+### 🔧 1. Preparar el frontend (Angular)
+
+1. Ejecuta el build de producción:
+```bash
+ng build --configuration production
+```
+
+2. Esto generará una carpeta `dist/`. Entra a `dist/` y copia **todo el contenido** de la subcarpeta del proyecto (por ejemplo `dist/rally-fotografico/`) directamente a la raíz de `htdocs/` en el servidor.
+
+### 🗂️ 2. Subir archivos al servidor
+
+1. Abre **FileZilla** y conéctate a tu hosting de **Wuaze (InfinityFree)**.
+2. En la carpeta `htdocs/`:
+   - **Sube los archivos del frontend** generados en `dist/`.
+   - **Sube también todos los archivos PHP del backend** (como `usuarios.php`, `login.php`, `rallies.php`, etc.).
+
+> ⚠️ Asegúrate de que todos los archivos queden sueltos en la raíz de `htdocs/`, tanto frontend como backend.
+
+### 🗄️ 3. Configurar la base de datos
+
+1. En XAMPP, entra a **phpMyAdmin** y exporta tu base de datos como `.sql`.
+2. En InfinityFree (Wuaze):
+   - Crea una nueva base de datos.
+   - Accede a su **phpMyAdmin** y usa la pestaña **Importar** para subir tu `.sql`.
+
+### ⚙️ 4. Configurar URL del backend
+
+Edita el archivo `src/environments/environment.prod.ts` para apuntar al servidor de producción:
+
+```ts
+export const environment = {
+  production: true,
+  apiUrl: 'https://tusitio.wuaze.com' // sin barra final
+};
+```
+
+---
+
+## 🧾 Documentación Adjunta
+
+- ✔️ Manual de Usuario (participante)  
+- ✔️ Manual de Administrador  
+- ✔️ Documentación técnica (ER, arquitectura, casos de uso, decisiones, ampliaciones)  
+- ✔️ Diagrama entidad-relación (adjunto)  
+- ✔️ README completo  
+
+---
+
+## 📌 Créditos
+
+Proyecto desarrollado por:  
+**Ángela Borges Cantarino**  
+IES Velázquez – Curso 2024/2025  
+Módulo: Proyecto Integrado (Desarrollo de Aplicaciones Web)
+
+---
+
+## 📜 Licencia
+
+Este proyecto se distribuye bajo la licencia educativa del IES Velázquez. Uso con fines formativos y de evaluación.
