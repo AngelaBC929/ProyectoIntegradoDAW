@@ -57,7 +57,7 @@ export class RalliesActualesComponent implements OnInit, OnDestroy {
 
             // Para cada inscripción, obtener fotos subidas
            inscriptions.forEach((rallyId) => {
-            this.fotosAprobadas[rallyId] = false; // Valor inicial
+            this.fotosAprobadas[rallyId] = false; 
   // Obtener cantidad de fotos subidas
   const fotosSub = this.rallyService
     .getFotosSubidas(rallyId, userId)
@@ -103,7 +103,6 @@ export class RalliesActualesComponent implements OnInit, OnDestroy {
     return;
   }
   const inscrito = this.estaInscrito(rallyId);
-  // ✅ Paso 4: Bloquea la desinscripción si tiene fotos aprobadas
  if (inscrito) {
   const tieneAprobadas = this.fotosAprobadas[rallyId];
 

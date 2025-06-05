@@ -244,10 +244,10 @@ h6 {
 
 /* MODAL PARA SUBIR FOTOS */
 .subir-foto-modal {
-  background-color: #f9f4e6; /* Fondo cremita claro */
+  background-color: #f9f4e6; 
   padding: 2.5rem;
   border-radius: 1rem;
-  max-width: 600px; /* Más ancho */
+  max-width: 600px; 
   width: 95%;
   max-height: 90vh;
   overflow-y: auto;

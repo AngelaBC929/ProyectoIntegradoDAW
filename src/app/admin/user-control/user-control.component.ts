@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
-import { User } from '../../shared/models/user.model'; // Asegúrate de importar correctamente el modelo User
+import { User } from '../../shared/models/user.model';
 import { CommonModule } from '@angular/common';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
@@ -13,8 +13,8 @@ import { SweetAlertService } from '../../shared/services/sweet-alert.service';
   styleUrls: ['./user-control.component.css']
 })
 export class UserControlComponent implements OnInit {
-  users: User[] = [];  // Lista de usuarios, usando el modelo User
-  loading: boolean = true;  // Indicador de carga
+  users: User[] = [];  
+  loading: boolean = true;  
 
   constructor(private userService: UserService, private router: Router, private sweetAlert: SweetAlertService) {}
 
@@ -24,12 +24,12 @@ export class UserControlComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (users) => {
         console.log('Usuarios recibidos:', users);
-        this.users = users;  // Asignamos los usuarios a la lista
-        this.loading = false;  // Dejamos de mostrar el loading
+        this.users = users; 
+        this.loading = false;  
       },
       error: (error) => {
         console.error('Error al obtener los usuarios', error);
-        this.loading = false;  // Dejamos de mostrar el loading en caso de error
+        this.loading = false; 
       }
     });
   }
@@ -64,9 +64,9 @@ deleteUser(userId: number): void {
   // Editar usuario
   
 editUser(userId: number): void {
-  this.router.navigate(['/admin/edit-user', userId]);  // Redirige a la página de edición de usuario
+  this.router.navigate(['/admin/edit-user', userId]); 
 }
-// Método para redirigir al usuario al panel de usuario
+
 goBackToAdminPanel(): void {
   this.router.navigate(['admin']); 
 }

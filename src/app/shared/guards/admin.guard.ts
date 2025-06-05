@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
 
     // Verificamos si el usuario es admin y si su ID no es 14 (admin principal)
     if (role === 'admin') {
-      return true; // ✅ TODOS los admins, incluido el principal (id 14), pueden acceder
+      return true; //TODOS los admins, incluido el principal (id 14), pueden acceder
     
     } else {
       // Si no es admin, redirigimos a la zona de usuarios

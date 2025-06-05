@@ -46,15 +46,15 @@ h2{
 
 
 .register-container {
-  max-width: 480px;                /* antes 600px */
-  margin: 2rem auto;               /* menos margen */
-  padding: 1.5rem 2rem;            /* más compacto */
+  max-width: 480px;               
+  margin: 2rem auto;             
+  padding: 1.5rem 2rem;         
   background-color: #3a1d0b;
   border-radius: 15px;
   color: #fff6e5;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   font-family: 'Segoe UI', sans-serif;
-  font-size: 0.95rem;              /* opcional: escala general de fuente */
+  font-size: 0.95rem;           
 }
 
 .register-title {
@@ -152,8 +152,8 @@ input:focus {
 }
 /* Botón Registrar */
 button[type="submit"] {
-  background-color: #f4a261;    /* tono naranja cálido */
-  color: #2b160a;               /* texto oscuro */
+  background-color: #f4a261;    
+  color: #2b160a;               
   border: none;
   border-radius: 50px;
   padding: 0.9rem 1.6rem;
@@ -207,13 +207,13 @@ button.cancel-button:hover {
 }
 
 .checkbox-label input[type="checkbox"] {
-  accent-color: brown; /* ✅ Cambia el color del check a marrón */
+  accent-color: brown; 
   width: 18px;
   height: 18px;
 }
 
 .checkbox-label a {
-  color: #8B4513; /* También marrón, opcional */
+  color: #8B4513;
   text-decoration: underline;
 }
 

@@ -33,10 +33,11 @@ export class UserPhotosComponent implements OnInit {
   ngOnInit(): void {
     this.loadRallies();
   }
+  // Cargar los rallies y luego las fotos
   loadRallies() {
     this.rallyService.getAllRallies().subscribe((rallies: any[]) => {
       this.rallies = rallies;
-      this.loadPhotos(); // ← una vez que tienes los rallies, cargas las fotos
+      this.loadPhotos(); 
     });
   }
 
@@ -71,6 +72,7 @@ export class UserPhotosComponent implements OnInit {
     this.selectedPhoto = null;
   }
 
+  // Actualizar el estado de la foto
   updatePhotoStatus(status: string) {
     if (this.selectedPhoto) {
       console.log('Enviando solicitud con estos datos:', {

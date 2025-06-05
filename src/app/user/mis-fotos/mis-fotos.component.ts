@@ -141,7 +141,6 @@ onSaveEdit(): void {
       const index = this.fotos.findIndex(p => p.id === this.selectedPhoto.id);
 
       if (index !== -1) {
-        // Reemplazamos el objeto entero para que Angular lo detecte
         this.fotos[index] = {
           ...this.fotos[index],
           title: this.selectedPhoto.title,
@@ -173,8 +172,6 @@ onSaveEdit(): void {
 
   if (input.files && input.files.length > 0) {
     const file = input.files[0];
-
-    // EXTRA: poner como título el nombre del archivo sin extensión
     const nameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
     this.selectedPhoto.title = nameWithoutExt;
 

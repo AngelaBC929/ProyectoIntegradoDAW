@@ -64,7 +64,7 @@ h2 {
   box-shadow: none !important;
 }
 
-/* Botones de acciones */
+
 .actions {
   display: flex;
   gap: 10px;
@@ -105,7 +105,7 @@ h2 {
   box-shadow: 0 4px 10px rgba(160, 74, 27, 0.6);
 }
 
-/* Botón volver */
+
 .button-container {
   margin-top: 25px;
   text-align: center;

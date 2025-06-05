@@ -59,7 +59,7 @@
 }
 /* Estilo para el icono */
 .urban-navbar-logo {
-  height: 8rem; /* Más grande */
+  height: 8rem; 
   width: auto;
   object-fit: contain;
   user-select: none;

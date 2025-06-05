@@ -27,8 +27,8 @@ export class EditRalliesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rallyId = Number(this.route.snapshot.paramMap.get('id')); // Verifica que este ID es correcto
-    console.log('ID desde la URL:', this.rallyId); // Esto debe mostrar el ID correcto
+    this.rallyId = Number(this.route.snapshot.paramMap.get('id')); 
+    console.log('ID desde la URL:', this.rallyId); 
     
     // Formulario con validaciones
     this.rallyForm = this.fb.group({
@@ -44,7 +44,7 @@ export class EditRalliesComponent implements OnInit {
    
     // Cargar datos del rally
     this.rallyService.getRallyById(this.rallyId).subscribe((rally) => {
-      console.log('Rally recibido:', rally); // Verifica qué rally se está devolviendo
+      console.log('Rally recibido:', rally); 
       if (rally) {
         this.rallyForm.patchValue({
           title: rally.title,
@@ -80,7 +80,7 @@ export class EditRalliesComponent implements OnInit {
   
       // Si la fecha de fin es anterior a la de inicio, asigna el error al grupo
       if (endDate < startDate) {
-        return { dateMismatch: true }; // El error se asigna al grupo
+        return { dateMismatch: true };
       }
     }
   
@@ -89,24 +89,24 @@ export class EditRalliesComponent implements OnInit {
   
   
 
-  // Método para manejar el envío del formulario
+  // Envío del formulario
   onSubmit(): void {
     if (this.rallyForm.valid) {
       this.isLoading = true;
       const updatedRally: Rally = this.rallyForm.value;
   
-      console.log('Formulario enviado:', updatedRally); // Verifica los datos antes de enviarlos
+      console.log('Formulario enviado:', updatedRally); 
   
       this.rallyService.updateRally(this.rallyId, updatedRally).subscribe(
         (response) => {
           this.isLoading = false;
           this.message = 'Rally actualizado correctamente.';
-          this.router.navigate(['/admin/gestion-rallies']); // Redirige a la gestión
+          this.router.navigate(['/admin/gestion-rallies']); 
         },
         (error) => {
           this.isLoading = false;
           this.message = 'Error al actualizar el rally.';
-          console.error('Error al actualizar el rally:', error); // Muestra cualquier error del back-end
+          console.error('Error al actualizar el rally:', error); 
         }
       );
     } else {
@@ -115,8 +115,8 @@ export class EditRalliesComponent implements OnInit {
   }
   
 
-  // Método para cancelar la edición y volver al listado de rallies
+
   cancel(): void {
-    this.router.navigate(['/admin/gestion-rallies']);  // Redirige al listado de rallies
+    this.router.navigate(['/admin/gestion-rallies']);
   }
 }

@@ -62,29 +62,5 @@ export class SweetAlertService {
     }).then(result => result.isConfirmed);
   }
 
-//ESTO ES UN EJEMPLO DE CÓMO PODRÍA HACERLO PARA PERSONALIZAR LOS BOTONES
-// confirm(
-//   title: string,
-//   text: string,
-//   confirmText: string = 'Sí, eliminar',
-//   cancelText: string = 'Cancelar'
-// ): Promise<boolean> {
-//   return Swal.fire({
-//     title,
-//     text,
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#d33',
-//     cancelButtonColor: '#aaa',
-//     confirmButtonText: confirmText,
-//     cancelButtonText: cancelText,
-//     position: 'center'
-//   }).then(result => result.isConfirmed);
-// }
-
-// Y EN LA VISTA QUE HAGA FALTA SE LLAMA 
-// this.sweetAlert.confirm('¿Salir sin guardar?', 'Perderás los cambios no guardados.', 'Salir', 'Volver')
-
-  
 
 }

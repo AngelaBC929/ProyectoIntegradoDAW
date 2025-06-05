@@ -23,7 +23,7 @@ export class MisRalliesComponent implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   usuario: any = null;
-  tituloFoto: string = ''; // Añade esta propiedad en tu componente
+  tituloFoto: string = ''; 
   popupVisible: boolean = false;
   popupMensaje: string = '';
   imagenModalVisible = false;
@@ -139,7 +139,7 @@ isRallyFinished(endDateStr: string): boolean {
 onSubmit() {
   if (!this.selectedFile) {
     this.sweetAlert.info('Por favor selecciona una foto.');
-    return; // 🔥 Sal del método sin cerrar modal
+    return; 
   }
 
   if (this.selectedFile && this.usuario) {
@@ -155,7 +155,7 @@ onSubmit() {
           this.selectedFile = null;
           this.imagePreview = null;
           this.tituloFoto = '';
-          this.closeModal(); // Solo cerrar si se subió correctamente
+          this.closeModal(); 
         },
         error: (err: any) => {
           console.error('Error al subir la foto:', err);
@@ -183,8 +183,6 @@ closeImageModal() {
 mostrarPopup(mensaje: string) {
   this.popupMensaje = mensaje;
   this.popupVisible = true;
-
-  // Después de 3 segundos, cerrar el popup
   setTimeout(() => {
     this.popupVisible = false;
   }, 5000); // Popup se cierra automáticamente después de 5 segundos

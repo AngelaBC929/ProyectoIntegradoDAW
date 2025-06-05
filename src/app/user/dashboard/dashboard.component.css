@@ -58,7 +58,7 @@
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
-  align-items: stretch; /* Ya está bien esto */
+  align-items: stretch; 
 }
 
 /* Card estilo cálido */

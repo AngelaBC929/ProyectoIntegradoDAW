@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Suscribimos al BehaviorSubject para actualizar el nombre en vivo
+    // Suscribimos al BehaviorSubject para actualizar el nombre al instnate
     this.subscription = this.authenticationService.username$.subscribe(name => {
       this.userName = name || 'Invitado';
     });

@@ -47,7 +47,6 @@ export class RallyService {
   }
 
   updateRally(id: number, rallyData: any): Observable<any> {
-  // Añadimos el action 'update' en el body para que el backend sepa qué hacer
   const body = { ...rallyData, action: 'update', id };
 
   return this.http.post(this.apiUrl, body).pipe(
@@ -197,7 +196,7 @@ export class RallyService {
    map((res: any) => !!res.aprobadas),
     catchError(error => {
       console.error('Error al comprobar fotos aprobadas:', error);
-      return of(false); // por defecto asumimos que no tiene aprobadas si hay error
+      return of(false);
     })
   );
 }

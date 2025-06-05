@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Escuchar el cambio de rol (para navbar)
+    // Suscribirse al rol del usuario
     this.authService.role$.subscribe(role => {
       this.role = role;
     });
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
 handleLogin() {
   this.showModal = false;
   this.authService.logout();
-  this.authService.setLoginAfterSessionExpired(true); // ✅ marcamos que venimos de expiración
+  this.authService.setLoginAfterSessionExpired(true);
   this.router.navigate(['/login']);
 }
 

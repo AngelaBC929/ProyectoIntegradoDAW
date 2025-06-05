@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./faqs.component.css']
 })
 export class FaqsComponent implements OnInit {
-  tabActivo: string = 'faqs'; // por si usas tabs
+  tabActivo: string = 'faqs'; 
 
   preguntasRespuestas = [
      {

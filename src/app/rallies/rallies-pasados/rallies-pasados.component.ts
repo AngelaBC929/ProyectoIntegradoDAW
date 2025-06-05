@@ -56,8 +56,7 @@ export class RalliesPasadosComponent implements OnInit {
   }
 }
 
-  
-  // Método para redirigir al usuario al panel de usuario 
+
   volverAlPanelUsuario(): void {
     this.router.navigate(['user/dashboard']);
   }

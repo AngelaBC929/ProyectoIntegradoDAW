@@ -18,6 +18,6 @@ export class UserGuard implements CanActivate {
       return false;
     }
 
-    return true;  // Si es usuario, puede acceder
+    return true;  // accede
   }
 }

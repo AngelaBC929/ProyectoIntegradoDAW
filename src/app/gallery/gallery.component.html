@@ -18,10 +18,8 @@
             [src]="photo.photo_url" 
             alt="Foto del rally" 
             (click)="openImageModal(photo.photo_url)" 
-            style="cursor: pointer;" 
-          />
-          
-          <!-- Trofeo y etiqueta de ganadora -->
+            style="cursor: pointer;" />
+
           <div *ngIf="isWinner(photo, rally)" class="ganadora-label">
             <i class="fas fa-trophy" style="color: goldenrod;"></i> Ganadora
           </div>
@@ -31,12 +29,11 @@
             <p class="votos">❤️ {{ photo.votos || 0 }} votos</p>
 
            <button 
-  (click)="vote(photo.id)" 
-  [disabled]="hasVoted(photo.id) || hasRallyEnded(rally)"
-  class="btn-vote"
->
-  {{ hasRallyEnded(rally) ? 'Rally finalizado' : (hasVoted(photo.id) ? 'Ya votaste' : 'Votar') }}
-</button>
+            (click)="vote(photo.id)" 
+            [disabled]="hasVoted(photo.id) || hasRallyEnded(rally)"
+            class="btn-vote">
+            {{ hasRallyEnded(rally) ? 'Rally finalizado' : (hasVoted(photo.id) ? 'Ya votaste' : 'Votar') }}
+          </button>
 
           </div>
         </div>

@@ -17,7 +17,7 @@ export class CreateRalliesComponent {
   message: string = '';
   dateRangeError: string | null = null;
   titleDuplicationError: string | null = null;
-  rallies: any[] = [];  // Aquí almacenaremos los rallies
+  rallies: any[] = []; 
 
   constructor(
     private formBuilder: FormBuilder,

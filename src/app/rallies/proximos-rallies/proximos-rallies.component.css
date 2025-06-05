@@ -35,7 +35,7 @@ p{
 }
 .horizontal-card p span {
   font-weight: 700;
-  color: #7b4f24; /* Un tono cálido que combine con tu paleta */
+  color: #7b4f24;
 }
 i, .material-symbols-outlined {
   font-size: 3rem !important;
@@ -56,7 +56,7 @@ i, .material-symbols-outlined {
   font-weight: bold;
   text-align: center;
   display: block;
-  margin: 1rem auto; /* <-- esto lo centra horizontalmente */
+  margin: 1rem auto; 
 }
 
 .btn:hover {

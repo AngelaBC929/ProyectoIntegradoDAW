@@ -23,14 +23,11 @@
             <td>{{ photo.status }}</td>
             <td>
               <button (click)="openModal(photo)" [disabled]="
-    photo.status === 'aprobada' || 
-    photo.status === 'rechazada' || 
-    hasRallyEnded(photo)">
+                photo.status === 'aprobada' || 
+                photo.status === 'rechazada' || 
+                hasRallyEnded(photo)">
                 {{ hasRallyEnded(photo) ? 'Rally finalizado' : 'Revisar' }}
               </button>
-
-
-
             </td>
           </tr>
         </tbody>

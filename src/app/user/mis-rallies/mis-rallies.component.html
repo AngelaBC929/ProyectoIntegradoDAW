@@ -38,10 +38,10 @@
                 <p>
                   <span style="color: #5c3a1e;">Status:</span>
                   <span [ngClass]="{
-              'estado-aprobada': foto.status === 'aprobada',
-              'estado-pendiente': foto.status === 'pendiente',
-              'estado-rechazada': foto.status === 'rechazada'
-            }">
+                      'estado-aprobada': foto.status === 'aprobada',
+                      'estado-pendiente': foto.status === 'pendiente',
+                      'estado-rechazada': foto.status === 'rechazada'
+                    }">
                     <ng-container [ngSwitch]="foto.status">
                       <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
                       <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
@@ -101,7 +101,6 @@
     {{ popupMensaje }}
   </div>
 
-  <!-- Botón para volver -->
   <div class="button-container">
     <button (click)="goBackToUserPanel()" class="btn volver">Volver</button>
   </div>

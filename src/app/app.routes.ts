@@ -26,7 +26,7 @@ export const routes: Routes = [
   { path: 'gallery', component: GalleryComponent },
   { path: 'user/dashboard',
     loadComponent: () => import('./user/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [AuthGuard, UserGuard]  // Aseguramos que esté autenticado y no sea un admin
+    canActivate: [AuthGuard, UserGuard] 
   },
    { path: 'mis-rallies', component: MisRalliesComponent, canActivate: [AuthGuard, UserGuard] },
    { path: 'mis-fotos', component: MisFotosComponent, canActivate: [AuthGuard, UserGuard] },

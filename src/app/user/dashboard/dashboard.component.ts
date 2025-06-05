@@ -13,7 +13,7 @@ import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 import { User } from '../../shared/models/user.model';
 import { environment } from '../../../environments/environment';
 
-// Importa y registra controladores obligatorios de Chart.js
+// Importa y registra controladores OBLIGATORIOS de Chart.js
 import {
   BarController,
   BarElement,
@@ -152,7 +152,7 @@ export class DashboardComponent implements OnInit {
   onSubmit() {
     if (this.selectedFile && this.usuario) {
       const userId = this.usuario.id;
-      const rallyId = 456; // ⚠️ Cambia este valor si es necesario
+      const rallyId = 456;
       const title = this.tituloFoto || 'Sin título';
 
       this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
@@ -176,7 +176,6 @@ modificarPerfil(): void {
     this.userService.updateUser(this.usuario.id, updatedUser).subscribe({
       next: () => {
         this.sweetAlert.success('Perfil actualizado correctamente');
-        // Actualizar el nombre en localStorage
         this.authenticationService.setUsername(updatedUser.name);
 
       },

@@ -104,11 +104,11 @@ html, body {
   margin-bottom: 5px;
   display: flex;
   align-items: center;
-  justify-content: center;  /* Centrar horizontalmente */
+  justify-content: center; 
   gap: 5px;
   font-size: 1rem;
-  text-transform: uppercase; /* Mayúsculas */
-  user-select: none; /* Evita que se seleccione el texto, opcional */
+  text-transform: uppercase; 
+  user-select: none; 
 }
 
 /* Imagen */

@@ -140,7 +140,7 @@
   display: inline-block;
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #8B4513; /* marrón cálido */
+  background-color: #8B4513; 
   color: white;
   border-radius: 8px;
   text-decoration: none;
@@ -149,7 +149,7 @@
 }
 
 .btn-descarga:hover {
-  background-color: #5c3a1e; /* tono más oscuro al pasar el ratón */
+  background-color: #5c3a1e;
 }
 
 

@@ -81,7 +81,7 @@ export class PhotoService {
   return this.http.post<any>(this.apiUrl, formData);
 }
 
-  // ✅ FUNCIÓN CORRECTA PARA VOTAR
+  // FUNCIÓN CORRECTA PARA VOTAR
   vote(photoId: number, userId: number): Observable<any> {
     const body = {
       action: 'vote',
@@ -110,7 +110,7 @@ export class PhotoService {
       catchError(this.handleError.bind(this)));
   }
 
-  // ✅ FUNCIÓN CORRECTA PARA OBTENER LAS FOTOS APROBADAS CON PÁGINACIÓN
+  // FUNCIÓN CORRECTA PARA OBTENER LAS FOTOS APROBADAS
   getFotosAprobadasPaginated(page: number, limit: number): Observable<any> {
     const params = {
       action: 'getApprovedPhotos',
@@ -128,7 +128,7 @@ export class PhotoService {
       map(response => response.aprobadas),
       catchError(error => {
         console.error('Error al comprobar fotos aprobadas:', error);
-        return of(false); // por defecto asumimos que no tiene aprobadas si hay error
+        return of(false); 
       })
     );
   }

@@ -19,12 +19,12 @@ export class GalleryComponent implements OnInit {
     start_date?: string;
     end_date?: string;
     photos: any[];
-    winnerPhoto?: any[];  // Propiedad para las fotos ganadoras de cada rally
+    winnerPhoto?: any[];
   }[] = [];
   votedPhotos: Set<number> = new Set();
-  currentPage: number = 1; // Página global
-  limit: number = 100; // Fotos por página
-  totalPhotos: number = 0; // Total de fotos, para calcular las páginas
+  currentPage: number = 1; 
+  limit: number = 100; 
+  totalPhotos: number = 0; 
   imagenModalVisible = false;
   imagenModalUrl: string | null = null;
 
@@ -41,7 +41,7 @@ export class GalleryComponent implements OnInit {
       next: (response) => {
         console.log('Fotos aprobadas:', response);
         this.rallies = this.groupPhotosByRally(response.photos || []); // Agrupa las fotos por rally
-        this.totalPhotos = response.totalPhotos || 0; // Establece el total de fotos para la paginación
+        this.totalPhotos = response.totalPhotos || 0; 
         this.loadVotedPhotos();
 
         // Establecer las fotos ganadoras para cada rally
@@ -79,7 +79,7 @@ closeImageModal() {
 
       // Solo asigna ganadores si hay fotos con más de 0 votos
       if (maxVotes > 0) {
-        rally.winnerPhoto = winners; // Asigna las fotos con el máximo número de votos
+        rally.winnerPhoto = winners; 
       } else {
         rally.winnerPhoto = []; // Si no hay fotos con más de 0 votos, no hay ganadores
       }

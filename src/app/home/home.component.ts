@@ -42,11 +42,12 @@ export class HomeComponent implements OnInit {
     this.loadRecentPhotos();
   }
 
+  // Método para cargar las fotos recientes
 loadRecentPhotos(): void {
   this.photoService.getFotosAprobadasPaginated(1, 6).subscribe({
     next: (response) => {
       const fotos = response.photos || [];
-      // Ajustamos la URL completa
+  
       fotos.forEach((photo: { photo_url: string; }) => {
         photo.photo_url = `${environment.apiUrl}/${photo.photo_url}`;
       });

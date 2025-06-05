@@ -47,7 +47,7 @@ username$ = this.usernameSubject.asObservable();
   logout() {
     localStorage.removeItem('authToken');
     this.setRole(null);
-    this.setUsername(null);  // ✅ Aquí
+    this.setUsername(null); 
     localStorage.removeItem('userId');
     clearTimeout(this.timeout);
   }
@@ -56,16 +56,16 @@ username$ = this.usernameSubject.asObservable();
     return !!localStorage.getItem('authToken');
   }
 
-  // 🆕 Iniciar temporizador de inactividad
+  // Iniciar temporizador de inactividad
   startTimeout() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.logout(); // 🔐 cerrar sesión al expirar
-      this.sessionExpiredSubject.next(); // 🔔 emitir evento para mostrar el modal
+      this.logout(); // cerrar sesión al expirar
+      this.sessionExpiredSubject.next(); // emitir evento para mostrar el modal
     }, this.TIMEOUT_LIMIT);
   }
 
-  // 🆕 Resetear temporizador (cuando hay actividad del usuario)
+  //Resetear temporizador (cuando hay actividad del usuario)
   resetTimeout() {
     if (this.isAuthenticated()) {
       this.startTimeout();
@@ -96,7 +96,7 @@ username$ = this.usernameSubject.asObservable();
   
 register(email: string, username: string, password: string, name: string, lastName: string, birthdate: string) {
   const userData = {
-    action: 'create', // 👈 ¡IMPORTANTE!
+    action: 'create', //¡IMPORTANTE!
     email,
     username,
     password,

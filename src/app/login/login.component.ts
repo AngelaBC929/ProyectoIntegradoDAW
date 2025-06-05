@@ -17,7 +17,7 @@ export class LoginComponent {
   password: string = '';
   submitted: boolean = false;
   passwordVisible: boolean = false;
-  errorMessage: string = ''; // Mensaje de error para mostrar en la interfaz
+  errorMessage: string = ''; 
 
   // Expresión regular para validar la contraseña
   passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,12}$/;
@@ -61,14 +61,12 @@ export class LoginComponent {
             this.router.navigate(['/user/dashboard']);
           }
 
-          // Cerrar el modal tras redirección
           this.cerrar.emit();
         }
       },
       error: (error) => {
-        console.log('Error de login:', error); // Verifica el error recibido en la consola
+        console.log('Error de login:', error); 
         
-        // Aquí debes asegurarte de que el mensaje que recibes se asigna a 'errorMessage'
         if (error.status === 404) {
           this.errorMessage = error.error.error || 'Este usuario no está registrado. ¿Deseas registrarte?';  // Mensaje personalizado si no está registrado
         } else if (error.status === 401) {

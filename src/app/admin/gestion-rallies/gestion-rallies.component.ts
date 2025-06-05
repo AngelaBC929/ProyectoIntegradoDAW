@@ -27,7 +27,7 @@ export class GestionRalliesComponent implements OnInit {
     this.rallyService.rallies$.subscribe(rallies => {
       // Confirmamos que los rallies que estamos recibiendo están correctamente
       console.log('Datos de rallies recibidos en la suscripción:', rallies);
-      this.rallies = rallies; // Asignamos todos los rallies tal como los recibe desde el servicio
+      this.rallies = rallies; 
       console.log('Todos los rallies:', this.rallies);
     });
 
@@ -54,7 +54,6 @@ export class GestionRalliesComponent implements OnInit {
           if (isConfirmed) {
             this.rallyService.deleteRally(id).subscribe(() => {
               this.sweetAlert.success('Rally eliminado');
-              // Aquí puedes emitir un evento o refrescar la lista si es necesario
             });
           }
         });
@@ -65,7 +64,7 @@ export class GestionRalliesComponent implements OnInit {
     });
   }
 
-  // Método para redirigir al usuario al panel de usuario
+
   goBackToAdminPanel(): void {
     this.router.navigate(['admin']);
   }

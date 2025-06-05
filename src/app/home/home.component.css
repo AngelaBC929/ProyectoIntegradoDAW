@@ -232,7 +232,7 @@ img {
 .urban-hero-text {
   padding: 0.1rem;
   position: relative;
-  top: -5rem; /* Puedes ajustar este valor a -4rem o -5rem si hace falta */
+  top: -5rem; 
 }
 
   .urban-brand-title {
@@ -273,7 +273,7 @@ img {
 .urban-hero-text {
   padding: 0.5rem;
   position: relative;
-  top: -5rem; /* Puedes ajustar este valor a -4rem o -5rem si hace falta */
+  top: -5rem;
  background-position: center 60%;
 
 }

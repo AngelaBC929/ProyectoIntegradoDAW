@@ -29,6 +29,8 @@ export class RegisterComponent {
   confirmPasswordVisible: boolean = false;
   isSubmitting: boolean = false;
 
+  // Expresión regular para validar la contraseña
+  // Debe tener entre 8 y 12 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial
   private readonly passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*]).{8,12}$/;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {}
