@@ -6,6 +6,7 @@ require 'config.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents("php://input"), true);
 
+// Mostrar errores (solo para desarrollo)
 switch ($method) {
     case 'GET':
         if (isset($_GET['id'])) {
@@ -25,6 +26,7 @@ switch ($method) {
         }
         break;
 
+        // POST: Crear, actualizar o eliminar rally
     case 'POST':
         $action = $input['action'] ?? 'create';
 

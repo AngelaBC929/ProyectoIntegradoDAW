@@ -5,6 +5,7 @@ require 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+// Mostrar errores (solo para desarrollo)
 if ($method === 'GET') {
     if (!isset($_GET['userId'])) {
         http_response_code(400);

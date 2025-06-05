@@ -100,35 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 
-// if ($method === 'GET') {
-//     if (isset($_GET['action'])) {
-//         switch ($_GET['action']) {
-//             case 'fotos_usuario_actuales':
-//                 handleGetFotosUsuarioActuales();
-//                 break;
-//             case 'fotos_usuario':
-//                 handleGetFotosPorUsuario();
-//                 break;
-//             case 'user_photos':
-//                 handleGetUserPhotos();
-//                 break;
-//             case 'rally_photos':
-//                 handleGetRallyPhotos();
-//                 break;
-//             case 'all_photos':
-//                 handleGetAllPhotos();
-//                 break;
-//             case 'approved_photos':
-//                 handleGetApprovedPhotos();
-//                 break;
-//             default:
-//                 echo json_encode(['error' => 'Acción GET no válida']);
-//         }
-//     } else {
-//         echo json_encode(['error' => 'Falta acción en GET']);
-//     }
-// }
-
 
 
 // Funciones de utilidad
@@ -157,7 +128,7 @@ function handleUpload($conn)
     $rallyId = intval($_POST['rallyId']);
 
 
-    // Tamaño máximo 5MB
+    // Tamaño máximo 10MB
     if ($_FILES['photo']['size'] > 10 * 1024 * 1024) {
         responseError('El archivo es demasiado grande');
     }
@@ -463,80 +434,7 @@ function handleGetAllPhotos($conn)
         responseError('Error BD: ' . $e->getMessage(), 500);
     }
 }
-
-
-// function handleEdit($conn)
-
-// {
-//     if (!isset($_POST['userId'], $_POST['photo_id'], $_POST['title'])) {
-//         responseError('Faltan parámetros');
-//     }
-
-//     $userId = intval($_POST['userId']);
-//     $photoId = intval($_POST['photo_id']);
-//     $title = $_POST['title'];
-
-//     // Verificar permisos
-//     $stmt = $conn->prepare("SELECT * FROM rally_fotos WHERE id=? AND userId=?");
-//     $stmt->execute([$photoId, $userId]);
-//     $foto = $stmt->fetch(PDO::FETCH_ASSOC);
-
-//     if (!$foto) {
-//         responseError('Sin permisos', 403);
-//     }
-
-//     $newUrl = $foto['photo_url']; // Por si no cambia la imagen
-
-//     // Si se subió una nueva imagen
-//     if (!empty($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
-//         // Validaciones similares a handleUpload
-//         if ($_FILES['photo']['size'] > 5 * 1024 * 1024) {
-//             responseError('El archivo es demasiado grande');
-//         }
-
-//         $finfo = new finfo(FILEINFO_MIME_TYPE);
-//         $mime = $finfo->file($_FILES['photo']['tmp_name']);
-//         $allowed = ['image/jpeg', 'image/png', 'image/gif'];
-//         if (!in_array($mime, $allowed)) {
-//             responseError('Tipo de archivo no permitido');
-//         }
-
-//         // Nombre nuevo para evitar colisiones
-//         $dir = 'uploads/';
-//         if (!file_exists($dir))
-//             mkdir($dir, 0755, true);
-
-//         $orig = pathinfo($_FILES['photo']['name'], PATHINFO_FILENAME);
-//         $clean = preg_replace('/[^a-zA-Z0-9_-]/', '_', $orig);
-//         $ext = strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
-//         $base = "edit_user{$userId}_photo{$photoId}_{$clean}";
-//         $file = "{$base}.{$ext}";
-//         $path = $dir . $file;
-//         $i = 1;
-//         while (file_exists($path)) {
-//             $file = "{$base}_{$i}.{$ext}";
-//             $path = $dir . $file;
-//             $i++;
-//         }
-
-//         $tmpPath = $_FILES['photo']['tmp_name'];
-//         if (!resizeAndSaveImage($tmpPath, $path, $mime)) {
-//             responseError('Error al guardar la imagen', 500);
-//         }
-
-//         $newUrl = "https://expresscapturevz.wuaze.com/{$path}";
-//     }
-
-//     // Actualizar en BD
-//     try {
-//         $stmt = $conn->prepare("UPDATE rally_fotos SET title=?, photo_url=? WHERE id=?");
-//         $stmt->execute([$title, $newUrl, $photoId]);
-//         responseJson(['success' => true, 'message' => 'Foto actualizada', 'url' => $newUrl]);
-//     } catch (PDOException $e) {
-//         responseError('Error BD: ' . $e->getMessage(), 500);
-//     }
-// }
-
+// Editar foto
 function handleEdit($conn) {
     if (!isset($_POST['userId'], $_POST['photo_id'], $_POST['title'])) {
         responseError('Faltan parámetros');
@@ -638,30 +536,7 @@ function handleEdit($conn) {
     }
 }
 
-
-
-
-
-// Eliminación de foto
-// function handleDelete($conn)
-// {
-//     if (!isset($_POST['userId'], $_POST['photo_id']))
-//         responseError('Faltan parámetros');
-//     $u = intval($_POST['userId']);
-//     $p = intval($_POST['photo_id']);
-//     $stmt = $conn->prepare("SELECT 1 FROM rally_fotos WHERE id=? AND userId=?");
-//     $stmt->execute([$p, $u]);
-//     if (!$stmt->fetch())
-//         responseError('Sin permisos', 403);
-//     try {
-//         $conn->prepare("DELETE FROM rally_fotos WHERE id=?")->execute([$p]);
-//         responseJson(['success' => true, 'message' => 'Foto eliminada']);
-//     } catch (PDOException $e) {
-//         responseError('Error BD: ' . $e->getMessage(), 500);
-//     }
-// }
-
-
+// Eliminar foto
 function handleDelete($conn) {
     if (!isset($_POST['photo_id'], $_POST['userId'])) {
         responseError('Faltan parámetros');
