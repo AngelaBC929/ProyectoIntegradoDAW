@@ -9,7 +9,7 @@
       <button [routerLink]="['/mis-fotos']" [class.active]="tabActivo === 'misfotos'">Mis Fotos</button>
       <button (click)="entrarGaleria()" [class.active]="tabActivo === 'gallery'">Galería</button>
       <button [routerLink]="['/faqs']" [class.active]="tabActivo === 'faqs'">FAQs</button>
-      
+
     </nav>
   </header>
 
@@ -23,7 +23,7 @@
         <p>Participa en los próximos rallies fotográficos que tenemos preparados para ti.</p>
         <button class="btn-enter" (click)="entrarProximosRallies()">Entrar</button>
       </div>
-      <div class="card">       
+      <div class="card">
         <h2>Rallies Actuales
           <img src="images/camara.png" alt="camara" class="icono-rally-camara" />
         </h2>
@@ -39,6 +39,29 @@
       </div>
     </div>
   </div>
+  <!-- Después del div.user-dashboard -->
+  <!-- Estadísticas abajo -->
+  <div class="card-container">
+  <div class="card card-stats">
+    <h2>Rallies con más participación</h2>
+    <ul>
+      <li *ngFor="let rally of topRallies">
+        {{ rally.title }} : {{ rally.inscritos }} participantes
+      </li>
+    </ul>
+    <p *ngIf="topRallies.length === 0">No hay rallies con inscritos todavía.</p>
+  </div>
+
+  <div class="card card-graph">
+    <ng-container *ngIf="barChartData">
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="{ responsive: true }"></canvas>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
 
   <!-- SECCIÓN PERFIL -->
   <main>
@@ -61,13 +84,17 @@
       </div>
 
       <!-- INSTRUCCIONES DE FOTOS -->
-    <div class="fotos-card">
-  <h2>Subida de Fotos</h2>
-  <p>Puedes subir hasta <strong>3 fotos</strong> por rally. Asegúrate de que sigan la temática y cumplan las normas.</p>
-  <p>Tu foto puede ser <strong>admitida</strong>, quedar <strong>pendiente</strong> o ser <strong>rechazada</strong> tras revisión del administrador.</p>
-  <p>Podrás modificar tus fotos mientras no hayas subido las 3 fotos máximas al rally y podrás votar tus fotos favoritas mientras el rally este <strong>activo</strong>.</p>
-  <p>Consulta las <a routerLink="/faqs">FAQs</a> para más detalles.</p>
-</div>
+      <div class="fotos-card">
+        <h2>Subida de Fotos</h2>
+        <p>Puedes subir hasta <strong>3 fotos</strong> por rally. Asegúrate de que sigan la temática y cumplan las
+          normas.</p>
+        <p>Tu foto puede ser <strong>admitida</strong>, quedar <strong>pendiente</strong> o ser
+          <strong>rechazada</strong> tras revisión del administrador.
+        </p>
+        <p>Podrás modificar tus fotos mientras no hayas subido las 3 fotos máximas al rally y podrás votar tus fotos
+          favoritas mientras el rally este <strong>activo</strong>.</p>
+        <p>Consulta las <a routerLink="/faqs">FAQs</a> para más detalles.</p>
+      </div>
 
     </section>
   </main>

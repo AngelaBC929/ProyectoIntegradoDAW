@@ -58,6 +58,7 @@
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
+  align-items: stretch; /* Ya está bien esto */
 }
 
 /* Card estilo cálido */
@@ -321,6 +322,87 @@
   box-shadow: 0 2px 6px rgba(123, 79, 36, 0.3);
 }
 
+/* Igualar altura entre stats y gráfica */
+.card-container {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+
+/* Ambas tarjetas deben crecer igual */
+.card-stats,
+.card-graph {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+/* Card de estadísticas */
+.card-stats {
+  margin-top: 2.5rem;
+  background-color: #f2d388;
+  padding: 1.25rem 1.5625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Título de estadísticas */
+.card-stats h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4b2e05;
+  text-shadow: 1px 1px 3px #7b4f24;
+  text-align: center;
+}
+
+.card-stats ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.card-stats li {
+  display: flex;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #3c3c3c;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card del gráfico */
+.card-graph {
+  background-color: #f2d388;
+  padding: 1.25rem 1.5625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Contenedor del canvas centrado y responsivo */
+.chart-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Canvas dentro del gráfico */
+.card-graph canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 300px;
+  object-fit: contain;
+}
 
 /* ----------------------------------- */
 /* Responsive para tablets y móviles */

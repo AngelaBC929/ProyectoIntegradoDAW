@@ -30,9 +30,14 @@
             <p class="author">📸 {{ photo.autor }}</p>
             <p class="votos">❤️ {{ photo.votos || 0 }} votos</p>
 
-            <button (click)="vote(photo.id)" [disabled]="hasVoted(photo.id)" class="btn-vote">
-              {{ hasVoted(photo.id) ? 'Ya votaste' : 'Votar' }}
-            </button>
+           <button 
+  (click)="vote(photo.id)" 
+  [disabled]="hasVoted(photo.id) || hasRallyEnded(rally)"
+  class="btn-vote"
+>
+  {{ hasRallyEnded(rally) ? 'Rally finalizado' : (hasVoted(photo.id) ? 'Ya votaste' : 'Votar') }}
+</button>
+
           </div>
         </div>
       </div>

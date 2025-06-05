@@ -4,12 +4,13 @@
   background-size: cover;
   min-height: 100vh;
   width: 100%;
-  overflow: hidden; /* Evita scroll lateral por elementos rebeldes */
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 
-h1{
+h1 {
   font-size: 2.4rem;
   font-weight: 700;
   color: #4b2e05;
@@ -17,7 +18,8 @@ h1{
   margin-bottom: 2rem;
   text-shadow: 1px 1px 2px #7b4f24;
 }
-p{
+
+p {
   font-size: 1.2rem;
   color: #4b2e05;
   font-weight: 500;
@@ -28,19 +30,31 @@ p{
   margin-left: auto;
   margin-right: auto;
 }
-/* Card container ya existe, solo agregar flex-wrap para móviles */
+
+/* Container general de cards */
 .card-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
-/* Ajustes de las cards */
+/* Gestión: 3 cards en fila con ancho completo */
+.dashboard > .card-container:first-of-type {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.dashboard > .card-container:first-of-type .card {
+  flex: 1 1 calc(33.333% - 1.5rem); /* 3 en fila con margen */
+  max-width: 100%;
+  min-width: 260px;
+}
+
+/* Card general */
 .card {
-  flex: 1 1 280px;
-  max-width: 320px;
   background: #f2d388;
   padding: 1.8rem;
   border-radius: 12px;
@@ -63,16 +77,18 @@ p{
   font-size: 1.6rem;
   margin-bottom: 0.6rem;
   text-shadow: 1px 1px 2px #7b4f24;
+  text-align: center;
 }
 
 .card p {
   font-size: 1rem;
   line-height: 1.4;
   margin-bottom: 1.8rem;
+  text-align: center;
 }
 
 .card button {
-  align-self: flex-start;
+  margin: 0 auto;
   background-color: #7b4f24;
   color: #f9f4e6;
   border: none;
@@ -88,3 +104,95 @@ p{
   background-color: #a06937;
 }
 
+/* Estadísticas y gráfica */
+.card-container:last-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center; /* Ahora centrado */
+  margin-bottom: 2rem;
+}
+
+.card-stats,
+.card-graph {
+  flex: 1 1 420px;
+  max-width: 500px;
+  background-color: #f2d388;
+  padding: 1.25rem 1.5625rem;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 6px 14px rgba(210, 160, 70, 0.45);
+  min-height: 250px;
+}
+
+.card-stats h2,
+.card-graph h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4b2e05;
+  text-shadow: 1px 1px 3px #7b4f24;
+  text-align: center;
+}
+
+.card-stats ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.card-stats li {
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #3c3c3c;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-graph canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .dashboard > .card-container:first-of-type {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .dashboard > .card-container:first-of-type .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .card-container:last-of-type {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-stats,
+  .card-graph {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-height: 200px;
+  }
+}

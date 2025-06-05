@@ -2,15 +2,42 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+import { ChartData, ChartType, Chart } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+
 import { UserService } from '../../shared/services/user.service';
-import { PhotoService } from '../../shared/services/photo.service'; // Importamos el servicio de fotos
-import { User } from '../../shared/models/user.model';
+import { PhotoService } from '../../shared/services/photo.service';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
+import { User } from '../../shared/models/user.model';
+import { environment } from '../../../environments/environment';
+
+// Importa y registra controladores obligatorios de Chart.js
+import {
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+
+Chart.register(
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, BaseChartDirective],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -18,19 +45,33 @@ export class DashboardComponent implements OnInit {
   tabActivo = 'perfil';
   usuario: User | null = null;
   tituloFoto: string = '';
+  topRallies: { id: number, title: string, inscritos: number }[] = [];
 
-  // Variables para controlar la visibilidad del modal y la vista previa
   isModalOpen = false;
   selectedFile: File | null = null;
   imagePreview: string | null = null;
+  errorMessage: string = '';
+
+  // Gráfica
+  barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Inscritos',
+        backgroundColor: '#7b4f24'
+      }
+    ]
+  };
+  barChartType: ChartType = 'bar';
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private userService: UserService,
     private photoService: PhotoService,
-    private sweetAlert: SweetAlertService
+    private sweetAlert: SweetAlertService,
+    private http: HttpClient
   ) {}
-
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
@@ -46,14 +87,46 @@ export class DashboardComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+
+    this.cargarTopRallies();
   }
 
   seleccionarTab(tab: string) {
     this.tabActivo = tab;
   }
 
+  cargarTopRallies() {
+    const url = `${environment.apiUrl}/inscripciones.php?stats=top`;
+    this.http.get<any>(url).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.topRallies = response.topRallies;
+          this.updateChartData();
+        } else {
+          this.errorMessage = response.message || 'Error al cargar datos.';
+        }
+      },
+      error: (error) => {
+        this.errorMessage = 'Error en la llamada a la API.';
+        console.error('Error HTTP:', error);
+      }
+    });
+  }
+
+  updateChartData() {
+    this.barChartData = {
+      labels: this.topRallies.map(r => r.title),
+      datasets: [
+        {
+          data: this.topRallies.map(r => r.inscritos),
+          label: 'Inscritos',
+          backgroundColor: '#7b4f24'
+        }
+      ]
+    };
+  }
+
   openModal() {
-    console.log("Abriendo el modal"); // Verificar si el modal se abre correctamente
     this.isModalOpen = true;
   }
 
@@ -77,15 +150,12 @@ export class DashboardComponent implements OnInit {
 
   onSubmit() {
     if (this.selectedFile && this.usuario) {
-      const userId = this.usuario.id; // Obtener el userId del usuario actual
-      const rallyId = 456; // Aquí debes pasar el rallyId adecuado, si lo tienes disponible
+      const userId = this.usuario.id;
+      const rallyId = 456; // ⚠️ Cambia este valor si es necesario
       const title = this.tituloFoto || 'Sin título';
-; // Aquí puedes obtener el título de un input o asignar un valor por defecto
 
-      // Llamar al servicio para subir la foto
-      this.photoService.uploadPhoto(this.selectedFile, userId, rallyId,title).subscribe({
-        next: (response) => {
-          console.log('Foto subida con éxito:', response);
+      this.photoService.uploadPhoto(this.selectedFile, userId, rallyId, title).subscribe({
+        next: () => {
           this.sweetAlert.success('Foto subida correctamente');
           this.closeModal();
         },
@@ -95,9 +165,7 @@ export class DashboardComponent implements OnInit {
         }
       });
     } else {
-      alert('Por favor selecciona una foto.');
       this.sweetAlert.info('Por favor selecciona una foto.');
-
     }
   }
 
@@ -107,15 +175,14 @@ export class DashboardComponent implements OnInit {
       this.userService.updateUser(this.usuario.id, updatedUser).subscribe({
         next: () => {
           this.sweetAlert.success('Perfil actualizado correctamente');
-
         },
-        error: (error) => {
+        error: () => {
           this.sweetAlert.error('Error', 'No se pudo actualizar el perfil');
         }
       });
     }
   }
-  
+
   entrarProximosRallies() {
     this.router.navigate(['/proximos-rallies']);
   }
@@ -129,9 +196,9 @@ export class DashboardComponent implements OnInit {
   }
 
   entrarGaleria() {
-  this.router.navigate(['/gallery'], { queryParams: { from: 'dashboard' } });
-}
- 
+    this.router.navigate(['/gallery'], { queryParams: { from: 'dashboard' } });
+  }
+
   goBackToUserPanel(): void {
     this.router.navigate(['user/dashboard']);
   }

@@ -217,7 +217,7 @@ h6 {
 .btn:hover,
 .btn.volver:hover,
 .btn-subir:hover{
-  background-color: #8b4513;
+  background-color: #918f8f;
 }
 
 .btn-cerrar {
@@ -242,17 +242,30 @@ h6 {
   cursor: zoom-out;
 }
 
-.modal-content {
-  background-color: transparent;
-  padding: 2rem;
+/* MODAL PARA SUBIR FOTOS */
+.subir-foto-modal {
+  background-color: #f9f4e6; /* Fondo cremita claro */
+  padding: 2.5rem;
   border-radius: 1rem;
-  max-width: 300px;
-  width: 90%;
+  max-width: 600px; /* Más ancho */
+  width: 95%;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 10000;
+}
+
+
+/* MODAL PARA IMAGEN AMPLIADA */
+.modal-imagen-ampliada {
+  background-color: transparent;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90vh;
+  object-fit: contain;
+  user-select: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .modal-title {
@@ -419,6 +432,12 @@ h6 {
     font-size: 1rem;
     padding: 0.75rem 1.25rem;
   }
+  @media (max-width: 400px) {
+  .subir-foto-modal {
+    padding: 1.5rem 1rem;
+    border-radius: 0.8rem;
+  }
+}
 
   .image-modal .modal-content {
     max-width: 95%;

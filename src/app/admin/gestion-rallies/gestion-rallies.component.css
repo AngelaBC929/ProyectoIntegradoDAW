@@ -29,7 +29,7 @@ h2 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 12px;
-  min-width: 600px; /* Para que en móviles haya scroll si es necesario */
+  min-width: 600px;
 }
 
 .table thead th {
@@ -91,7 +91,6 @@ h2 {
 .edit-btn {
   background-color: #7b4f24;
 }
-
 .edit-btn:hover {
   background-color: #a06937;
   box-shadow: 0 4px 10px rgba(160, 105, 55, 0.6);
@@ -101,7 +100,6 @@ h2 {
   background-color: #c55e25;
   box-shadow: 0 2px 5px rgba(197, 94, 37, 0.4);
 }
-
 .delete-btn:hover {
   background-color: #a04a1b;
   box-shadow: 0 4px 10px rgba(160, 74, 27, 0.6);
@@ -132,13 +130,20 @@ h2 {
   color: #fff;
   box-shadow: 0 6px 14px rgba(160, 105, 55, 0.8);
 }
+
+/* Botón nuevo */
+.add-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 .btn-nuevo {
   font-family: 'Georgia', serif;
   font-weight: 700;
   background-color: #4b2e05;
   color: #f9f4e6;
   border: none;
-  margin-left: 12rem;
   padding: 10px 22px;
   border-radius: 10px;
   cursor: pointer;
@@ -146,13 +151,8 @@ h2 {
   box-shadow: 0 4px 10px rgba(75, 46, 5, 0.4);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   white-space: nowrap;
+  margin: 0;
 }
-.add-button-container {
-  display: flex;
-  justify-content: flex-start; /* Alinea a la izquierda */
-  margin-bottom: 1rem;
-}
-
 
 .btn-nuevo:hover {
   background-color: #7b4f24;
@@ -161,16 +161,15 @@ h2 {
 }
 
 
-
-/* --- Responsive --- */
+/* === Responsive Mejorado === */
 @media (max-width: 768px) {
   .table-container {
-    padding: 15px 15px;
+    padding: 15px;
     margin: 20px auto;
   }
 
   .table {
-    min-width: unset;
+    min-width: 100%;
   }
 
   .table thead th,
@@ -180,21 +179,52 @@ h2 {
   }
 
   .actions {
-    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .action-btn {
     font-size: 0.85rem;
     padding: 6px 10px;
-    min-width: 60px;
-  }
-
-  .button-container {
-    margin-top: 20px;
+    min-width: 100%;
   }
 
   .back-button {
     font-size: 1rem;
     padding: 10px 22px;
+  }
+
+  .add-button-container {
+    justify-content: center;
+  }
+
+  .btn-nuevo {
+    margin: 0 auto;
+  }
+}
+
+/* Extra pequeño (<480px) */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 2rem;
+  }
+
+  .table-container {
+    padding: 12px;
+  }
+
+  .action-btn {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+
+  .btn-nuevo {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .back-button {
+    padding: 8px 18px;
+    font-size: 1rem;
   }
 }

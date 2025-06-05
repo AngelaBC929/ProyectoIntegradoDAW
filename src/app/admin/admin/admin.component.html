@@ -23,4 +23,27 @@
     </div>
   </div>
   <p>Aqui puedes descargarte nuestro <a href="/docs/manual_administrador.pdf" download target="_blank" class="btn-descarga">manual de administrador (PDF)</a>.</p>
+  
+ <!-- Después del div.user-dashboard -->
+  <!-- Estadísticas abajo -->
+  <div class="card-container">
+  <div class="card card-stats">
+    <h2>Rallies con más participación</h2>
+    <ul>
+      <li *ngFor="let rally of topRallies">
+        {{ rally.title }} : {{ rally.inscritos }} participantes
+      </li>
+    </ul>
+    <p *ngIf="topRallies.length === 0">No hay rallies con inscritos todavía.</p>
+  </div>
+
+  <div class="card card-graph">
+    <ng-container *ngIf="barChartData">
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="{ responsive: true }"></canvas>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
 </div>

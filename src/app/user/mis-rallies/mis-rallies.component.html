@@ -57,7 +57,7 @@
 <!-- Modal para imagen ampliada -->
   <div class="image-modal" *ngIf="imagenModalVisible" (click)="closeImageModal()">
     <span class="close">&times;</span>
-    <img class="modal-content" [src]="imagenModalUrl" alt="Imagen ampliada" />
+    <img class="modal-content modal-imagen-ampliada" [src]="imagenModalUrl" alt="Imagen ampliada" />
   </div>
 
 
@@ -72,12 +72,12 @@
 
   <!-- Modal de carga de fotos -->
   <div *ngIf="isModalOpen" class="modal-overlay">
-    <div class="modal-content">
+    <div class="subir-foto-modal">
       <h5>Subir foto para el rally: {{ rallySeleccionado?.title }}</h5>
 
       <label for="tituloFoto">Título de la foto</label>
+      <br>
       <input id="tituloFoto" type="text" [(ngModel)]="tituloFoto" placeholder="Introduce un título" />
-
       <input type="file" (change)="onFileSelected($event)" />
       <div *ngIf="imagePreview">
         <img [src]="imagePreview" alt="Vista previa" class="preview-img" />

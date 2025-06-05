@@ -92,6 +92,11 @@ closeImageModal() {
     return rally.winnerPhoto?.some((winner: any) => winner.id === photo.id) ?? false;
   }
 
+hasRallyEnded(rally: any): boolean {
+  const today = new Date();
+  const endDate = new Date(rally.end_date);
+  return today > endDate;
+}
 
   // Función para agrupar las fotos por rally
   groupPhotosByRally(photos: any[]): any[] {
