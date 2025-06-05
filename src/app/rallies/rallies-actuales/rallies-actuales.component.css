@@ -13,13 +13,21 @@ h2 {
   text-align: center;
   margin-top: 1rem;
   color: #4b2e05;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   text-shadow: 1px 1px 1px #7b4f24;
 }
 
 .text-brown {
   color: #6c4c3b; 
+}
+h4{
+  text-align: center;
+  margin-top: 1rem;
+  color: #4b2e05;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #7b4f24;
 }
 
 .icono-tema-preview {
@@ -74,7 +82,7 @@ i, .material-symbols-outlined {
   font-weight: 700;
   text-shadow: 1px 1px 2px #7b4f24;
   text-align: left;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   margin-bottom: 0.3rem;
 }
 
@@ -89,7 +97,7 @@ i, .material-symbols-outlined {
   color: #7b4f24;
 }
 
-/* Botones */
+/* Botones base */
 .btn, .cancelar-btn, .apuntarme-btn {
   background-color: #a0522d;
   color: white;
@@ -109,20 +117,50 @@ i, .material-symbols-outlined {
   background-color: #8b4513;
 }
 
-.cancelar-btn {
+/* Botón cancelar */
+.cancelar-btn,
+.btn-outline-danger {
   background-color: #cc4b37;
+  color: white;
+  border: none;
 }
 
-.cancelar-btn:hover {
+.cancelar-btn:hover,
+.btn-outline-danger:hover {
   background-color: #a43a29;
 }
 
-.apuntarme-btn {
+/* Botón inscribirse */
+.apuntarme-btn,
+.btn-primary {
   background-color: #4b8b3b;
+  color: white;
+  border: none;
 }
 
-.apuntarme-btn:hover {
+.apuntarme-btn:hover,
+.btn-primary:hover {
   background-color: #3a6b2b;
+}
+
+/* Botón volver */
+.button-container .btn {
+  background-color: #a0522d;
+  color: white;
+  border: none;
+}
+
+.button-container .btn:hover {
+  background-color: #8b4513;
+}
+
+/* Botón deshabilitado (inscripción completada) */
+button[disabled] {
+  background-color: #d4b9a7 !important;
+  color: #6e4b33 !important;
+  border-color: #d4b9a7 !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
 }
 
 /* Contenedor botón volver */

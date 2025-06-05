@@ -182,6 +182,8 @@ mostrarPopup(mensaje: string) {
     this.popupVisible = false;
   }, 5000); // Popup se cierra automáticamente después de 5 segundos
 }
+
+
 volverADashboard() {
   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
     this.router.navigate(['/user/dashboard']);

@@ -14,57 +14,51 @@
   <div class="rallies-container">
     <div *ngFor="let rally of misRallies" class="rally-card">
       <div class="card-body">
-        <h5 class="card-title">{{ rally.title }}</h5>
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
+          <div class="flex-grow-1">
+            <h3>{{ rally.title }}</h3>
+            <h4 class="fechas-rally">
+              Inicio: <span class="label">{{ rally.start_date | date:'dd/MM/yyyy' }}</span> - Fin:
+              <span class="label">{{ rally.end_date | date:'dd/MM/yyyy' }}</span>
+            </h4>
 
-    <!-- Miniaturas de fotos subidas por rally -->
-<ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
-  <div class="miniaturas-container" *ngIf="fotos.length > 0">
-    <h6>Mis fotos subidas:</h6>
-    <div class="miniaturas">
-      <div *ngFor="let foto of fotos" class="foto-preview">
-        <img
-          [src]="foto.photo_url"
-          alt="Foto subida"
-          (click)="openImageModal(foto.photo_url)"
-          style="cursor: pointer;"
-        />
-        <p>{{ foto.title || 'Sin título' }}</p>
-        <p>
-          <span style="color: #5c3a1e;">Status:</span>
-          <span
-            [ngClass]="{
+          </div>
+        </div>
+
+
+        <!-- Miniaturas de fotos subidas por rally -->
+        <ng-container *ngIf="fotosPorRally && fotosPorRally[rally.id] as fotos">
+          <div class="miniaturas-container" *ngIf="fotos.length > 0">
+            <h6>Mis fotos subidas:</h6>
+            <div class="miniaturas">
+              <div *ngFor="let foto of fotos" class="foto-preview">
+                <img [src]="foto.photo_url" alt="Foto subida" (click)="openImageModal(foto.photo_url)"
+                  style="cursor: pointer;" />
+                <p>{{ foto.title || 'Sin título' }}</p>
+                <p>
+                  <span style="color: #5c3a1e;">Status:</span>
+                  <span [ngClass]="{
               'estado-aprobada': foto.status === 'aprobada',
               'estado-pendiente': foto.status === 'pendiente',
               'estado-rechazada': foto.status === 'rechazada'
-            }"
-          >
-            <ng-container [ngSwitch]="foto.status">
-              <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
-              <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
-              <span *ngSwitchCase="'rechazada'"> Rechazada ❌</span>
-            </ng-container>
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
-</ng-container>
+            }">
+                    <ng-container [ngSwitch]="foto.status">
+                      <span *ngSwitchCase="'aprobada'"> Aprobada ✅</span>
+                      <span *ngSwitchCase="'pendiente'"> Pendiente ⏳</span>
+                      <span *ngSwitchCase="'rechazada'"> Rechazada ❌</span>
+                    </ng-container>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
 
-<!-- Modal para mostrar imagen ampliada -->
-<div
-  class="modal-overlay"
-  *ngIf="imagenModalVisible"
-  (click)="closeImageModal()"
-  style="cursor: zoom-out;"
->
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <img
-      [src]="imagenModalUrl"
-      alt="Imagen ampliada"
-      style="width: 100%; height: auto; border-radius: 1rem;"
-    />
+<!-- Modal para imagen ampliada -->
+  <div class="image-modal" *ngIf="imagenModalVisible" (click)="closeImageModal()">
+    <span class="close">&times;</span>
+    <img class="modal-content" [src]="imagenModalUrl" alt="Imagen ampliada" />
   </div>
-</div>
 
 
         <div class="card-buttons">
@@ -90,8 +84,8 @@
       </div>
 
       <div class="modal-buttons">
-        <button (click)="onSubmit()" class="btn">Subir Foto</button>
-        <button (click)="closeModal()" class="btn-secondary">Cerrar</button>
+        <button (click)="onSubmit()" class="btn btn-subir">Subir Foto</button>
+        <button (click)="closeModal()" class="btn btn-cerrar">Cerrar</button>
       </div>
 
     </div>

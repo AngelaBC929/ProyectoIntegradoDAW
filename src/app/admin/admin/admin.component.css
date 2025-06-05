@@ -17,6 +17,17 @@ h1{
   margin-bottom: 2rem;
   text-shadow: 1px 1px 2px #7b4f24;
 }
+p{
+  font-size: 1.2rem;
+  color: #4b2e05;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
 /* Card container ya existe, solo agregar flex-wrap para móviles */
 .card-container {
   display: flex;

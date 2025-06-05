@@ -25,8 +25,12 @@ export class GalleryComponent implements OnInit {
   currentPage: number = 1; // Página global
   limit: number = 6; // Fotos por página
   totalPhotos: number = 0; // Total de fotos, para calcular las páginas
+  imagenModalVisible = false;
+  imagenModalUrl: string | null = null;
 
-  constructor(private photoService: PhotoService, private router: Router, private route: ActivatedRoute, private sweetAlert: SweetAlertService) {}
+
+
+  constructor(private photoService: PhotoService, private router: Router, private route: ActivatedRoute, private sweetAlert: SweetAlertService) { }
 
   ngOnInit() {
     this.loadRallies();
@@ -48,62 +52,70 @@ export class GalleryComponent implements OnInit {
       }
     });
   }
+openImageModal(url: string) {
+  this.imagenModalUrl = url;
+  this.imagenModalVisible = true;
+}
 
+closeImageModal() {
+  this.imagenModalVisible = false;
+  this.imagenModalUrl = null;
+}
   // Función para establecer las fotos ganadoras de cada rally
-setWinners() {
-  this.rallies.forEach(rally => {
-    let maxVotes = 0;
-    let winners: any[] = [];
+  setWinners() {
+    this.rallies.forEach(rally => {
+      let maxVotes = 0;
+      let winners: any[] = [];
 
-    // Encuentra el número máximo de votos
-    rally.photos.forEach(photo => {
-      if (photo.votos > maxVotes) {
-        maxVotes = photo.votos; // Establece el nuevo máximo
-        winners = [photo]; // Reinicia los ganadores si se encuentra un nuevo máximo
-      } else if (photo.votos === maxVotes) {
-        winners.push(photo); // Agrega la foto si tiene el mismo número de votos
+      // Encuentra el número máximo de votos
+      rally.photos.forEach(photo => {
+        if (photo.votos > maxVotes) {
+          maxVotes = photo.votos; // Establece el nuevo máximo
+          winners = [photo]; // Reinicia los ganadores si se encuentra un nuevo máximo
+        } else if (photo.votos === maxVotes) {
+          winners.push(photo); // Agrega la foto si tiene el mismo número de votos
+        }
+      });
+
+      // Solo asigna ganadores si hay fotos con más de 0 votos
+      if (maxVotes > 0) {
+        rally.winnerPhoto = winners; // Asigna las fotos con el máximo número de votos
+      } else {
+        rally.winnerPhoto = []; // Si no hay fotos con más de 0 votos, no hay ganadores
       }
     });
-
-    // Solo asigna ganadores si hay fotos con más de 0 votos
-    if (maxVotes > 0) {
-      rally.winnerPhoto = winners; // Asigna las fotos con el máximo número de votos
-    } else {
-      rally.winnerPhoto = []; // Si no hay fotos con más de 0 votos, no hay ganadores
-    }
-  });
-}
+  }
 
 
-isWinner(photo: any, rally: any): boolean {
-  // Verifica si la foto está en la lista de ganadores para este rally
-  return rally.winnerPhoto?.some((winner: any) => winner.id === photo.id) ?? false;
-}
+  isWinner(photo: any, rally: any): boolean {
+    // Verifica si la foto está en la lista de ganadores para este rally
+    return rally.winnerPhoto?.some((winner: any) => winner.id === photo.id) ?? false;
+  }
 
 
   // Función para agrupar las fotos por rally
- groupPhotosByRally(photos: any[]): any[] {
-  const grouped: { [key: number]: any } = {};
+  groupPhotosByRally(photos: any[]): any[] {
+    const grouped: { [key: number]: any } = {};
 
-  photos.forEach(photo => {
-    // Completar URL
-    photo.photo_url = `${environment.apiUrl}/${photo.photo_url}`;
+    photos.forEach(photo => {
+      // Completar URL
+      photo.photo_url = `${environment.apiUrl}/${photo.photo_url}`;
 
-    const rallyId = photo.rally_id;
-    if (!grouped[rallyId]) {
-      grouped[rallyId] = {
-        id: rallyId,
-        title: photo.rally_title || 'Rally sin nombre',
-        start_date: photo.rally_start_date,
-        end_date: photo.rally_end_date,
-        photos: []
-      };
-    }
-    grouped[rallyId].photos.push(photo);
-  });
+      const rallyId = photo.rally_id;
+      if (!grouped[rallyId]) {
+        grouped[rallyId] = {
+          id: rallyId,
+          title: photo.rally_title || 'Rally sin nombre',
+          start_date: photo.rally_start_date,
+          end_date: photo.rally_end_date,
+          photos: []
+        };
+      }
+      grouped[rallyId].photos.push(photo);
+    });
 
-  return Object.values(grouped);
-}
+    return Object.values(grouped);
+  }
 
   loadVotedPhotos() {
     const userId = localStorage.getItem('userId');
@@ -181,13 +193,13 @@ isWinner(photo: any, rally: any): boolean {
     return (this.currentPage * this.limit) < this.totalPhotos; // Verifica si hay más fotos
   }
 
- goBackToHome(): void {
-  const from = this.route.snapshot.queryParamMap.get('from');
-  if (from === 'dashboard') {
-    this.router.navigate(['/user/dashboard']);
-  } else {
-    this.router.navigate(['/home']);
+  goBackToHome(): void {
+    const from = this.route.snapshot.queryParamMap.get('from');
+    if (from === 'dashboard') {
+      this.router.navigate(['/user/dashboard']);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
-}
 
 }

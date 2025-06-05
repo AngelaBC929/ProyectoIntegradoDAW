@@ -17,7 +17,7 @@ export class FaqsComponent implements OnInit {
   preguntasRespuestas = [
      {
     pregunta: '¿Quieres saber cómo moverte por toda la App?',
-    respuesta: `Aquí puedes descargar nuestro <a href="/docs/manual-usuario.pdf" download target="_blank" class="btn-descarga">manual de usuario (PDF)</a>.`,
+    respuesta: `Aquí puedes descargar nuestro <a href="/docs/manual_usuario.pdf" download target="_blank" class="btn-descarga">manual de usuario (PDF)</a>.`,
     abierta: false
     },
     {
