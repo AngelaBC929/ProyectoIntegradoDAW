@@ -28,7 +28,7 @@ Incluye un sistema de administración que permite validar fotos, gestionar usuar
 - **Estructura modular**: componentes agrupados por funcionalidades
 
 ### 🔧 Backend (PHP)
-- **Lenguaje**: PHP 7+  
+- **Lenguaje**: PHP 8+  
 - **Base de datos**: MySQL (XAMPP)  
 - **Estilo**: API REST simulada (POST + action)  
 - **Despliegue**: InfinityFree (Wuaze)
